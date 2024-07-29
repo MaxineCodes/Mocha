@@ -32,6 +32,14 @@ Repository
 ```
  ---
 
+## Building:
+
+This project should compile and link properly on Microsoft Visual Studio 2022 (17) with any compiler supporting C++ 20 or higher on Windows x64.
+The dependencies are included in the repository and do not require to be downloaded and linked manually.
+OpenGL is required. It is assumed that OpenGL is pre-installed on the system.
+
+ ---
+
  ## Dependencies:
  - GLEW 2.1.0
  - GLFW 3.4
