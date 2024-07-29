@@ -1,5 +1,9 @@
 # Visual Studio 2022 OpenGL Graphics Template
- A simple template for starting OpenGL graphics (64x) with all dependencies included.
+A simple template for starting OpenGL graphics (64x) with all dependencies included.
+
+ ---
+
+![image](https://github.com/MaxineCodes/VS2022-OpenGL-Graphics-Template/blob/main/git_img/screenshot.jpg)
 
  ---
 
@@ -36,5 +40,3 @@ Repository
  - glm 0.9.9.8
 
 ---
-
-![image](https://github.com/MaxineCodes/VS2022-OpenGL-Graphics-Template/blob/main/git_img/screenshot.jpg)
