@@ -1,4 +1,4 @@
-#include "Core.h"
+#include "Mocha.h"
 
 // std includes
 #include <iostream>
@@ -40,7 +40,7 @@ void main()
 )";
 
 
-namespace Core 
+namespace Mocha
 {
     
 

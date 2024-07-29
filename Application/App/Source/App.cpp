@@ -1,8 +1,8 @@
-#include "Core/Core.h"
+#include "Mocha/Mocha.h"
 
 int main()
 {
-	Core::PrintHelloWorld();
+	Mocha::PrintHelloWorld();
 
-	Core::DoGraphicsSomething();
+	Mocha::DoGraphicsSomething();
 }
