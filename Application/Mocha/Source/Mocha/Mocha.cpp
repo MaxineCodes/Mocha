@@ -57,6 +57,7 @@ namespace Mocha
         if (!glfwInit()) 
         {
             std::cerr << "Failed to initialize GLFW" << std::endl;
+            return;
         }
 
         // Create a windowed mode window and its OpenGL context
