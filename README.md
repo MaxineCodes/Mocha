@@ -9,19 +9,23 @@ The software is separated into two projects: Mocha and App. App builds into App.
 
 ```
 Repository
+|
 |-- Dependencies            # Dependencies are included in the repository
 |   |-- glew-2.1.0
 |   |-- glfw-3.4.bin.WIN64
 |   |-- glm-0.9.9.8
 |   |-- imgui
 |   `-- stb
+|
 |-- Binaries                # This folder is only shown/generated when building
+|
 |-- Application             # Contains all the interesting stuff
 |   |-- App                 # Builds as an .exe using Mocha.dll, this is where you run the program
 |   |   `-- Source
-|   |-- Mocha               # Mocha contains the implementation that is built into a .dll
-|   |   `-- Source
-|   |       ` Mocha         # Mocha.h exposes the 'api' of Mocha.dll and is included in App.exe
+|   `-- Mocha               # Mocha contains the implementation that is built into a .dll
+|       `-- Source
+|           ` Mocha         # Mocha.h exposes the 'api' of Mocha.dll and is included in App.exe
+|
 `-- git_img                 # Web preview stuff for github
 ```
  ---
