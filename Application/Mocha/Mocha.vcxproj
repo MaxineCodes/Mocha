@@ -161,6 +161,7 @@
     <ClInclude Include="..\..\Dependencies\imgui\imstb_textedit.h" />
     <ClInclude Include="..\..\Dependencies\imgui\imstb_truetype.h" />
     <ClInclude Include="Source\Mocha.h" />
+    <ClInclude Include="Source\Mocha\Debug\Debug.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Dependencies\imgui\imgui.cpp" />
@@ -170,6 +171,7 @@
     <ClCompile Include="..\..\Dependencies\imgui\imgui_impl_opengl3.cpp" />
     <ClCompile Include="..\..\Dependencies\imgui\imgui_tables.cpp" />
     <ClCompile Include="..\..\Dependencies\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="Source\Mocha\Debug\Debug.cpp" />
     <ClCompile Include="Source\Mocha\Mocha.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

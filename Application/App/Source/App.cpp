@@ -2,7 +2,21 @@
 
 int main()
 {
-	Mocha::PrintHelloWorld();
+	//Mocha::Debug::EnableDebug();
+	//Mocha::Debug::DisableDebug();
 
-	Mocha::DoGraphicsSomething();
+
+	// Testing functions
+	Mocha::Debug::PrintHelloWorld();
+	Mocha::Debug::DoGraphicsSomething();
+
+
+	//if (Mocha::InitiateWindow())
+	//{
+	//	std::cout << "Success" << std::endl;
+	//}
+
+	Mocha::Debug::Logging::SetGlobalMinimumLogLevel(Mocha::Debug::Logging::Info);
+
+	Mocha::Debug::Logging::Log(Mocha::Debug::Logging::Warning, "test");
 }

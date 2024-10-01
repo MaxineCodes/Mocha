@@ -1,10 +1,10 @@
 #pragma once
 
+#include "Debug/Debug.h"
+
 namespace Mocha
 {
-	// Testing functions
-	void PrintHelloWorld();
-	void DoGraphicsSomething();
+
 
 	bool InitiateWindow();
 
