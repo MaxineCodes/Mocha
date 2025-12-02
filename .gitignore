@@ -1,0 +1,73 @@
+# ------------------------------------------------------------
+# Mocha C++/CMake project – .gitignore
+# ------------------------------------------------------------
+
+# OS files
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# Editors/IDEs
+.idea/
+.vs/
+.vscode/
+*.code-workspace
+*.suo
+*.user
+*.userossc
+*.ncb
+*.sdf
+*.opensdf
+*.opendb
+*.VC.db
+
+# CMake build directories
+build/
+cmake-build-*/
+
+# CMake generated files (if accidentally created in source tree)
+CMakeFiles/
+CMakeCache.txt
+CMakeScripts/
+Testing/
+_deps/
+Makefile
+cmake_install.cmake
+install_manifest.txt
+compile_commands.json
+
+# FetchContent downloads/builds placed in source tree
+dependencies/
+
+# Compiled objects & libraries
+*.o
+*.obj
+*.lo
+*.la
+*.a
+*.lib
+*.so
+*.dylib
+*.dll
+*.exp
+*.ilk
+*.pdb
+
+# Executables & app bundles
+*.exe
+*.out
+*.app
+
+# Logs, caches, temp files
+*.log
+*.tmp
+*.temp
+*.swp
+.cache/
+
+# Python bytecode (used by GLAD generator)
+__pycache__/
+*.pyc
+
+# Keep project metadata like Junie rules tracked
+!.junie/
