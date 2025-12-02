@@ -121,7 +121,12 @@ target_link_libraries(imgui PUBLIC
 target_compile_definitions(imgui PUBLIC IMGUI_IMPL_OPENGL_LOADER_GLAD)
 
 # Main executable
-add_executable(Mocha src/main.cpp)
+add_executable(Mocha src/main.cpp
+        src/core/rendering.cpp
+        src/core/rendering.h
+        src/core/scene.cpp
+        src/core/scene.h
+)
 
 target_link_libraries(Mocha PRIVATE
     OpenGL::GL
