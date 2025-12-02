@@ -1,6 +1,6 @@
 # Mocha
 
-Mocha is a simple cross-platform 3D OpenGL rendering engine to render 3D objects in real-time supporting physically based rendering algorithms and scene loading.
+Mocha is a simple cross-platform 3D OpenGL core-profile rendering engine to render 3D objects in real-time supporting physically based rendering algorithms and scene loading.
 If you're familiar with 3D viewing applications, a main point of inspiration for this project is Sketchfab or Marmoset Viewer. Performance is not a priority, but being GPU based and only handling small scenes, this should not be a major issue.
 
 ---
@@ -35,3 +35,9 @@ Make sure Python 3 is in your PATH and glad is installed.
 Running `pip install glad` should do the trick.
 
 ---
+
+## Sources
+
+- PBR Book: https://www.pbr-book.org/
+- Google Filament book and repository: https://github.com/google/filament
+- Learn OpenGL website: https://learnopengl.com/
