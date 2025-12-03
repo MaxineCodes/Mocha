@@ -120,6 +120,14 @@ target_link_libraries(imgui PUBLIC
 
 target_compile_definitions(imgui PUBLIC IMGUI_IMPL_OPENGL_LOADER_GLAD)
 
+# GLM (header-only math library)
+FetchContent_Declare(
+    glm
+    GIT_REPOSITORY https://github.com/g-truc/glm.git
+    GIT_TAG 1.0.1
+)
+FetchContent_MakeAvailable(glm)
+
 # Main executable
 add_executable(Mocha src/main.cpp
         src/core/rendering.cpp
@@ -138,6 +146,16 @@ target_link_libraries(Mocha PRIVATE
 target_include_directories(Mocha PRIVATE
     ${stb_SOURCE_DIR}
 )
+
+# Link or include GLM depending on targets provided by the fetched project
+if(TARGET glm::glm)
+    target_link_libraries(Mocha PRIVATE glm::glm)
+elseif(TARGET glm)
+    target_link_libraries(Mocha PRIVATE glm)
+else()
+    # Fallback: include headers directly (header-only)
+    target_include_directories(Mocha PRIVATE ${glm_SOURCE_DIR})
+endif()
 
 # Ensure GLAD is generated before compiling Mocha (for headers)
 add_dependencies(Mocha glad_generate)
