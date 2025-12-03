@@ -23,7 +23,7 @@ namespace Mocha
         // Create window through (in the future) a GLFW wrapper
         if (!glfwInit())
         {
-            std::cerr << "Failed to initialize GLFW\n";
+            logger::logError("Failed to initialize GLFW");
             return false;
         }
 
@@ -36,7 +36,7 @@ namespace Mocha
         GLFWwindow* window = glfwCreateWindow(1280, 720, "Mocha :: OpenGL Realtime Rendering", nullptr, nullptr);
         if (!window)
         {
-            std::cerr << "Failed to create GLFW window\n";
+            logger::logError("Failed to create GLFW window");
             glfwTerminate();
             return false;
         }
@@ -48,12 +48,14 @@ namespace Mocha
         // Load OpenGL functions using GLAD (v0.1.x)
         if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
         {
-            std::cerr << "Failed to initialize GLAD\n";
+            logger::logError("Failed to initialize GLAD");
             glfwDestroyWindow(window);
             glfwTerminate();
             return false;
         }
-        std::cout << "OpenGL " << (const char*)glGetString(GL_VERSION) << " loaded" << std::endl;
+        logger::logInfo("OpenGL loaded");
+        logger::logInfo(("OpenGL version: " + std::string((const char*)glGetString(GL_VERSION))).c_str());
+        //std::cout << "OpenGL " << (const char*)glGetString(GL_VERSION) << " loaded" << std::endl;
 
         // Setup ImGui
         IMGUI_CHECKVERSION();
@@ -74,7 +76,8 @@ namespace Mocha
         if (!success)
         {
             glGetShaderInfoLog(vertexShader, 512, nullptr, infoLog);
-            std::cerr << "Vertex shader compilation failed:\n" << infoLog << "\n";
+            logger::logGLError(infoLog);
+            //std::cerr << "Vertex shader compilation failed:\n" << infoLog << "\n";
         }
 
         // Compile fragment shader
@@ -85,7 +88,8 @@ namespace Mocha
         if (!success)
         {
             glGetShaderInfoLog(fragmentShader, 512, nullptr, infoLog);
-            std::cerr << "Fragment shader compilation failed:\n" << infoLog << "\n";
+            logger::logGLError(infoLog);
+            //std::cerr << "Fragment shader compilation failed:\n" << infoLog << "\n";
         }
 
         // Link shader program
@@ -97,7 +101,8 @@ namespace Mocha
         if (!success)
         {
             glGetProgramInfoLog(shaderProgram, 512, nullptr, infoLog);
-            std::cerr << "Shader program linking failed:\n" << infoLog << "\n";
+            logger::logGLError(infoLog);
+            //std::cerr << "Shader program linking failed:\n" << infoLog << "\n";
         }
         glDeleteShader(vertexShader);
         glDeleteShader(fragmentShader);

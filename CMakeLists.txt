@@ -134,6 +134,9 @@ add_executable(Mocha src/main.cpp
         src/core/rendering.h
         src/core/scene.cpp
         src/core/scene.h
+        src/io/logger.cpp
+        src/io/logger.h
+        src/io/logger.cpp
 )
 
 target_link_libraries(Mocha PRIVATE

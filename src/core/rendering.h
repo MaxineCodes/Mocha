@@ -7,6 +7,8 @@
 
 #include "scene.h"
 
+#include "../io/logger.h"
+
 namespace Mocha
 {
     inline const char* vertexShaderSource = R"(
