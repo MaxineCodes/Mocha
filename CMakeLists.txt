@@ -93,7 +93,8 @@ FetchContent_MakeAvailable(stb)
 FetchContent_Declare(
     imgui
     GIT_REPOSITORY https://github.com/ocornut/imgui.git
-    GIT_TAG v1.91.5
+    # Use the docking branch of Dear ImGui
+    GIT_TAG docking
 )
 FetchContent_MakeAvailable(imgui)
 
