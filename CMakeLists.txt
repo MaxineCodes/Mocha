@@ -142,6 +142,14 @@ add_executable(Mocha src/main.cpp
         src/interface/gui.h
         src/core/window.cpp
         src/core/window.h
+        src/core/Material.cpp
+        src/core/Material.h
+        src/core/Shader.cpp
+        src/core/Shader.h
+        src/core/Mesh.cpp
+        src/core/Mesh.h
+        src/core/RenderObject.cpp
+        src/core/RenderObject.h
 )
 
 target_link_libraries(Mocha PRIVATE
