@@ -138,6 +138,8 @@ add_executable(Mocha src/main.cpp
         src/io/logger.cpp
         src/io/logger.h
         src/io/logger.cpp
+        src/GUI/gui.cpp
+        src/GUI/gui.h
 )
 
 target_link_libraries(Mocha PRIVATE

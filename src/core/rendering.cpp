@@ -11,6 +11,8 @@
 #include <imgui_impl_opengl3.h>
 #include <iostream>
 
+#include "../gui/gui.h"
+
 namespace Mocha
 {
     void framebuffer_size_callback(GLFWwindow* window, int width, int height)
@@ -58,12 +60,7 @@ namespace Mocha
         //std::cout << "OpenGL " << (const char*)glGetString(GL_VERSION) << " loaded" << std::endl;
 
         // Setup ImGui
-        IMGUI_CHECKVERSION();
-        ImGui::CreateContext();
-        ImGuiIO& io = ImGui::GetIO(); (void)io;
-        ImGui::StyleColorsDark();
-        ImGui_ImplGlfw_InitForOpenGL(window, true);
-        ImGui_ImplOpenGL3_Init("#version 330 core");
+        GUI::setup(window);
 
         // Compile shaders
         // Compile vertex shader
@@ -143,12 +140,10 @@ namespace Mocha
             glfwPollEvents();
 
             // Start ImGui frame
-            ImGui_ImplOpenGL3_NewFrame();
-            ImGui_ImplGlfw_NewFrame();
-            ImGui::NewFrame();
+            GUI::newFrame();
 
             // Show ImGui demo window
-            ImGui::ShowDemoWindow();
+            GUI::createGuiElements();
 
             // Render
             glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
@@ -160,8 +155,7 @@ namespace Mocha
             glDrawArrays(GL_TRIANGLES, 0, 3);
 
             // Render ImGui
-            ImGui::Render();
-            ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+            GUI::draw();
 
             glfwSwapBuffers(window);
         }
@@ -171,9 +165,7 @@ namespace Mocha
         glDeleteBuffers(1, &VBO);
         glDeleteProgram(shaderProgram);
 
-        ImGui_ImplOpenGL3_Shutdown();
-        ImGui_ImplGlfw_Shutdown();
-        ImGui::DestroyContext();
+        GUI::cleanup();
 
         glfwDestroyWindow(window);
         glfwTerminate();
