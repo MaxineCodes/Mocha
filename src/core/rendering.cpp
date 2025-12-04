@@ -8,7 +8,7 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
 
-#include "../gui/gui.h"
+#include "../interface/gui.h"
 
 namespace Mocha
 {

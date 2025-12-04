@@ -7,7 +7,7 @@
 
 #include "scene.h"
 
-#include "../io/logger.h"
+#include "../interface/logger.h"
 
 namespace Mocha
 {
