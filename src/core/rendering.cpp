@@ -6,8 +6,8 @@
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-#include <iostream>
 
+#include "Window.h"
 #include "../interface/gui.h"
 
 namespace Mocha
@@ -19,45 +19,11 @@ namespace Mocha
 
     bool render(Scene scene)
     {
-        // Create window through (in the future) a GLFW wrapper
-        if (!glfwInit())
-        {
-            logger::logError("Failed to initialize GLFW");
-            return false;
-        }
-
-        // Configure GLFW for OpenGL 3.3 core
-        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
-        // Create window
-        GLFWwindow* window = glfwCreateWindow(1280, 720, "Mocha :: OpenGL Realtime Rendering", nullptr, nullptr);
-        if (!window)
-        {
-            logger::logError("Failed to create GLFW window");
-            glfwTerminate();
-            return false;
-        }
-        glfwMakeContextCurrent(window);
-        glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
-        glfwSwapInterval(1); // Enable vsync
-
-        // Load glad
-        // Load OpenGL functions using GLAD (v0.1.x)
-        if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
-        {
-            logger::logError("Failed to initialize GLAD");
-            glfwDestroyWindow(window);
-            glfwTerminate();
-            return false;
-        }
-        logger::logInfo("OpenGL loaded");
-        logger::logInfo(("OpenGL version: " + std::string((const char*)glGetString(GL_VERSION))).c_str());
-        //std::cout << "OpenGL " << (const char*)glGetString(GL_VERSION) << " loaded" << std::endl;
+        // Create window through a GLFW wrapper
+        Window window(1280, 720, "Mocha :: OpenGL Realtime Rendering");
 
         // Setup ImGui
-        GUI::setup(window);
+        GUI::setup(window.getWindow());
 
         // Compile shaders
         // Compile vertex shader
@@ -132,9 +98,9 @@ namespace Mocha
         glBindVertexArray(0);
 
         // Render Loop
-        while (!glfwWindowShouldClose(window))
+        while (!window.windowShouldClose())
         {
-            glfwPollEvents();
+            Window::pollEvents();
 
             // Start ImGui frame
             GUI::newFrame();
@@ -154,7 +120,7 @@ namespace Mocha
             // Render ImGui
             GUI::draw();
 
-            glfwSwapBuffers(window);
+            window.swapBuffers();
         }
 
         // Cleanup
@@ -163,9 +129,7 @@ namespace Mocha
         glDeleteProgram(shaderProgram);
 
         GUI::cleanup();
-
-        glfwDestroyWindow(window);
-        glfwTerminate();
+        window.cleanup();
 
         return false;
     }
