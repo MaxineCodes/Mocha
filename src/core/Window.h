@@ -19,8 +19,10 @@ namespace Mocha
         Window(int width, int height, const char* title);
         GLFWwindow* getWindow() const { return window; }
 
+        void processInput() const;
+
         bool windowShouldClose() const;
-        static void pollEvents() ;
+        void pollEvents() const ;
         void swapBuffers() const;
         void cleanup() const;
 

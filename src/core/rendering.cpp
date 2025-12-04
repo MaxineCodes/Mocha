@@ -12,17 +12,11 @@
 
 namespace Mocha
 {
-    void framebuffer_size_callback(GLFWwindow* window, int width, int height)
-    {
-        glViewport(0, 0, width, height);
-    }
-
     bool render(Scene scene)
     {
         // Create window through a GLFW wrapper
         Window window(1280, 720, "Mocha :: OpenGL Realtime Rendering");
-
-        // Setup ImGui
+        // Setup gui
         GUI::setup(window.getWindow());
 
         // Compile shaders
@@ -100,7 +94,7 @@ namespace Mocha
         // Render Loop
         while (!window.windowShouldClose())
         {
-            Window::pollEvents();
+            window.pollEvents();
 
             // Start ImGui frame
             GUI::newFrame();

@@ -11,7 +11,8 @@ namespace Mocha
 {
     Window::Window(int width, int height, const char *title)
     {
-        if (!glfwInit()) {
+        if (!glfwInit())
+        {
             logger::logError("Failed to initialise GLFW");
             return;
         }
@@ -45,13 +46,22 @@ namespace Mocha
         logger::logInfo(("OpenGL version: " + std::string((const char*)glGetString(GL_VERSION))).c_str());
     }
 
+    void Window::processInput() const
+    {
+        if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+        {
+            glfwSetWindowShouldClose(window, true);
+        }
+    }
+
     bool Window::windowShouldClose() const
     {
         return glfwWindowShouldClose(window);
     }
-    void Window::pollEvents()
+    void Window::pollEvents() const
     {
         glfwPollEvents();
+        processInput();
     }
     void Window::swapBuffers() const
     {
