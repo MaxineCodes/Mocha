@@ -16,11 +16,11 @@ namespace Mocha
     {
         switch (level)
         {
-            case logLevel::INFO:  return   "[INFO]  ";
-            case logLevel::WARN:  return   "[WARN]  ";
-            case logLevel::ERROR: return   "[ERROR] ";
+            case logLevel::INFO:    return "[INFO]  ";
+            case logLevel::WARN:    return "[WARN]  ";
+            case logLevel::ERROR:   return "[ERROR] ";
             case logLevel::GLERROR: return "[GL_ERROR]";
-            case logLevel::DEBUG:
+            case logLevel::DEBUG:   return "[DEBUG] ";
             default:              return   "[DEBUG] ";
         }
     }
