@@ -5,9 +5,9 @@
 #include "rendering.h"
 
 #include <glad/glad.h>
-#include <GLFW/glfw3.h>
 
 #include "Window.h"
+#include "Shader.h"
 #include "../interface/gui.h"
 
 namespace Mocha
@@ -19,47 +19,10 @@ namespace Mocha
         // Setup gui
         GUI::setup(window.getWindow());
 
-        // Compile shaders
-        // Compile vertex shader
-        unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
-        glShaderSource(vertexShader, 1, &vertexShaderSource, nullptr);
-        glCompileShader(vertexShader);
-        int success;
-        char infoLog[512];
-        glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
-        if (!success)
-        {
-            glGetShaderInfoLog(vertexShader, 512, nullptr, infoLog);
-            logger::logGLError(infoLog);
-            //std::cerr << "Vertex shader compilation failed:\n" << infoLog << "\n";
-        }
-
-        // Compile fragment shader
-        unsigned int fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-        glShaderSource(fragmentShader, 1, &fragmentShaderSource, nullptr);
-        glCompileShader(fragmentShader);
-        glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
-        if (!success)
-        {
-            glGetShaderInfoLog(fragmentShader, 512, nullptr, infoLog);
-            logger::logGLError(infoLog);
-            //std::cerr << "Fragment shader compilation failed:\n" << infoLog << "\n";
-        }
-
-        // Link shader program
-        unsigned int shaderProgram = glCreateProgram();
-        glAttachShader(shaderProgram, vertexShader);
-        glAttachShader(shaderProgram, fragmentShader);
-        glLinkProgram(shaderProgram);
-        glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
-        if (!success)
-        {
-            glGetProgramInfoLog(shaderProgram, 512, nullptr, infoLog);
-            logger::logGLError(infoLog);
-            //std::cerr << "Shader program linking failed:\n" << infoLog << "\n";
-        }
-        glDeleteShader(vertexShader);
-        glDeleteShader(fragmentShader);
+        const Shader simpleShader = Shader(
+            "D:/Dev/2026/Mocha/res/shaders/basicVertexShader.glsl",
+            "D:/Dev/2026/Mocha/res/shaders/basicFragmentShader.glsl"
+            );
 
         // VAO, VBO
         // Triangle vertices (position + color)
@@ -91,6 +54,9 @@ namespace Mocha
         glBindBuffer(GL_ARRAY_BUFFER, 0);
         glBindVertexArray(0);
 
+
+
+
         // Render Loop
         while (!window.windowShouldClose())
         {
@@ -107,7 +73,9 @@ namespace Mocha
             glClear(GL_COLOR_BUFFER_BIT);
 
             // Draw triangle
-            glUseProgram(shaderProgram);
+            simpleShader.use();
+            simpleShader.setFloat("someUniform", 1.0f);
+
             glBindVertexArray(VAO);
             glDrawArrays(GL_TRIANGLES, 0, 3);
 
@@ -120,7 +88,6 @@ namespace Mocha
         // Cleanup
         glDeleteVertexArrays(1, &VAO);
         glDeleteBuffers(1, &VBO);
-        glDeleteProgram(shaderProgram);
 
         GUI::cleanup();
         window.cleanup();

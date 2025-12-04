@@ -6,7 +6,7 @@
 #define MOCHA_SHADER_H
 #include <string>
 
-#include "imgui_impl_opengl3_loader.h"
+#include <glad/glad.h>
 
 namespace Mocha
 {
@@ -18,17 +18,21 @@ namespace Mocha
         Shader(const char* vertexPath, const char* fragmentPath);
         ~Shader();
 
-        GLuint program;
-        GLuint vertexShader;
-        GLuint fragmentShader;
+        GLuint shaderProgramID;
+        GLuint vertexShaderID;
+        GLuint fragmentShaderID;
 
-        void use();
+        char infoLog[512];
+        int success;
+
+        void use() const;
         void setBool(const std::string& name, bool value) const;
         void setInt(const std::string& name, int value) const;
         void setFloat(const std::string& name, float value) const;
 
     private:
-        const char* readFileFromPath(const char* path);
+        static const char* readFileFromPath(const char* path);
+        GLuint createShader(const char* shaderCode);
 
 
     };

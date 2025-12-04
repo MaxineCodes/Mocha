@@ -8,33 +8,63 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
-#include <glad/glad.h>
+#include <cstdlib>
+
 #include "../interface/logger.h"
+
 
 namespace Mocha
 {
     Shader::Shader(const char *vertexPath, const char *fragmentPath)
     {
+        // Read the code from the shader file
         const char* vertexShaderCode = readFileFromPath(vertexPath);
         const char* fragmentShaderCode = readFileFromPath(fragmentPath);
 
-        unsigned int vertexShader, fragmentShader;
-        int success;
-        char infoLog[512];
+        // Compile shaders and store the ID as GLuint
+        vertexShaderID = createShader(vertexShaderCode);
+        fragmentShaderID = createShader(fragmentShaderCode);
 
-        // vertex Shader
-        vertexShader = glCreateShader(GL_VERTEX_SHADER);
-        glShaderSource(vertexShader, 1, &vertexShaderCode, NULL);
-        glCompileShader(vertexShader);
-
-        // print compile errors if any
-        glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
+        // Shader program
+        shaderProgramID = glCreateProgram();
+        glAttachShader(shaderProgramID, vertexShaderID);
+        glAttachShader(shaderProgramID, fragmentShaderID);
+        glLinkProgram(shaderProgramID);
+        // Log linking errors if any
+        glGetProgramiv(shaderProgramID, GL_LINK_STATUS, &success);
         if(!success)
         {
-            glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
-            logger::logGLError("ERROR::SHADER::VERTEX::COMPILATION_FAILED");
+            glGetProgramInfoLog(shaderProgramID, 512, NULL, infoLog);
+            logger::logGLError("ERROR::SHADER::PROGRAM::LINKING_FAILED");
             logger::logGLError(infoLog);
-        };
+        }
+
+        // delete the shaders as they're linked into our program now and no longer necessary
+        glDeleteShader(vertexShaderID);
+        glDeleteShader(fragmentShaderID);
+    }
+
+    Shader::~Shader()
+    {
+        glDeleteProgram(shaderProgramID);
+    }
+
+    void Shader::use() const
+    {
+        glUseProgram(shaderProgramID);
+    }
+
+    void Shader::setBool(const std::string &name, bool value) const
+    {
+        glUniform1i(glGetUniformLocation(shaderProgramID, name.c_str()), (int)value);
+    }
+    void Shader::setInt(const std::string &name, int value) const
+    {
+        glUniform1i(glGetUniformLocation(shaderProgramID, name.c_str()), value);
+    }
+    void Shader::setFloat(const std::string &name, float value) const
+    {
+        glUniform1f(glGetUniformLocation(shaderProgramID, name.c_str()), value);
     }
 
     const char * Shader::readFileFromPath(const char *path)
@@ -51,7 +81,7 @@ namespace Mocha
             shaderFile.open(path);
             std::stringstream shaderStream;
             // read file's buffer contents into streams
-           shaderStream << rawShaderCode.rdbuf();
+           shaderStream << shaderFile.rdbuf();
             // close file handlers
             shaderFile.close();
             // convert stream into string
@@ -63,5 +93,24 @@ namespace Mocha
         }
 
         return rawShaderCode.c_str();
+    }
+
+    GLuint Shader::createShader(const char *shaderCode)
+    {
+        // Compile shader
+        GLuint shader = glCreateShader(GL_VERTEX_SHADER);
+        glShaderSource(vertexShaderID, 1, &shaderCode, NULL);
+        glCompileShader(vertexShaderID);
+
+        // Log compile errors if any
+        glGetShaderiv(vertexShaderID, GL_COMPILE_STATUS, &success);
+        if(!success)
+        {
+            glGetShaderInfoLog(vertexShaderID, 512, NULL, infoLog);
+            logger::logGLError("ERROR::SHADER::VERTEX::COMPILATION_FAILED");
+            logger::logGLError(infoLog);
+        };
+
+        return shader;
     }
 } // Mocha
