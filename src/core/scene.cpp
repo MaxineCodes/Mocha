@@ -3,3 +3,8 @@
 //
 
 #include "scene.h"
+
+namespace Mocha
+{
+
+}

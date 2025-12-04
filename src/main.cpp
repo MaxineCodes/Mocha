@@ -11,7 +11,7 @@ int main()
 {
     // First, create the scene you want to render
     // Planned: Load .USD scene, or a constructor which generates something for you
-    Scene myScene;
+    Mocha::Scene myScene;
 
 
     if (!Mocha::render(myScene))

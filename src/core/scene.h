@@ -7,17 +7,19 @@
 
 #include <vector>
 
-class Scene
+namespace Mocha
 {
-public:
-    // Vector of all objects
-        // objects have 1 material referenced
-    // Vector of all materials
-        // materials references 1 shader and references textures
-    // Vector of all textures
-    // Vector of all lights
-    // Vector of all cameras
-};
+    class Scene
+    {
+    public:
+        // Vector of all objects
+            // objects have 1 material referenced
+        // Vector of all materials
+            // materials references 1 shader and references textures
+        // Vector of all textures
+        // Vector of all lights
+        // Vector of all cameras
+    };
 
-
+}
 #endif //MOCHA_SCENE_H
