@@ -2,7 +2,7 @@
 // Created by maxin on 03/12/2025.
 //
 
-#include "../io/logger.h"
+#include "logger.h"
 
 #include <stdio.h>
 #include <iostream>
