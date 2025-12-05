@@ -4,6 +4,9 @@
 
 int main()
 {
+    Mocha::logger::setUseCout(true);
+    Mocha::logger::setPrintDebug(true);
+
     // First, create the scene you want to render
     // Planned: Load .USD scene, or a constructor which generates something for you
     Mocha::Scene myScene;

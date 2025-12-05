@@ -31,8 +31,8 @@ namespace Mocha
         void setFloat(const std::string& name, float value) const;
 
     private:
-        static const char* readFileFromPath(const char* path);
-        GLuint createShader(const char* shaderCode);
+        static std::string readFileFromPath(const char* path);
+        GLuint createShader(std::string shaderCode);
 
 
     };

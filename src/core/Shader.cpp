@@ -11,6 +11,7 @@
 #include <cstdlib>
 
 #include "../interface/logger.h"
+#include <string>
 
 
 namespace Mocha
@@ -18,8 +19,10 @@ namespace Mocha
     Shader::Shader(const char *vertexPath, const char *fragmentPath)
     {
         // Read the code from the shader file
-        const char* vertexShaderCode = readFileFromPath(vertexPath);
-        const char* fragmentShaderCode = readFileFromPath(fragmentPath);
+        std::string vertexShaderCode = readFileFromPath(vertexPath);
+        std::string fragmentShaderCode = readFileFromPath(fragmentPath);
+
+        logger::logDebug(vertexShaderCode.c_str());
 
         // Compile shaders and store the ID as GLuint
         vertexShaderID = createShader(vertexShaderCode);
@@ -67,7 +70,7 @@ namespace Mocha
         glUniform1f(glGetUniformLocation(shaderProgramID, name.c_str()), value);
     }
 
-    const char * Shader::readFileFromPath(const char *path)
+    std::string Shader::readFileFromPath(const char *path)
     {
         std::string rawShaderCode;
         std::ifstream shaderFile;
@@ -92,14 +95,19 @@ namespace Mocha
             logger::logGLError("ERROR::SHADER::FILE_NOT_SUCCESFULLY_READ");
         }
 
-        return rawShaderCode.c_str();
+        logger::logDebug(path);
+        logger::logDebug(rawShaderCode.c_str());
+
+        return rawShaderCode;
     }
 
-    GLuint Shader::createShader(const char *shaderCode)
+    GLuint Shader::createShader(const std::string shaderCode)
     {
+        const char* shaderSource = shaderCode.c_str();
+
         // Compile shader
         GLuint shader = glCreateShader(GL_VERTEX_SHADER);
-        glShaderSource(vertexShaderID, 1, &shaderCode, NULL);
+        glShaderSource(vertexShaderID, 1, &shaderSource, NULL);
         glCompileShader(vertexShaderID);
 
         // Log compile errors if any
