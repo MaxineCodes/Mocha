@@ -7,11 +7,8 @@
 #include <string>
 #include <fstream>
 #include <sstream>
-#include <iostream>
-#include <cstdlib>
 
 #include "../interface/logger.h"
-#include <string>
 
 
 namespace Mocha

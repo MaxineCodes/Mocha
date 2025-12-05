@@ -69,7 +69,7 @@ namespace Mocha
             GUI::createGuiElements();
 
             // Render
-            glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+            glClearColor(0.6f, 0.7f, 0.8f, 1.0f); // gentle blue like the sky
             glClear(GL_COLOR_BUFFER_BIT);
 
             // Draw triangle
