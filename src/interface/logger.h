@@ -5,6 +5,7 @@
 #ifndef MOCHA_LOGGER_H
 #define MOCHA_LOGGER_H
 #include <string>
+#include <vector>
 
 namespace Mocha
 {
@@ -19,6 +20,8 @@ namespace Mocha
         static bool printDebug;
         static bool useCout;
 
+        static std::vector<std::string> logMessages;
+
     public:
         static void log(logLevel level, const char* message);
         static void log(logLevel level, const std::string& message) { log(level, message.c_str()); }
@@ -31,6 +34,8 @@ namespace Mocha
 
         static void setUseCout(const bool enabled)  { useCout = enabled; }
         static void setPrintDebug(const bool enabled) { printDebug = enabled; }
+
+        static std::vector<std::string> getLogMessages() { return logMessages; }
 
         static bool getUseCout() { return useCout; }
         static bool getPrintDebug() { return printDebug; }

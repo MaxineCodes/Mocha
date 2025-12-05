@@ -11,6 +11,7 @@ namespace Mocha
 {
     bool logger::useCout;
     bool logger::printDebug;
+    std::vector<std::string> Mocha::logger::logMessages;
 
     const char* logger::determineLogLevelPrefix(const logLevel level)
     {
@@ -19,7 +20,7 @@ namespace Mocha
             case logLevel::INFO:    return "[INFO]  ";
             case logLevel::WARN:    return "[WARN]  ";
             case logLevel::ERROR:   return "[ERROR] ";
-            case logLevel::GLERROR: return "[GL_ERROR]";
+            case logLevel::GLERROR: return "[GL_ERROR] ";
             case logLevel::DEBUG:   return "[DEBUG] ";
             default:              return   "[DEBUG] ";
         }
@@ -30,6 +31,9 @@ namespace Mocha
         if (level == logLevel::DEBUG && !printDebug) return;
 
         const char* prefix = determineLogLevelPrefix(level);
+
+        // Store message to a log string
+        logMessages.push_back(std::string(prefix) + message);
 
         if (useCout)
         {
