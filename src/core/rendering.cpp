@@ -20,8 +20,8 @@ namespace Mocha
         GUI::setup(window.getWindow());
 
         const Shader simpleShader = Shader(
-            "D:/Dev/2026/Mocha/res/shaders/basicVertexShader.glsl",
-            "D:/Dev/2026/Mocha/res/shaders/basicFragmentShader.glsl"
+            "../../res/shaders/basicVertexShader.glsl",
+            "../../res/shaders/basicFragmentShader.glsl"
             );
 
         // VAO, VBO
