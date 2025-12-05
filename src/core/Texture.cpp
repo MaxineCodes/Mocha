@@ -4,4 +4,9 @@
 
 #include "Texture.h"
 
-namespace Mocha {} // Mocha
+namespace Mocha {
+    Texture::Texture(const char *path)
+    {
+
+    }
+} // Mocha
