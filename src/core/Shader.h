@@ -19,8 +19,6 @@ namespace Mocha
         ~Shader();
 
         GLuint shaderProgramID;
-        GLuint vertexShaderID;
-        GLuint fragmentShaderID;
 
         char infoLog[512];
         int success;
@@ -32,7 +30,7 @@ namespace Mocha
 
     private:
         static std::string readFileFromPath(const char* path);
-        GLuint createShader(std::string shaderCode);
+        GLuint createShader(std::string shaderCode, GLenum type);
 
 
     };

@@ -15,7 +15,7 @@ namespace Mocha
     bool render(Scene scene)
     {
         // Create window through a GLFW wrapper
-        Window window(1280, 720, "Mocha :: OpenGL Realtime Rendering");
+        Window window(2560, 1440, "Mocha :: OpenGL Realtime Rendering");
         // Setup gui
         GUI::setup(window.getWindow());
 
@@ -74,7 +74,7 @@ namespace Mocha
 
             // Draw triangle
             simpleShader.use();
-            simpleShader.setFloat("someUniform", 1.0f);
+            //simpleShader.setFloat("someUniform", 1.0f);
 
             glBindVertexArray(VAO);
             glDrawArrays(GL_TRIANGLES, 0, 3);

@@ -25,8 +25,8 @@ namespace Mocha
         logger::logDebug(vertexShaderCode.c_str());
 
         // Compile shaders and store the ID as GLuint
-        vertexShaderID = createShader(vertexShaderCode);
-        fragmentShaderID = createShader(fragmentShaderCode);
+        GLuint vertexShaderID = createShader(vertexShaderCode, GL_VERTEX_SHADER);
+        GLuint fragmentShaderID = createShader(fragmentShaderCode, GL_FRAGMENT_SHADER);
 
         // Shader program
         shaderProgramID = glCreateProgram();
@@ -101,24 +101,23 @@ namespace Mocha
         return rawShaderCode;
     }
 
-    GLuint Shader::createShader(const std::string shaderCode)
+    GLuint Shader::createShader(const std::string shaderCode, GLenum type)
     {
         const char* shaderSource = shaderCode.c_str();
 
-        // Compile shader
-        GLuint shader = glCreateShader(GL_VERTEX_SHADER);
-        glShaderSource(vertexShaderID, 1, &shaderSource, NULL);
-        glCompileShader(vertexShaderID);
+        GLuint shaderID = glCreateShader(type);
+        glShaderSource(shaderID, 1, &shaderSource, NULL);
+        glCompileShader(shaderID);
 
         // Log compile errors if any
-        glGetShaderiv(vertexShaderID, GL_COMPILE_STATUS, &success);
+        glGetShaderiv(shaderID, GL_COMPILE_STATUS, &success);
         if(!success)
         {
-            glGetShaderInfoLog(vertexShaderID, 512, NULL, infoLog);
-            logger::logGLError("ERROR::SHADER::VERTEX::COMPILATION_FAILED");
+            glGetShaderInfoLog(shaderID, 512, NULL, infoLog);
+            logger::logGLError("ERROR::SHADER::COMPILATION_FAILED");
             logger::logGLError(infoLog);
         };
 
-        return shader;
+        return shaderID;
     }
 } // Mocha
