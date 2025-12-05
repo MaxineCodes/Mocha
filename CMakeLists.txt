@@ -150,6 +150,8 @@ add_executable(Mocha src/main.cpp
         src/core/Mesh.h
         src/core/RenderObject.cpp
         src/core/RenderObject.h
+        src/core/Texture.cpp
+        src/core/Texture.h
 )
 
 target_link_libraries(Mocha PRIVATE
