@@ -64,7 +64,7 @@ void Mocha::GUI::DrawLogWindow()
         else if (message.rfind("[GL_ERROR]", 0) == 0)
             ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(255, 20, 20, 255)); // dark red
         else if (message.rfind("[DEBUG]", 0) == 0)
-            ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(200, 200, 200, 255)); // grey
+            ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(100, 100, 100, 255)); // dark grey
         else
             ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(200, 200, 200, 255)); // default grey
 
