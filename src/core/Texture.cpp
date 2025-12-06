@@ -35,4 +35,9 @@ namespace Mocha
         }
         stbi_image_free(data);
     }
+
+    void Texture::use()
+    {
+        glBindTexture(GL_TEXTURE_2D, textureID);
+    }
 } // Mocha

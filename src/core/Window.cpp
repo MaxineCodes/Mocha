@@ -5,8 +5,6 @@
 #include "Window.h"
 #include "../interface/logger.h"
 
-#include <glad/glad.h>
-
 namespace Mocha
 {
     Window::Window(int width, int height, const char *title)

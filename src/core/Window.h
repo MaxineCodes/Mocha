@@ -5,6 +5,7 @@
 #ifndef MOCHA_WINDOW_H
 #define MOCHA_WINDOW_H
 
+#include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
 namespace Mocha

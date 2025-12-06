@@ -17,6 +17,8 @@ namespace Mocha
 
         // Default constructor uses a minecraft cobblestone texture
         Texture() { Texture("../../res/textures/cobblestone_basecolour.png"); }
+
+        void use();
     };
 } // Mocha
 
