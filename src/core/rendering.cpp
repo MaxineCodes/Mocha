@@ -63,7 +63,7 @@ namespace Mocha
         glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
         glEnableVertexAttribArray(2);
 
-        Texture brickTexture = Texture("../../res/textures/stylized_bricks_basecolor.png");
+        Texture brickTexture = Texture("../../res/textures/pink_wood_basecolour.png");
 
 
         // Render Loop
@@ -81,10 +81,8 @@ namespace Mocha
             glClearColor(0.6f, 0.7f, 0.8f, 1.0f); // gentle blue like the sky
             glClear(GL_COLOR_BUFFER_BIT);
 
-            // Draw triangle
-            simpleShader.use();
-            //simpleShader.setFloat("someUniform", 1.0f);
             brickTexture.use();
+            simpleShader.use();
 
             // Draw triangle
             glBindVertexArray(VAO);
@@ -100,6 +98,7 @@ namespace Mocha
         // Cleanup
         glDeleteVertexArrays(1, &VAO);
         glDeleteBuffers(1, &VBO);
+        glDeleteBuffers(1, &EBO);
 
         GUI::cleanup();
         window.cleanup();
