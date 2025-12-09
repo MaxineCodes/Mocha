@@ -47,3 +47,5 @@ Running `pip install glad` should do the trick.
 - PBR Book: https://www.pbr-book.org/
 - Google Filament book and repository: https://github.com/google/filament
 - Learn OpenGL website: https://learnopengl.com/
+- Shaders for game programming and artists book: https://archive.org/details/shadersforgamepr0000stla/mode/2up
+- SIGGRAPH 2025 Course: Physically Based Shading in Theory and Practice : https://blog.selfshadow.com/publications/s2025-shading-course/
