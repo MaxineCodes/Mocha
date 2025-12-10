@@ -16,7 +16,7 @@ namespace Mocha
     bool render(Scene scene)
     {
         // Create window through a GLFW wrapper
-        Window window(2560, 1440, "Mocha :: OpenGL Realtime Rendering");
+        Window window(1400, 1400, "Mocha :: OpenGL Realtime Rendering");
         // Setup gui
         GUI::setup(window.getWindow());
 
@@ -63,8 +63,8 @@ namespace Mocha
         glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
         glEnableVertexAttribArray(2);
 
-        Texture brickTexture = Texture("../../res/textures/pink_wood_basecolour.png");
-
+        Texture brickTexture = Texture("../../res/textures/stylized_bricks_basecolour.png");
+        Texture cobblestoneTexture = Texture("../../res/textures/cobblestone_basecolour.png");
 
         // Render Loop
         while (!window.windowShouldClose())
@@ -81,7 +81,14 @@ namespace Mocha
             glClearColor(0.6f, 0.7f, 0.8f, 1.0f); // gentle blue like the sky
             glClear(GL_COLOR_BUFFER_BIT);
 
+            simpleShader.setInt("texture1", 0);
+            simpleShader.setInt("texture2", 1);
+
+            glActiveTexture(GL_TEXTURE0);
             brickTexture.use();
+            glActiveTexture(GL_TEXTURE1);
+            cobblestoneTexture.use();
+
             simpleShader.use();
 
             // Draw triangle
