@@ -129,6 +129,20 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(glm)
 
+# Assimp (3D model loading)
+# Keep it lightweight: disable tools and tests; use static lib to match global setting
+FetchContent_Declare(
+    assimp
+    GIT_REPOSITORY https://github.com/assimp/assimp.git
+    GIT_TAG v5.4.3
+)
+set(ASSIMP_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+set(ASSIMP_BUILD_ASSIMP_TOOLS OFF CACHE BOOL "" FORCE)
+set(ASSIMP_NO_EXPORT ON CACHE BOOL "" FORCE)
+set(ASSIMP_INJECT_DEBUG_POSTFIX OFF CACHE BOOL "" FORCE)
+# Assimp defines its own zlib by default; keep defaults to simplify setup
+FetchContent_MakeAvailable(assimp)
+
 # Main executable
 add_executable(Mocha src/main.cpp
         src/core/rendering.cpp
@@ -159,6 +173,7 @@ target_link_libraries(Mocha PRIVATE
     glfw
     glad_gl_core_33
     imgui
+    assimp::assimp
 )
 
 target_include_directories(Mocha PRIVATE
