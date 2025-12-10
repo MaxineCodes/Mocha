@@ -49,3 +49,4 @@ Running `pip install glad` should do the trick.
 - Learn OpenGL website: https://learnopengl.com/
 - Shaders for game programming and artists book: https://archive.org/details/shadersforgamepr0000stla/mode/2up
 - SIGGRAPH 2025 Course: Physically Based Shading in Theory and Practice : https://blog.selfshadow.com/publications/s2025-shading-course/
+- Wavefront OBJ file: https://en.wikipedia.org/wiki/Wavefront_.obj_file
