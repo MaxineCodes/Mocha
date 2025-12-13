@@ -5,16 +5,20 @@
 #ifndef MOCHA_RENDEROBJECT_H
 #define MOCHA_RENDEROBJECT_H
 #include "Mesh.h"
+#include "../Object.h"
+
+#include <vector>
 
 namespace Mocha
 {
-    class RenderObject
+    class RenderObject : public Object
     {
     public:
         void draw();
 
     private:
-        Mesh mesh;
+        std::vector<Mesh> meshes;
+        std::vector<Material> materials;
 
     };
 } // Mocha

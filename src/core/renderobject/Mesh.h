@@ -9,7 +9,10 @@
 
 namespace Mocha
 {
-    class Mesh {};
+    class Mesh
+    {
+
+    };
 } // Mocha
 
 #endif //MOCHA_MESH_H

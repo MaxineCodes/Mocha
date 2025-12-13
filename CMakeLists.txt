@@ -77,6 +77,8 @@ add_custom_target(glad_generate
 
 add_library(glad_gl_core_33 STATIC
     ${GLAD_OUT_SRC}/glad.c
+        src/core/lighting/Light.cpp
+        src/core/lighting/Light.h
 )
 add_dependencies(glad_gl_core_33 glad_generate)
 target_include_directories(glad_gl_core_33 PUBLIC ${GLAD_OUT_INCLUDE})
@@ -166,6 +168,7 @@ add_executable(Mocha src/main.cpp
         src/core/renderobject/RenderObject.h
         src/core/renderobject/Texture.cpp
         src/core/renderobject/Texture.h
+        src/core/Object.h
 )
 
 target_link_libraries(Mocha PRIVATE

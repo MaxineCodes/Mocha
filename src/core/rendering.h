@@ -5,7 +5,7 @@
 #ifndef MOCHA_RENDERING_H
 #define MOCHA_RENDERING_H
 
-#include "scene.h"
+#include "Scene.h"
 
 #include "../interface/logger.h"
 
