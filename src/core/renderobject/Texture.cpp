@@ -7,7 +7,7 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
 
-#include "../interface/logger.h"
+#include "../../interface/logger.h"
 
 namespace Mocha
 {

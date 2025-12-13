@@ -5,7 +5,7 @@
 #ifndef MOCHA_MATERIAL_H
 #define MOCHA_MATERIAL_H
 
-#include "shader.h"
+#include "Shader.h"
 
 namespace Mocha
 {

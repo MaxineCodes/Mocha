@@ -8,7 +8,7 @@
 #include <fstream>
 #include <sstream>
 
-#include "../interface/logger.h"
+#include "../../interface/logger.h"
 
 
 namespace Mocha

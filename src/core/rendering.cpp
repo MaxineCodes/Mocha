@@ -11,8 +11,8 @@
 #include <glm/gtc/type_ptr.hpp>
 
 #include "Window.h"
-#include "Shader.h"
-#include "Texture.h"
+#include "renderobject/Shader.h"
+#include "renderobject/Texture.h"
 #include "../interface/gui.h"
 
 namespace Mocha
