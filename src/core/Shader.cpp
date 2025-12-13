@@ -67,6 +67,11 @@ namespace Mocha
         glUniform1f(glGetUniformLocation(shaderProgramID, name.c_str()), value);
     }
 
+    void Shader::setMat4(const std::string &name, const glm::mat4 &matrix) const
+    {
+        glUniformMatrix4fv(glGetUniformLocation(shaderProgramID, name.c_str()), 1, GL_FALSE, &matrix[0][0]);
+    }
+
     std::string Shader::readFileFromPath(const char *path)
     {
         std::string rawShaderCode;

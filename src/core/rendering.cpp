@@ -34,12 +34,48 @@ namespace Mocha
         // VAO, VBO
         // Triangle vertices (position + color + texcoord)
         float vertices[] = {
-            // positions          // colors           // texture coords
-            0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right
-            0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // bottom right
-           -0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left
-           -0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f    // top left
-       };
+            -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+             0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
+             0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+             0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+            -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+            -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+
+            -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+             0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+             0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+             0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+            -0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
+            -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+
+            -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+            -0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+            -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+            -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+            -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+            -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+
+             0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+             0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+             0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+             0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+             0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+             0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+
+            -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+             0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
+             0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+             0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+            -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+            -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+
+            -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+             0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+             0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+             0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+            -0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
+            -0.5f,  0.5f, -0.5f,  0.0f, 1.0f
+        };
         unsigned int indices[] = {
             0, 1, 3, // first triangle
             1, 2, 3  // second triangle
@@ -51,6 +87,8 @@ namespace Mocha
         glGenBuffers(1, &VBO);
         glGenBuffers(1, &EBO);
 
+        glEnable(GL_DEPTH_TEST);
+
         glBindVertexArray(VAO);
 
         glBindBuffer(GL_ARRAY_BUFFER, VBO);
@@ -60,25 +98,25 @@ namespace Mocha
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
         // position attribute
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
+        //glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
         glEnableVertexAttribArray(0);
         // color attribute
-        glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
-        glEnableVertexAttribArray(1);
+        //glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+        //glEnableVertexAttribArray(1);
         // texture coord attribute
-        glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
-        glEnableVertexAttribArray(2);
+        //glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+        glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+        glEnableVertexAttribArray(1); // was 2
 
         Texture brickTexture = Texture("../../res/textures/stylized_bricks_basecolour.png");
         Texture cobblestoneTexture = Texture("../../res/textures/cobblestone_basecolour.png");
 
-        //glm::mat4 perspectiveProjectionMatrix = glm::perspective(glm::radians(45.0f), float(window.width,window.height))
+
 
         // Render Loop
         while (!window.windowShouldClose())
         {
-            window.pollEvents();
-
             // Start ImGui frame
             GUI::newFrame();
 
@@ -88,6 +126,7 @@ namespace Mocha
             // Render
             glClearColor(0.6f, 0.7f, 0.8f, 1.0f); // gentle blue like the sky
             glClear(GL_COLOR_BUFFER_BIT);
+            glClear(GL_DEPTH_BUFFER_BIT);
 
             simpleShader.setInt("texture1", 0);
             simpleShader.setInt("texture2", 1);
@@ -97,24 +136,42 @@ namespace Mocha
             glActiveTexture(GL_TEXTURE1);
             cobblestoneTexture.use();
 
-            // create transformations
-            glm::mat4 transform = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
-            transform = glm::translate(transform, glm::vec3(0.5f, -0.5f, 0.0f));
-            transform = glm::rotate(transform, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));
-
             simpleShader.use();
-            unsigned int transformLoc = glGetUniformLocation(simpleShader.shaderProgramID, "transform");
-            glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transform));
+
+            // create transformations
+            glm::mat4 modelMatrix                 = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
+            glm::mat4 viewMatrix                  = glm::mat4(1.0f);
+            modelMatrix = glm::rotate(modelMatrix, (float)glfwGetTime(), glm::vec3(0.5f, 1.0f, 0.0f)); // TODO:　get time from window class function
+            viewMatrix  = glm::translate(viewMatrix, glm::vec3(0.0f, 0.0f, -3.0f));
+            // perspective matrix
+            const float fov = glm::radians(45.0f);
+            glm::mat4 perspectiveProjectionMatrix = glm::perspective(fov, float(width) / float(height), 0.1f, 100.0f);
+
+            // retrieve the matrix uniform locations
+            unsigned int modelLoc = glGetUniformLocation(simpleShader.shaderProgramID, "model");
+            unsigned int viewLoc  = glGetUniformLocation(simpleShader.shaderProgramID, "view");
+
+            // pass them to the shaders (3 different ways)
+            glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(modelMatrix));
+            glUniformMatrix4fv(viewLoc, 1, GL_FALSE, &viewMatrix[0][0]);
+
+            simpleShader.setMat4("projection", perspectiveProjectionMatrix);
+            //simpleShader.setMat4("view", viewMatrix);
+
+
+            //unsigned int transformLoc = glGetUniformLocation(simpleShader.shaderProgramID, "transform");
+            //glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transform));
 
             // Draw triangle
             glBindVertexArray(VAO);
-            glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-            //glDrawArrays(GL_TRIANGLES, 0, 3);
+            //glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+            glDrawArrays(GL_TRIANGLES, 0, 36);
 
             // Render ImGui
             GUI::draw();
 
             window.swapBuffers();
+            window.pollEvents();
         }
 
         // Cleanup
