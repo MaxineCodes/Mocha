@@ -6,6 +6,10 @@
 
 #include <glad/glad.h>
 
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
 #include "Window.h"
 #include "Shader.h"
 #include "Texture.h"
@@ -15,8 +19,10 @@ namespace Mocha
 {
     bool render(Scene scene)
     {
+        int width = 1400, height = 1400;
+
         // Create window through a GLFW wrapper
-        Window window(1400, 1400, "Mocha :: OpenGL Realtime Rendering");
+        Window window(width, height, "Mocha :: OpenGL Realtime Rendering");
         // Setup gui
         GUI::setup(window.getWindow());
 
@@ -66,6 +72,8 @@ namespace Mocha
         Texture brickTexture = Texture("../../res/textures/stylized_bricks_basecolour.png");
         Texture cobblestoneTexture = Texture("../../res/textures/cobblestone_basecolour.png");
 
+        //glm::mat4 perspectiveProjectionMatrix = glm::perspective(glm::radians(45.0f), float(window.width,window.height))
+
         // Render Loop
         while (!window.windowShouldClose())
         {
@@ -89,7 +97,14 @@ namespace Mocha
             glActiveTexture(GL_TEXTURE1);
             cobblestoneTexture.use();
 
+            // create transformations
+            glm::mat4 transform = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
+            transform = glm::translate(transform, glm::vec3(0.5f, -0.5f, 0.0f));
+            transform = glm::rotate(transform, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));
+
             simpleShader.use();
+            unsigned int transformLoc = glGetUniformLocation(simpleShader.shaderProgramID, "transform");
+            glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transform));
 
             // Draw triangle
             glBindVertexArray(VAO);
