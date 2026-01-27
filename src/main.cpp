@@ -2,7 +2,7 @@
 
 #include "core/rendering.h"
 
-int main()
+int main()  
 {
     Mocha::logger::setUseCout(true);
     Mocha::logger::setPrintDebug(true);
