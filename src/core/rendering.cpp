@@ -19,7 +19,7 @@ namespace Mocha
 {
     bool render(Scene scene)
     {
-        int width = 1400, height = 1400;
+        const int width = 800, height = 800;
 
         // Create window through a GLFW wrapper
         Window window(width, height, "Mocha :: OpenGL Realtime Rendering");
@@ -27,8 +27,8 @@ namespace Mocha
         GUI::setup(window.getWindow());
 
         const Shader simpleShader = Shader(
-            "../../res/shaders/basicVertexShader.glsl",
-            "../../res/shaders/basicFragmentShader.glsl"
+            "res/shaders/basicVertexShader.glsl",
+            "res/shaders/basicFragmentShader.glsl"
             );
 
         // VAO, VBO
@@ -109,8 +109,8 @@ namespace Mocha
         glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
         glEnableVertexAttribArray(1); // was 2
 
-        Texture brickTexture = Texture("../../res/textures/stylized_bricks_basecolour.png");
-        Texture cobblestoneTexture = Texture("../../res/textures/cobblestone_basecolour.png");
+        Texture brickTexture = Texture("res/textures/stylized_bricks_basecolour.png");
+        Texture cobblestoneTexture = Texture("res/textures/cobblestone_basecolour.png");
 
 
 
