@@ -17,9 +17,9 @@
 
 namespace Mocha
 {
-    bool render(Scene scene)
+    bool Render(Scene scene)
     {
-        const int width = 800, height = 800;
+        const int width = 1400, height = 800;
 
         // Create window through a GLFW wrapper
         Window window(width, height, "Mocha :: OpenGL Realtime Rendering");

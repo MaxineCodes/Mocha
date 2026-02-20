@@ -7,6 +7,14 @@
 
 #include <GLFW/glfw3.h>
 
+/*
+ *  gui.h
+ *
+ *  gui.h contains everything handling GUI rendering.
+ *  Mostly abstractions for ImGUI.
+ *
+ */
+
 namespace Mocha
 {
     namespace GUI

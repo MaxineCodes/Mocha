@@ -7,6 +7,16 @@
 #include <string>
 #include <vector>
 
+/*
+ *  logger.h
+ *
+ *  logger.h contains the logging system, it's a very simple logger for the bare essentials.
+ *  You might wonder, 'why not just use a library that gives you a better, faster, and easier to use logger?'
+ *  Good question, the answer is an unsatisfactory 'because I want to learn how to make a logger.'
+ *  This is an educational project for myself. Inefficiency is fine.
+ *
+ */
+
 namespace Mocha
 {
     class logger

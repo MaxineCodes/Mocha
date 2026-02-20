@@ -9,37 +9,19 @@
 
 #include "../interface/logger.h"
 
+/*
+ *  rendering.h
+ *
+ *  rendering.h contains the Mocha::Render() function and exposes the render loop.
+ *  Render() loads the scene file, and prepares everything for OpenGL to render the graphics,
+ *  as well as the GUI rendering through ImGUI.
+ *
+ */
+
 namespace Mocha
 {
-    inline const char* vertexShaderSource = R"(
-    #version 330 core
-    layout (location = 0) in vec3 aPos;
-    layout (location = 1) in vec3 aColor;
+    bool Render(Scene scene);
 
-    out vec3 fragColor;
-
-    void main()
-    {
-        gl_Position = vec4(aPos, 1.0);
-        fragColor = aColor;
-    }
-    )";
-
-    inline const char* fragmentShaderSource = R"(
-    #version 330 core
-    in vec3 fragColor;
-    out vec4 FragColor;
-
-    void main()
-    {
-        FragColor = vec4(fragColor, 1.0);
-    }
-    )";
-
-    bool render(Scene scene);
-
-    class rendering {
-    };
 } // Mocha
 
 #endif //MOCHA_RENDERING_H
