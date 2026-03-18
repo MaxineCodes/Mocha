@@ -7,6 +7,7 @@
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include "camera/Camera.h"
 
 /*
  *  Window.h
@@ -28,13 +29,14 @@ namespace Mocha
     public:
         GLFWwindow* window;
         int width, height;
-        Window(int width, int height, const char* title);
+        Camera* camera;
+        Window(int width, int height, const char* title, Camera* camera);
         GLFWwindow* getWindow() const { return window; }
 
-        void processInput() const;
+        void processInput(float deltaTime) const;
 
         bool windowShouldClose() const;
-        void pollEvents() const ;
+        void pollEvents(float deltaTime) const ;
         void swapBuffers() const;
         void cleanup() const;
 

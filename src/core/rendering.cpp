@@ -14,15 +14,24 @@
 #include "renderobject/Shader.h"
 #include "renderobject/Texture.h"
 #include "../interface/gui.h"
+#include "camera/Camera.h"
 
 namespace Mocha
 {
     bool Render(Scene scene)
     {
         const int width = 1400, height = 800;
+        // time
+        float deltaTime = 0.0f;
+        float lastFrame = 0.0f;
+
+        // Create camera
+        Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
+        float lastX = width / 2.0f, lastY = height / 2.0f;
+        bool firstMouse = true;
 
         // Create window through a GLFW wrapper
-        Window window(width, height, "Mocha :: OpenGL Realtime Rendering");
+        Window window(width, height, "Mocha :: OpenGL Realtime Rendering", &camera);
         // Setup gui
         GUI::setup(window.getWindow());
 
@@ -117,6 +126,11 @@ namespace Mocha
         // Render Loop
         while (!window.windowShouldClose())
         {
+            // Calculate deltatime
+            float currentFrame = static_cast<float>(glfwGetTime());
+            deltaTime = currentFrame - lastFrame;
+            lastFrame = currentFrame;
+
             // Start ImGui frame
             GUI::newFrame();
 
@@ -140,7 +154,8 @@ namespace Mocha
 
             // create transformations
             glm::mat4 modelMatrix                 = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
-            glm::mat4 viewMatrix                  = glm::mat4(1.0f);
+            //glm::mat4 viewMatrix                  = glm::mat4(1.0f);
+            glm::mat4 viewMatrix = camera.GetViewMatrix();
             modelMatrix = glm::rotate(modelMatrix, (float)glfwGetTime(), glm::vec3(0.5f, 1.0f, 0.0f)); // TODO:　get time from window class function
             viewMatrix  = glm::translate(viewMatrix, glm::vec3(0.0f, 0.0f, -3.0f));
             // perspective matrix
@@ -171,7 +186,7 @@ namespace Mocha
             GUI::draw();
 
             window.swapBuffers();
-            window.pollEvents();
+            window.pollEvents(deltaTime);
         }
 
         // Cleanup

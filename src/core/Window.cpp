@@ -7,8 +7,10 @@
 
 namespace Mocha
 {
-    Window::Window(int width, int height, const char *title)
+    Window::Window(int width, int height, const char *title, Camera* camera)
     {
+        Window::camera = camera;
+
         if (!glfwInit())
         {
             logger::logError("Failed to initialise GLFW");
@@ -44,11 +46,32 @@ namespace Mocha
         logger::logInfo(("OpenGL version: " + std::string((const char*)glGetString(GL_VERSION))).c_str());
     }
 
-    void Window::processInput() const
+    void Window::processInput(float deltaTime) const
     {
         if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         {
             glfwSetWindowShouldClose(window, true);
+        }
+
+        if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+        {
+            //logger::logInfo("W pressed");
+            Window::camera->ProcessKeyboard(FORWARD, deltaTime);
+        }
+        if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+        {
+            //logger::logInfo("A pressed");
+            Window::camera->ProcessKeyboard(LEFT, deltaTime);
+        }
+        if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+        {
+            //logger::logInfo("S pressed");
+            Window::camera->ProcessKeyboard(BACKWARD, deltaTime);
+        }
+        if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+        {
+            //logger::logInfo("D pressed");
+            Window::camera->ProcessKeyboard(RIGHT, deltaTime);
         }
     }
 
@@ -56,10 +79,10 @@ namespace Mocha
     {
         return glfwWindowShouldClose(window);
     }
-    void Window::pollEvents() const
+    void Window::pollEvents(float deltaTime = 1.0f) const
     {
         glfwPollEvents();
-        processInput();
+        processInput(deltaTime);
     }
     void Window::swapBuffers() const
     {
