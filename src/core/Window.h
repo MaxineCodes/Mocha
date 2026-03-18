@@ -9,9 +9,9 @@
 #include <GLFW/glfw3.h>
 
 /*
- *  window.h
+ *  Window.h
  *
- *  window.h offers an abstraction for GLFWwindow, and some helper functions to make the rest of the codebase cleaner and simpler.
+ *  Window.h offers an abstraction for GLFWwindow, and some helper functions to make the rest of the codebase cleaner and simpler.
  *  Will also handle input in the future.
  *
  *  Functions:

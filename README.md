@@ -11,6 +11,10 @@ If you're familiar with 3D viewing applications, a main point of inspiration for
 
 ---
 
+![Viewport Screenshot](https://github.com/MaxineCodes/Mocha/blob/main/res/graphics/screenshots/viewport-18-03-26.png)
+
+---
+
 Features planned:
 
 - [ ] Physically based materials and rendering. 
