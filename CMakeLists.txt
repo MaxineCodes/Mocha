@@ -173,6 +173,8 @@ add_executable(Mocha
         src/core/renderobject/RenderObject.cpp
         src/core/renderobject/Texture.cpp
         src/core/lighting/Light.cpp
+        src/core/camera/Camera.cpp
+        src/core/camera/Camera.h
 )
 
 target_link_libraries(Mocha PRIVATE
