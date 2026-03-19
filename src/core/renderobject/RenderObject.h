@@ -9,17 +9,25 @@
 
 #include <vector>
 
+#include "assimp/scene.h"
+
 namespace Mocha
 {
     class RenderObject : public Object
     {
+    private:
+        const char* defaultObjectPath = "res/models/cube.obj";
+
     public:
+        RenderObject(char* path);
+        RenderObject() { RenderObject(defaultObjectPath); }
         void draw();
 
     private:
         std::vector<Mesh> meshes;
-        std::vector<Material> materials;
+        std::string directory;
 
+        void loadModel(std::string path);
     };
 } // Mocha
 

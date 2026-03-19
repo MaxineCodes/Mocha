@@ -87,7 +87,10 @@ add_custom_target(glad_generate
         DEPENDS ${GLAD_OUT_SRC}/glad.c ${GLAD_OUT_INCLUDE}/glad/glad.h ${GLAD_OUT_INCLUDE}/KHR/khrplatform.h
 )
 
-add_library(glad_gl_core_33 STATIC ${GLAD_OUT_SRC}/glad.c)
+add_library(glad_gl_core_33 STATIC ${GLAD_OUT_SRC}/glad.c
+        src/core/importing/modelImporting.h
+        src/core/importing/modelImporting.cpp
+        src/core/importing/modelImporting.h)
 add_dependencies(glad_gl_core_33 glad_generate)
 target_include_directories(glad_gl_core_33 PUBLIC ${GLAD_OUT_INCLUDE})
 

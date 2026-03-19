@@ -5,12 +5,14 @@
 #ifndef MOCHA_TEXTURE_H
 #define MOCHA_TEXTURE_H
 #include <glad/glad.h>
+#include <string>
 
 namespace Mocha
 {
     struct Texture
     {
         GLuint textureID;
+        std::string type;
         int width, height, channels;
 
         Texture(const char* path);
