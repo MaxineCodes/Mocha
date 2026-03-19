@@ -44,6 +44,11 @@ namespace Mocha
         glDeleteShader(fragmentShaderID);
     }
 
+    Shader::Shader()
+    {
+        Shader("res/shaders/basicVertexShader.glsl", "res/shaders/basicFragmentShader.glsl");
+    }
+
     Shader::~Shader()
     {
         glDeleteProgram(shaderProgramID);
