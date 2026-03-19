@@ -27,14 +27,4 @@ namespace Mocha
     {
 
     }
-
-    void RenderObject::processNode(aiNode *node, const aiScene *scene)
-    {
-
-    }
-
-    Mesh RenderObject::processMesh(aiMesh *mesh, const aiScene *scene)
-    {
-
-    }
 } // Mocha

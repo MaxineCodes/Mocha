@@ -188,10 +188,12 @@ target_link_libraries(Mocha PRIVATE
 target_include_directories(Mocha PRIVATE
         ${GLAD_OUT_INCLUDE}
         ${stb_SOURCE_DIR}
+        ${assimp_SOURCE_DIR}/include
+        ${CMAKE_BINARY_DIR}/dependencies/assimp-src/include
 )
 
 if(TARGET glm::glm)
-    target_link_libraries(Mocha PRIVATE glm::glm)
+    target_link_libraries(Mocha PRIVATE glm::glm assimp::assimp)
 else()
     target_include_directories(Mocha PRIVATE ${glm_SOURCE_DIR})
 endif()

@@ -2,9 +2,32 @@
 // Created by maxine on 19/03/2026.
 //
 
-#include "modelImporting.h"
+#include <assimp/Importer.hpp>
+#include <assimp/scene.h>
+#include <assimp/postprocess.h>
 
-void importModel(const char *path)
+#include "modelImporting.h"
+#include "../renderobject/Mesh.h"
+
+namespace Mocha
 {
+
+    void importModel(const char *path)
+    {
+
+    }
+
+
+
+    void processNode(aiNode* node, const aiScene* scene)
+    {
+
+    }
+
+    Mesh processMesh(aiMesh* mesh, const aiScene* scene)
+    {
+
+    }
+
 
 }
