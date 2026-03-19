@@ -8,7 +8,7 @@
 
 namespace Mocha
 {
-    RenderObject::RenderObject(char* path)
+    RenderObject::RenderObject(const char* path)
     {
         loadModel(path);
     }
@@ -26,6 +26,6 @@ namespace Mocha
 
     void RenderObject::loadModel(std::string path)
     {
-        importModel(std::string(path));
+        meshes = importModel(std::string(path));
     }
 } // Mocha

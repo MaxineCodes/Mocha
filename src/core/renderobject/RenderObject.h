@@ -19,7 +19,7 @@ namespace Mocha
         const char* defaultObjectPath = "res/models/cube.obj";
 
     public:
-        RenderObject(char* path);
+        RenderObject(const char* path);
         RenderObject() { RenderObject(defaultObjectPath); }
         void draw();
 

@@ -119,6 +119,16 @@ namespace Mocha
         Texture brickTexture = Texture("res/textures/stylized_bricks_basecolour.png");
         Texture cobblestoneTexture = Texture("res/textures/cobblestone_basecolour.png");
 
+        Texture minecraftFoxTexture = Texture("res/textures/minecraft_fox.png");
+        Texture minecraftSnowFoxTexture = Texture("res/textures/minecraft_snow_fox.png");
+
+
+
+
+        //RenderObject myGloriousCube = RenderObject("res/models/cube.obj");
+        //RenderObject utahTeapot = RenderObject("res/models/utah_teapot.obj");
+        RenderObject minecraftFox = RenderObject("res/models/minecraft_fox.obj");
+
 
 
         // Render Loop
@@ -144,9 +154,9 @@ namespace Mocha
             simpleShader.setInt("texture2", 1);
 
             glActiveTexture(GL_TEXTURE0);
-            brickTexture.use();
+            minecraftFoxTexture.use();
             glActiveTexture(GL_TEXTURE1);
-            cobblestoneTexture.use();
+            minecraftSnowFoxTexture.use();
 
             simpleShader.use();
 
@@ -154,8 +164,8 @@ namespace Mocha
             glm::mat4 modelMatrix                 = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
             //glm::mat4 viewMatrix                  = glm::mat4(1.0f);
             glm::mat4 viewMatrix = camera.GetViewMatrix();
-            modelMatrix = glm::rotate(modelMatrix, (float)glfwGetTime(), glm::vec3(0.5f, 1.0f, 0.0f)); // TODO:　get time from window class function
-            viewMatrix  = glm::translate(viewMatrix, glm::vec3(0.0f, 0.0f, -3.0f));
+            modelMatrix = glm::rotate(modelMatrix, (float)glfwGetTime(), glm::vec3(0.0f, 1.0f, 0.0f)); // TODO:　get time from window class function
+            viewMatrix  = glm::translate(viewMatrix, glm::vec3(0.0f, -1.0f, -3.0f));
             // perspective matrix
             const float fov = camera.GetFOV(); //fov = glm::radians(45.0f);
             glm::mat4 perspectiveProjectionMatrix = glm::perspective(fov, float(width) / float(height), 0.1f, 100.0f);
@@ -176,9 +186,11 @@ namespace Mocha
             //glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transform));
 
             // Draw triangle
-            glBindVertexArray(VAO);
+            //glBindVertexArray(VAO);
             //glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-            glDrawArrays(GL_TRIANGLES, 0, 36);
+            //glDrawArrays(GL_TRIANGLES, 0, 36);
+
+            minecraftFox.draw();
 
             // Render ImGui
             GUI::draw();

@@ -14,13 +14,12 @@ namespace Mocha
     void Mesh::Draw()
     {
         // Use assigned material
-        material.Use();
+        //material.Use();
 
         // Draw mesh
         glBindVertexArray(VAO);
         glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
         glBindVertexArray(0);
-        logger::logDebug("Mesh drawn");
     }
 
     void Mesh::initializeMesh()

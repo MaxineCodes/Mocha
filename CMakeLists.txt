@@ -168,7 +168,6 @@ add_executable(Mocha
         src/interface/logger.cpp
         src/interface/gui.cpp
         src/core/importing/modelImporting.cpp
-        #src/core/importing/modelImporting.h
         src/core/renderobject/Material.cpp
         src/core/renderobject/Shader.cpp
         src/core/renderobject/Mesh.cpp
@@ -176,7 +175,6 @@ add_executable(Mocha
         src/core/renderobject/Texture.cpp
         src/core/lighting/Light.cpp
         src/core/camera/Camera.cpp
-        #src/core/camera/Camera.h
 )
 
 target_link_libraries(Mocha PRIVATE

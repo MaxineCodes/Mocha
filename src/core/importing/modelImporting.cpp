@@ -7,7 +7,6 @@
 #include <assimp/postprocess.h>
 
 #include "modelImporting.h"
-#include "../renderobject/Mesh.h"
 #include "../../interface/logger.h"
 
 namespace Mocha
@@ -82,7 +81,7 @@ namespace Mocha
         }
     }
 
-    void importModel(std::string path)
+    std::vector<Mesh> importModel(std::string path)
     {
         Assimp::Importer importer;
         const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs);
@@ -90,11 +89,13 @@ namespace Mocha
         if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
         {
             logger::logError("ERROR ASSIMP: " + std::string(importer.GetErrorString()));
-            return;
+            return meshes;
         }
 
         directory = path.substr(0, path.find_last_of('/'));
         processNode(scene->mRootNode, scene);
+
+        return meshes;
     }
 
 }
