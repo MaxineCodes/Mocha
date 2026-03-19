@@ -30,10 +30,15 @@ namespace Mocha
         GLFWwindow* window;
         int width, height;
         Camera* camera;
+        bool firstMouse = true;
+        float lastX = width / 2.0f, lastY = height / 2.0f;
+
+
         Window(int width, int height, const char* title, Camera* camera);
         GLFWwindow* getWindow() const { return window; }
 
         void processInput(float deltaTime) const;
+        void processMouseInput() const;
 
         bool windowShouldClose() const;
         void pollEvents(float deltaTime) const ;
@@ -44,6 +49,8 @@ namespace Mocha
 
         static void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 
+        static void mouseCallback(GLFWwindow *window, double xposIn, double yposIn);
+        static void mouseScrollCallback(GLFWwindow *window, double xposIn, double yposIn);
     };
 
 }

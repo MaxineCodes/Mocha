@@ -27,8 +27,6 @@ namespace Mocha
 
         // Create camera
         Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
-        float lastX = width / 2.0f, lastY = height / 2.0f;
-        bool firstMouse = true;
 
         // Create window through a GLFW wrapper
         Window window(width, height, "Mocha :: OpenGL Realtime Rendering", &camera);
@@ -127,7 +125,7 @@ namespace Mocha
         while (!window.windowShouldClose())
         {
             // Calculate deltatime
-            float currentFrame = static_cast<float>(glfwGetTime());
+            float currentFrame = static_cast<float>(glfwGetTime()); // TODO:　get time from window class function
             deltaTime = currentFrame - lastFrame;
             lastFrame = currentFrame;
 
@@ -159,7 +157,7 @@ namespace Mocha
             modelMatrix = glm::rotate(modelMatrix, (float)glfwGetTime(), glm::vec3(0.5f, 1.0f, 0.0f)); // TODO:　get time from window class function
             viewMatrix  = glm::translate(viewMatrix, glm::vec3(0.0f, 0.0f, -3.0f));
             // perspective matrix
-            const float fov = glm::radians(45.0f);
+            const float fov = camera.GetFOV(); //fov = glm::radians(45.0f);
             glm::mat4 perspectiveProjectionMatrix = glm::perspective(fov, float(width) / float(height), 0.1f, 100.0f);
 
             // retrieve the matrix uniform locations

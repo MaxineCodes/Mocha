@@ -86,6 +86,7 @@ namespace Mocha
         void ProcessKeyboard(Camera_Movement direction, float deltaTime);
         void ProcessMouseMovement(float xoffset, float yoffset, GLboolean constrainPitch = true);
         void ProcessMouseScroll(float yoffset);
+        float GetFOV () const { return glm::radians(Zoom); }
 
     private:
         void updateCameraVectors();

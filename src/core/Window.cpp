@@ -7,6 +7,13 @@
 
 namespace Mocha
 {
+    // Callback functions
+    void mouseCallback(GLFWwindow *window, double xposIn, double yposIn);
+    void mouseScrollCallback(GLFWwindow *window, double xposIn, double yposIn);
+
+    // Window Class
+    // -------------------------------------------------
+
     Window::Window(int width, int height, const char *title, Camera* camera)
     {
         Window::camera = camera;
@@ -30,7 +37,13 @@ namespace Mocha
             glfwTerminate();
         }
         glfwMakeContextCurrent(window);
+        glfwSetWindowUserPointer(window, this);
         glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+
+        glfwSetCursorPosCallback(window, mouseCallback);
+        glfwSetScrollCallback(window, mouseScrollCallback);
+        glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+
         glfwSwapInterval(1); // Enable vsync
 
         // Load glad
@@ -98,6 +111,39 @@ namespace Mocha
     void Window::framebuffer_size_callback(GLFWwindow *window, int width, int height)
     {
         glViewport(0, 0, width, height);
+    }
+
+
+    // Callback functions
+    // -------------------------------------------------
+
+    void Window::mouseCallback(GLFWwindow *window, double xposIn, double yposIn)
+    {
+        auto* self = static_cast<Window *>(glfwGetWindowUserPointer(window));
+
+        float xpos = static_cast<float>(xposIn);
+        float ypos = static_cast<float>(yposIn);
+
+        if (self->firstMouse)
+        {
+            self->lastX = xpos;
+            self->lastY = ypos;
+            self->firstMouse = false;
+        }
+
+        float xoffset = xpos - self->lastX;
+        float yoffset = self->lastY - ypos;
+        self->lastX = xpos;
+        self->lastY = ypos;
+
+        self->camera->ProcessMouseMovement(xoffset, yoffset);
+    }
+    void Window::mouseScrollCallback(GLFWwindow *window, double xoffset, double yoffset)
+    {
+
+
+        auto* self = static_cast<Window *>(glfwGetWindowUserPointer(window));
+        self->camera->ProcessMouseScroll(static_cast<float>(yoffset));
     }
 
 }
