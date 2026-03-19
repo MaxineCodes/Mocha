@@ -20,6 +20,7 @@ namespace Mocha
         unsigned int programID;
 
         Shader(const char* vertexPath, const char* fragmentPath);
+        Shader();
         ~Shader();
 
         GLuint shaderProgramID;
