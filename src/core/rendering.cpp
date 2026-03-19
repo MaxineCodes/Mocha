@@ -45,6 +45,10 @@ namespace Mocha
         // without respecting the z-buffer.
         glEnable(GL_DEPTH_TEST);
 
+        // GL_LINE = wireframe, GL_FILL = not wireframe
+        //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
         //Texture brickTexture = Texture("res/textures/stylized_bricks_basecolour.png");
         //Texture cobblestoneTexture = Texture("res/textures/cobblestone_basecolour.png");
         Texture minecraftFoxTexture = Texture("res/textures/minecraft_fox.png");
@@ -53,9 +57,10 @@ namespace Mocha
 
 
 
-        //RenderObject myGloriousCube = RenderObject("res/models/cube.obj");
-        //RenderObject utahTeapot = RenderObject("res/models/utah_teapot.obj");
+        RenderObject myGloriousCube = RenderObject("res/models/cube.obj");
+        RenderObject utahTeapot = RenderObject("res/models/utah_teapot.obj");
         RenderObject minecraftFox = RenderObject("res/models/minecraft_fox.obj");
+        //RenderObject cuteFox = RenderObject("res/models/cute_fox.obj");
 
 
 
@@ -89,11 +94,10 @@ namespace Mocha
             simpleShader.use();
 
             // create transformations
-            glm::mat4 modelMatrix                 = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
-            //glm::mat4 viewMatrix                  = glm::mat4(1.0f);
+            glm::mat4 modelMatrix = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
             glm::mat4 viewMatrix = camera.GetViewMatrix();
             modelMatrix = glm::rotate(modelMatrix, (float)glfwGetTime(), glm::vec3(0.0f, 1.0f, 0.0f)); // TODO:　get time from window class function
-            viewMatrix  = glm::translate(viewMatrix, glm::vec3(0.0f, -1.0f, -3.0f));
+            viewMatrix  = glm::translate(viewMatrix, glm::vec3(1.7f, -1.5f, -3.0f));
             // perspective matrix
             const float fov = camera.GetFOV(); //fov = glm::radians(45.0f);
             glm::mat4 perspectiveProjectionMatrix = glm::perspective(fov, float(width) / float(height), 0.1f, 100.0f);
@@ -101,8 +105,7 @@ namespace Mocha
             // retrieve the matrix uniform locations
             unsigned int modelLoc = glGetUniformLocation(simpleShader.shaderProgramID, "model");
             unsigned int viewLoc  = glGetUniformLocation(simpleShader.shaderProgramID, "view");
-
-            // pass them to the shaders (3 different ways)
+            // pass them to the shaders
             glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(modelMatrix));
             glUniformMatrix4fv(viewLoc, 1, GL_FALSE, &viewMatrix[0][0]);
 
@@ -110,7 +113,10 @@ namespace Mocha
             //simpleShader.setMat4("view", viewMatrix);
 
             // Draw meshes
+            utahTeapot.draw();
+            myGloriousCube.draw();
             minecraftFox.draw();
+            //cuteFox.draw();
 
             // Render ImGui
             GUI::draw();
