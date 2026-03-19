@@ -46,6 +46,13 @@ Running `pip install glad` should do the trick.
 
 ---
 
+## Credits
+
+- ["cute_fox.obj"](https://skfb.ly/6SxNF) by eexy is licensed under [Creative Commons Attribution](http://creativecommons.org/licenses/by/4.0/).    
+  Also available on Instagram: [@vharmeleon](https://www.instagram.com/vharmeleon/).
+
+---
+
 ## Sources
 
 - PBR Book: https://www.pbr-book.org/
