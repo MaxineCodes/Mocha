@@ -55,7 +55,7 @@ Running `pip install glad` should do the trick.
 
 ## Sources
 
-- C++ Coding Standards: https://isocpp.org/wiki/faq/coding-standards
+- C++ Coding Standards: https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines
 - PBR Book: https://www.pbr-book.org/
 - Google Filament book and repository: https://github.com/google/filament
 - Learn OpenGL website: https://learnopengl.com/
