@@ -42,6 +42,12 @@ namespace Mocha
         static void logError(const char* message)   { log(logLevel::ERROR, message); }
         static void logGLError(const char* message) { log(logLevel::GLERROR, message); }
 
+        static void logInfo (const std::string& message)   { logInfo(message.c_str()); }
+        static void logDebug(const std::string& message)   { logDebug(message.c_str()); }
+        static void logWarn (const std::string& message)   { logWarn(message.c_str()); }
+        static void logError(const std::string& message)   { logError(message.c_str()); }
+        static void logGLError(const std::string& message) { logGLError(message.c_str()); }
+
         static void setUseCout(const bool enabled)  { useCout = enabled; }
         static void setPrintDebug(const bool enabled) { printDebug = enabled; }
 
