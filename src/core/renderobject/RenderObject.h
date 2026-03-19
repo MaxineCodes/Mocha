@@ -25,7 +25,7 @@ namespace Mocha
 
     private:
         std::vector<Mesh> meshes;
-        std::string directory;
+        //std::string directory;
 
         void loadModel(std::string path);
     };

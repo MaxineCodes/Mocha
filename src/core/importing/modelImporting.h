@@ -5,9 +5,11 @@
 #ifndef MOCHA_MODELIMPORTING_H
 #define MOCHA_MODELIMPORTING_H
 
+#include <string>
+
 namespace Mocha
 {
-    void importModel(const char* path);
+    void importModel(std::string path);
 }
 
 #endif //MOCHA_MODELIMPORTING_H

@@ -4,6 +4,7 @@
 
 #include "RenderObject.h"
 #include "../../interface/logger.h"
+#include "../importing/modelImporting.h"
 
 namespace Mocha
 {
@@ -25,6 +26,6 @@ namespace Mocha
 
     void RenderObject::loadModel(std::string path)
     {
-
+        importModel(std::string(path));
     }
 } // Mocha
