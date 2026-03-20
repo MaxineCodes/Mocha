@@ -131,7 +131,7 @@ namespace Mocha
             // Draw meshes
             //utahTeapot.draw();
             //myGloriousCube.transform.scale = glm::vec3(50.0f, 50.0f, 50.0f);
-            //myGloriousCube.draw();
+            myGloriousCube.draw();
             //minecraftFox.draw();
             //cuteFox.transform.scale = glm::vec3(2.5f, 2.5f, 2.5f);
             cuteFox.draw();

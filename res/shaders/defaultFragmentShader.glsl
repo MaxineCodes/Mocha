@@ -8,7 +8,7 @@ uniform sampler2D texture2;
 
 void main()
 {
-    float scale = 8.0;
+    float scale = 50.0;
     vec2 grid = floor(TexCoord * scale);
     float checker = mod(grid.x + grid.y, 2.0);
 
