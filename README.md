@@ -46,8 +46,16 @@ Running `pip install glad` should do the trick.
 
 ---
 
+## Credits
+
+- ["cute_fox.obj"](https://skfb.ly/6SxNF) by eexy is licensed under [Creative Commons Attribution](http://creativecommons.org/licenses/by/4.0/).    
+  Also available on Instagram: [@vharmeleon](https://www.instagram.com/vharmeleon/).
+
+---
+
 ## Sources
 
+- C++ Coding Standards: https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines
 - PBR Book: https://www.pbr-book.org/
 - Google Filament book and repository: https://github.com/google/filament
 - Learn OpenGL website: https://learnopengl.com/
