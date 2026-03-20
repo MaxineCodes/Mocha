@@ -11,7 +11,7 @@ If you're familiar with 3D viewing applications, a main point of inspiration for
 
 ---
 
-![Viewport Screenshot](https://github.com/MaxineCodes/Mocha/blob/main/res/graphics/screenshots/viewport-19-03-26.png)
+![Viewport Screenshot](https://github.com/MaxineCodes/Mocha/blob/main/res/graphics/screenshots/viewport-20-03-26.png)
 
 ---
 
