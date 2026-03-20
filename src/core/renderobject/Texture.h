@@ -12,7 +12,10 @@ namespace Mocha
     struct Texture
     {
         GLuint textureID;
+        std::string name;
         std::string type;
+        std::string number;
+        std::string extension;
         int width, height, channels;
 
         Texture(const char* path);

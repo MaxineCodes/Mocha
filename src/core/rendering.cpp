@@ -54,10 +54,10 @@ namespace Mocha
         //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
-        //Texture brickTexture = Texture("res/textures/stylized_bricks_basecolour.png");
+        //Texture brickTexture = Texture("res/textures/stylizedBricks_basecolour.png");
         //Texture cobblestoneTexture = Texture("res/textures/cobblestone_basecolour.png");
-        Texture minecraftFoxTexture = Texture("res/textures/minecraft_fox.png");
-        Texture minecraftSnowFoxTexture = Texture("res/textures/minecraft_snow_fox.png");
+        Texture minecraftFoxTexture = Texture("res/textures/minecraftFox_baseColour.png");
+        Texture minecraftSnowFoxTexture = Texture("res/textures/minecraftSnowFox_baseColour.png");
 
 
         Material minecraftFoxMaterial = Material(&simpleShader);
@@ -66,11 +66,11 @@ namespace Mocha
 
         Material bricksMaterial = Material(&simpleShader);
         bricksMaterial.name("bricksMaterial");
-        bricksMaterial.addTexture(Texture("res/textures/stylized_bricks_basecolour.png"));
+        bricksMaterial.addTexture(Texture("res/textures/stylizedBricks_baseColour.png"));
 
         Material defaultMaterial = Material(&defaultShader);
         defaultMaterial.name("defaultMaterial");
-        defaultMaterial.addTexture(Texture("res/textures/cobblestone_basecolour.png"));
+        defaultMaterial.addTexture(Texture("res/textures/cobblestone_baseColour.png"));
 
         RenderObject myGloriousCube = RenderObject("res/models/cube.obj");
         myGloriousCube.assignMaterial(&bricksMaterial);

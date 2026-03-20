@@ -5,14 +5,39 @@
 #include "Texture.h"
 
 #define STB_IMAGE_IMPLEMENTATION
+#include <sstream>
 #include <stb_image.h>
 
 #include "../../interface/logger.h"
 
 namespace Mocha
 {
+    std::string extractTextureName(const char *path)
+    {
+        std::string p = std::string(path);
+        size_t lastSlash = p.find_last_of("/\\");
+        std::string filename = (lastSlash != std::string::npos) ? p.substr(lastSlash + 1) : p;
+        filename = filename.substr(0, filename.find_last_of('.'));
+        return filename.substr(0, filename.find('_'));
+    }
+    std::string extractTextureType(const char *path)
+    {
+        std::string p(path);
+        size_t lastSlash = p.find_last_of("/\\");
+        std::string filename = (lastSlash != std::string::npos)
+            ? p.substr(lastSlash + 1) : p;
+        filename = filename.substr(0, filename.find_last_of('.'));
+
+        size_t first = filename.find('_');
+        size_t second = filename.find('_', first + 1);
+        return filename.substr(first + 1, second - first - 1);
+    }
+
     Texture::Texture(const char *path)
     {
+        type = extractTextureType(path);
+        name = extractTextureName(path);
+
         glGenTextures(1, &textureID);
         glBindTexture(GL_TEXTURE_2D, textureID);
         // set the texture wrapping/filtering options (on the currently bound texture object)
@@ -38,6 +63,8 @@ namespace Mocha
             logger::logError(path);
             logger::logError(stbi_failure_reason());
         }
+
+
         stbi_image_free(data);
     }
 
@@ -45,4 +72,6 @@ namespace Mocha
     {
         glBindTexture(GL_TEXTURE_2D, textureID);
     }
+
+
 } // Mocha

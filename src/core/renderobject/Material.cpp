@@ -32,7 +32,7 @@ namespace Mocha {
     void Material::Use() const
     {
         shader->use();
-        logger::logDebug(("using material: " + m_name).c_str());
+        logger::logDebugFrame(("using material: " + m_name).c_str());
 
         // Naming convention for texture: [ texture_baseColour_N ] where N = number of textures
         // For material in shaders: [ material.texture_baseColour_N ]
@@ -54,8 +54,8 @@ namespace Mocha {
             shader->setInt(std::string ("material." + textureName + number), i);
             glBindTexture(GL_TEXTURE_2D, textures[i].textureID);
 
-            //logger::logDebug(std::string ("using texture: " + textureName + " N=" + number));
-            //logger::logDebug(std::string ("shader.setInt: [material." + textureName + number + "] at " + std::to_string(i)));
+            logger::logDebugFrame(std::string ("using texture: " + textureName + " N=" + number));
+            logger::logDebugFrame(std::string ("shader.setInt: [material." + textureName + number + "] at " + std::to_string(i)));
         }
         glActiveTexture(GL_TEXTURE0);
     }
