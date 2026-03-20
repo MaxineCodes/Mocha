@@ -49,7 +49,7 @@ namespace Mocha
         void AssignMaterial(Material &material);
 
     private:
-        unsigned int VAO, VBO, EBO;
+        GLuint VAO, VBO, EBO;
         void initializeMesh();
 
 

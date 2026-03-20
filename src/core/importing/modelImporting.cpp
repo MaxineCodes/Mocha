@@ -12,7 +12,6 @@
 namespace Mocha
 {
     std::string directory;
-    std::vector<Mesh> meshes;
 
     Mesh processMesh(aiMesh* mesh, const aiScene* scene)
     {
@@ -67,22 +66,24 @@ namespace Mocha
         return Mesh(vertices, indices);
     }
 
-    void processNode(aiNode* node, const aiScene* scene)
+    void processNode(aiNode* node, const aiScene* scene, std::vector<Mesh>& localMeshes)
     {
         for (unsigned i = 0; i < node->mNumMeshes; i++)
         {
             aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
-            meshes.push_back(processMesh(mesh, scene));
+            localMeshes.push_back(processMesh(mesh, scene));
         }
 
         for (unsigned i = 0; i < node->mNumChildren; i++)
         {
-            processNode(node->mChildren[i], scene);
+            processNode(node->mChildren[i], scene, localMeshes);
         }
     }
 
     std::vector<Mesh> importModel(std::string path)
     {
+        std::vector<Mesh> localMeshes;
+
         Assimp::Importer importer;
         //const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs);
         const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate);
@@ -90,13 +91,13 @@ namespace Mocha
         if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
         {
             logger::logError("ERROR ASSIMP: " + std::string(importer.GetErrorString()));
-            return meshes;
+            return localMeshes;
         }
 
         directory = path.substr(0, path.find_last_of('/'));
-        processNode(scene->mRootNode, scene);
+        processNode(scene->mRootNode, scene, localMeshes);
 
-        return meshes;
+        return localMeshes;
     }
 
 }
