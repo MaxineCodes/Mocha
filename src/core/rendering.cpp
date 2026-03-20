@@ -54,8 +54,8 @@ namespace Mocha
         //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
-        //Texture brickTexture = Texture("res/textures/stylizedBricks_basecolour.png");
-        //Texture cobblestoneTexture = Texture("res/textures/cobblestone_basecolour.png");
+        Texture brickTexture = Texture("res/textures/stylizedBricks_baseColour.png");
+        Texture cobblestoneTexture = Texture("res/textures/cobblestone_baseColour.png");
         Texture minecraftFoxTexture = Texture("res/textures/minecraftFox_baseColour.png");
         Texture minecraftSnowFoxTexture = Texture("res/textures/minecraftSnowFox_baseColour.png");
 
@@ -72,6 +72,10 @@ namespace Mocha
         defaultMaterial.name("defaultMaterial");
         defaultMaterial.addTexture(Texture("res/textures/cobblestone_baseColour.png"));
 
+        Material cuteFoxMaterial = Material(&simpleShader);
+        cuteFoxMaterial.name("cuteFoxMaterial");
+        //cuteFoxMaterial.addTexture(brickTexture);
+
         RenderObject myGloriousCube = RenderObject("res/models/cube.obj");
         myGloriousCube.assignMaterial(&bricksMaterial);
         RenderObject utahTeapot = RenderObject("res/models/utah_teapot.obj");
@@ -79,7 +83,7 @@ namespace Mocha
         RenderObject minecraftFox = RenderObject("res/models/minecraft_fox.obj");
         minecraftFox.assignMaterial(&minecraftFoxMaterial);
         RenderObject cuteFox = RenderObject("res/models/cute_fox.obj");
-        cuteFox.assignMaterial(&defaultMaterial);
+        cuteFox.assignMaterial(&cuteFoxMaterial);
 
         int frameCount = 0;
 
@@ -128,9 +132,9 @@ namespace Mocha
             //utahTeapot.draw();
             //myGloriousCube.transform.scale = glm::vec3(50.0f, 50.0f, 50.0f);
             //myGloriousCube.draw();
-            minecraftFox.draw();
+            //minecraftFox.draw();
             //cuteFox.transform.scale = glm::vec3(2.5f, 2.5f, 2.5f);
-            //cuteFox.draw();
+            cuteFox.draw();
 
             // Render ImGui
             GUI::draw();

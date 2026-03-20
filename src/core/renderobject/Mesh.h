@@ -11,9 +11,10 @@ namespace Mocha
 {
     struct Vertex
     {
-        glm::vec3 position;     // pos 1
-        glm::vec3 normal;       // pos 2
-        glm::vec2 texCoords;    // pos 3
+        glm::vec3 position;     // pos 0
+        glm::vec3 normal;       // pos 1
+        glm::vec2 texCoords;    // pos 2
+        glm::vec4 colour;       // pos 3
     };
 
     class Mesh

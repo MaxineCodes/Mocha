@@ -47,6 +47,17 @@ namespace Mocha
             }
             else vertex.texCoords = glm::vec2(0.0f, 0.0f);
 
+            // Vertex Colours
+            if (mesh->mColors[0])
+            {
+                vertex.colour = glm::vec4(
+                mesh->mColors[0][i].r,
+                mesh->mColors[0][i].g,
+                mesh->mColors[0][i].b,
+                mesh->mColors[0][i].a
+            );
+            }
+
             vertices.push_back(vertex);
         }
 
