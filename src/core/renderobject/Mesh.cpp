@@ -8,9 +8,9 @@
 
 namespace Mocha
 {
-    Mesh::~Mesh()
+    void Mesh::CleanUp()
     {
-        // Clean up buffers on deconstruction
+        // Clean up buffers
         glDeleteVertexArrays(1, &VAO);
         glDeleteBuffers(1, &VBO);
         glDeleteBuffers(1, &EBO);

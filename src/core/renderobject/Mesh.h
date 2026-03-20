@@ -45,8 +45,7 @@ namespace Mocha
             initializeMesh();
         }
 
-        ~Mesh();
-
+        void CleanUp();
         void Draw();
         void AssignMaterial(Material &material);
 
