@@ -13,6 +13,8 @@ If you're familiar with 3D viewing applications, a main point of inspiration for
 
 ![Viewport Screenshot](https://github.com/MaxineCodes/Mocha/blob/main/res/graphics/screenshots/viewport-20-03-26.png)
 
+["cute_fox.obj"](https://skfb.ly/6SxNF) by eexy.
+
 ---
 
 Features planned:
