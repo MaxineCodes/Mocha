@@ -38,6 +38,11 @@ namespace Mocha
             "res/shaders/basicFragmentShader.glsl"
             );
 
+        const Shader defaultShader = Shader(
+            "res/shaders/defaultVertexShader.glsl",
+            "res/shaders/defaultFragmentShader.glsl"
+            );
+
 
 
         // Make sure depth test is enabled, otherwise
@@ -55,11 +60,19 @@ namespace Mocha
         Texture minecraftSnowFoxTexture = Texture("res/textures/minecraft_snow_fox.png");
 
 
+        Material minecraftFoxMaterial = Material(&simpleShader);
+        minecraftFoxMaterial.name("minecraftFoxMaterial");
+        minecraftFoxMaterial.addTexture(minecraftSnowFoxTexture);
 
+        Material bricksMaterial = Material(&simpleShader);
+        bricksMaterial.addTexture(Texture("res/textures/stylized_bricks_basecolour.png"));
 
-        RenderObject myGloriousCube = RenderObject("res/models/cube.obj");
-        RenderObject utahTeapot = RenderObject("res/models/utah_teapot.obj");
+        Material defaultMaterial = Material(&defaultShader);
+
+        //RenderObject myGloriousCube = RenderObject("res/models/cube.obj");
+        //RenderObject utahTeapot = RenderObject("res/models/utah_teapot.obj");
         RenderObject minecraftFox = RenderObject("res/models/minecraft_fox.obj");
+        minecraftFox.assignMaterial(&minecraftFoxMaterial);
         //RenderObject cuteFox = RenderObject("res/models/cute_fox.obj");
 
 
@@ -86,12 +99,12 @@ namespace Mocha
             simpleShader.setInt("texture1", 0);
             simpleShader.setInt("texture2", 1);
 
-            glActiveTexture(GL_TEXTURE0);
-            minecraftFoxTexture.use();
-            glActiveTexture(GL_TEXTURE1);
-            minecraftSnowFoxTexture.use();
+            //glActiveTexture(GL_TEXTURE0);
+            //minecraftFoxTexture.use();
+            //glActiveTexture(GL_TEXTURE1);
+            //minecraftSnowFoxTexture.use();
 
-            simpleShader.use();
+            //simpleShader.use();
 
             // create transformations
             glm::mat4 modelMatrix = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
@@ -110,12 +123,15 @@ namespace Mocha
             glUniformMatrix4fv(viewLoc, 1, GL_FALSE, &viewMatrix[0][0]);
 
             simpleShader.setMat4("projection", perspectiveProjectionMatrix);
+            defaultShader.setMat4("projection", perspectiveProjectionMatrix);
             //simpleShader.setMat4("view", viewMatrix);
 
             // Draw meshes
-            utahTeapot.draw();
-            myGloriousCube.draw();
+            //utahTeapot.draw();
+            //myGloriousCube.transform.scale = glm::vec3(2.5f, 2.5f, 2.5f);
+            //myGloriousCube.draw();
             minecraftFox.draw();
+            //cuteFox.transform.scale = glm::vec3(2.5f, 2.5f, 2.5f);
             //cuteFox.draw();
 
             // Render ImGui

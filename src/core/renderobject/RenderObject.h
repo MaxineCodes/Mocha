@@ -20,13 +20,13 @@ namespace Mocha
 
     public:
         RenderObject(const char* path);
-        RenderObject() { RenderObject(defaultObjectPath); }
+        RenderObject();
         void draw();
+        // Assigns a material to all meshes belonging to this RenderObject
+        void assignMaterial(Material* material);
 
     private:
         std::vector<Mesh> meshes;
-        //std::string directory;
-
         void loadModel(std::string path);
     };
 } // Mocha

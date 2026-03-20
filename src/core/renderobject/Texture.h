@@ -16,9 +16,7 @@ namespace Mocha
         int width, height, channels;
 
         Texture(const char* path);
-
-        // Default constructor uses a minecraft cobblestone texture
-        Texture() { Texture("../../res/textures/cobblestone_basecolour.png"); }
+        Texture() { Texture("res/textures/cobblestone_basecolour.png");}
 
         void use();
     };

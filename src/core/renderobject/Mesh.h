@@ -18,17 +18,20 @@ namespace Mocha
 
     class Mesh
     {
+    private:
+        static Material* getDefaultMaterial();
+
     public:
         std::vector<Vertex> vertices;
         std::vector<unsigned int> indices;
-        Material material;
+        Material* m_material;
 
         Mesh(const std::vector<Vertex> &vertices,
             const std::vector<unsigned int> &indices,
             Material &material)
         : vertices(vertices),
           indices(indices),
-          material(material)
+          m_material(&material)
         {
             initializeMesh();
         }
@@ -38,10 +41,12 @@ namespace Mocha
         : vertices(vertices),
           indices(indices)
         {
+            m_material = getDefaultMaterial();
             initializeMesh();
         }
 
         void Draw();
+        void AssignMaterial(Material &material);
 
     private:
         unsigned int VAO, VBO, EBO;

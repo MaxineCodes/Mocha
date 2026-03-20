@@ -13,6 +13,12 @@ namespace Mocha
         loadModel(path);
     }
 
+    RenderObject::RenderObject()
+        : RenderObject(defaultObjectPath)
+    {
+
+    }
+
 
 
     void RenderObject::draw()
@@ -21,6 +27,14 @@ namespace Mocha
         for (unsigned int i = 0; i < meshes.size(); i++)
         {
             meshes[i].Draw();
+        }
+    }
+
+    void RenderObject::assignMaterial(Material *material)
+    {
+        for (unsigned int i = 0; i < meshes.size(); i++)
+        {
+            meshes[i].AssignMaterial(*material);
         }
     }
 

@@ -45,8 +45,9 @@ namespace Mocha
     }
 
     Shader::Shader()
+        : Shader("res/shaders/defaultVertexShader.glsl",
+            "res/shaders/defaultFragmentShader.glsl")
     {
-        Shader("res/shaders/basicVertexShader.glsl", "res/shaders/basicFragmentShader.glsl");
     }
 
     Shader::~Shader()
