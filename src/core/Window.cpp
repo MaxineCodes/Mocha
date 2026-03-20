@@ -42,7 +42,7 @@ namespace Mocha
 
         glfwSetCursorPosCallback(window, mouseCallback);
         glfwSetScrollCallback(window, mouseScrollCallback);
-        glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+        //glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED); // TODO: re-enable this
 
         glfwSwapInterval(1); // Enable vsync
 
@@ -68,22 +68,22 @@ namespace Mocha
 
         if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
         {
-            //logger::logInfo("W pressed");
+            logger::logInfoInput("W pressed");
             Window::camera->ProcessKeyboard(FORWARD, deltaTime);
         }
         if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
         {
-            //logger::logInfo("A pressed");
+            logger::logInfoInput("A pressed");
             Window::camera->ProcessKeyboard(LEFT, deltaTime);
         }
         if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
         {
-            //logger::logInfo("S pressed");
+            logger::logInfoInput("S pressed");
             Window::camera->ProcessKeyboard(BACKWARD, deltaTime);
         }
         if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
         {
-            //logger::logInfo("D pressed");
+            logger::logInfoInput("D pressed");
             Window::camera->ProcessKeyboard(RIGHT, deltaTime);
         }
     }

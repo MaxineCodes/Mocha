@@ -31,6 +31,8 @@ void Mocha::GUI::createGuiElements()
 {
     //ImGui::ShowDemoWindow();
     DrawLogWindow();
+    DrawFrameLogWindow();
+    DrawInputLogWindow();
 }
 
 void Mocha::GUI::draw()
@@ -44,6 +46,77 @@ void Mocha::GUI::cleanup()
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplGlfw_Shutdown();
     ImGui::DestroyContext();
+}
+
+void Mocha::GUI::DrawInputLogWindow()
+{
+    ImGui::Begin("InputLog");
+    ImGui::BeginChild("ScrollingRegion", ImVec2(0,0), false, ImGuiWindowFlags_HorizontalScrollbar);
+
+    // Get all the log messages onto the log window
+    const auto& logMessages = logger::getInputLogMessages();
+    for (const auto& message : logMessages)
+    {
+        if      (message.rfind("[ERROR]", 0) == 0)
+            ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(255, 80, 80, 255));   // red
+        else if (message.rfind("[INFO]", 0) == 0)
+            ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(255, 255, 255, 255)); // white
+        else if (message.rfind("[DEBUG]", 0) == 0)
+            ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(100, 100, 100, 255)); // dark grey
+        else
+            ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(200, 200, 200, 255)); // default grey
+
+        ImGui::TextUnformatted(message.c_str());
+        ImGui::PopStyleColor();
+    }
+
+    // Scroll to bottom by default
+    if (ImGui::GetScrollY() >= ImGui::GetScrollMaxY())
+    {
+        ImGui::SetScrollHereY(1.0f);
+    }
+
+    ImGui::EndChild();
+
+    ImGui::End();
+}
+
+void Mocha::GUI::DrawFrameLogWindow()
+{
+    ImGui::Begin("FrameLog");
+    ImGui::BeginChild("ScrollingRegion", ImVec2(0,0), false, ImGuiWindowFlags_HorizontalScrollbar);
+
+    // Get all the log messages onto the log window
+    const auto& logMessages = logger::getFrameLogMessages();
+    for (const auto& message : logMessages)
+    {
+        if      (message.rfind("[ERROR]", 0) == 0)
+            ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(255, 80, 80, 255));   // red
+        else if (message.rfind("[WARN]", 0) == 0)
+            ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(255, 200, 0, 255)); // yellow
+        else if (message.rfind("[INFO]", 0) == 0)
+            ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(255, 255, 255, 255)); // white
+        else if (message.rfind("[GL_ERROR]", 0) == 0)
+            ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(255, 20, 20, 255)); // dark red
+        else if (message.rfind("[DEBUG]", 0) == 0)
+            ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(100, 100, 100, 255)); // dark grey
+        else
+            ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(200, 200, 200, 255)); // default grey
+
+
+        ImGui::TextUnformatted(message.c_str());
+        ImGui::PopStyleColor();
+    }
+
+    // Scroll to bottom by default
+    if (ImGui::GetScrollY() >= ImGui::GetScrollMaxY())
+    {
+        ImGui::SetScrollHereY(1.0f);
+    }
+
+    ImGui::EndChild();
+
+    ImGui::End();
 }
 
 void Mocha::GUI::DrawLogWindow()

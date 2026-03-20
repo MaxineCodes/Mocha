@@ -81,11 +81,13 @@ namespace Mocha
         RenderObject cuteFox = RenderObject("res/models/cute_fox.obj");
         cuteFox.assignMaterial(&defaultMaterial);
 
-
+        int frameCount = 0;
 
         // Render Loop
         while (!window.windowShouldClose())
         {
+            logger::logInfoFrame("Starting frame: " + std::to_string(frameCount));
+
             // Calculate deltatime
             float currentFrame = static_cast<float>(glfwGetTime()); // TODO:　get time from window class function
             deltaTime = currentFrame - lastFrame;
@@ -135,6 +137,8 @@ namespace Mocha
 
             window.swapBuffers();
             window.pollEvents(deltaTime);
+
+            frameCount++;
         }
 
         // Cleanup

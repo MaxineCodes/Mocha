@@ -32,6 +32,8 @@ namespace Mocha
 
         ///////////////// Private functions
         void DrawLogWindow();
+        void DrawFrameLogWindow();
+        void DrawInputLogWindow();
     }
 }
 
