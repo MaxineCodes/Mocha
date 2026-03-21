@@ -45,17 +45,17 @@ namespace Mocha {
         for (unsigned int i = 0; i < textures.size(); i++)
         {
             glActiveTexture(GL_TEXTURE0 + i);
-            std::string number; std::string textureName = textures[i].type;
+            std::string number; std::string textureType = textures[i].type; std::string name = textures[i].name;
 
-            if      (textureName == "texture_baseColour_") number = std::to_string(baseColourCount++);
-            else if (textureName == "texture_normal_")      number = std::to_string(normalCount++);
-            else if (textureName == "texture_specular_")    number = std::to_string(specularCount++);
+            if      (textureType == "texture_baseColour_") number = std::to_string(baseColourCount++);
+            else if (textureType == "texture_normal_")      number = std::to_string(normalCount++);
+            else if (textureType == "texture_specular_")    number = std::to_string(specularCount++);
 
-            shader->setInt(std::string ("material." + textureName + number), i);
+            shader->setInt(std::string ("material." + textureType + number), i);
             glBindTexture(GL_TEXTURE_2D, textures[i].textureID);
 
-            logger::logDebugFrame(std::string ("using texture: " + textureName + " N=" + number));
-            logger::logDebugFrame(std::string ("shader.setInt: [material." + textureName + number + "] at " + std::to_string(i)));
+            logger::logDebugFrame(std::string ("using texture: " + name + textureType + " N=" + number));
+            logger::logDebugFrame(std::string ("shader.setInt: [material." + textureType + number + "] at " + std::to_string(i)));
         }
         glActiveTexture(GL_TEXTURE0);
     }
