@@ -70,18 +70,17 @@ namespace Mocha
 
         Material defaultMaterial = Material(&defaultShader);
         defaultMaterial.name("defaultMaterial");
-        defaultMaterial.addTexture(Texture("res/textures/cobblestone_baseColour.png"));
 
         Material cuteFoxMaterial = Material(&simpleShader);
         cuteFoxMaterial.name("cuteFoxMaterial");
-        //cuteFoxMaterial.addTexture(brickTexture);
+        cuteFoxMaterial.addTexture(brickTexture);
 
-        RenderObject myGloriousCube = RenderObject("res/models/cube.obj");
-        myGloriousCube.assignMaterial(&bricksMaterial);
-        RenderObject utahTeapot = RenderObject("res/models/utah_teapot.obj");
-        utahTeapot.assignMaterial(&defaultMaterial);
-        RenderObject minecraftFox = RenderObject("res/models/minecraft_fox.obj");
-        minecraftFox.assignMaterial(&minecraftFoxMaterial);
+        //RenderObject myGloriousCube = RenderObject("res/models/cube.obj");
+        //myGloriousCube.assignMaterial(&bricksMaterial);
+        //RenderObject utahTeapot = RenderObject("res/models/utah_teapot.obj");
+        //utahTeapot.assignMaterial(&defaultMaterial);
+        //RenderObject minecraftFox = RenderObject("res/models/minecraft_fox.obj");
+        //minecraftFox.assignMaterial(&minecraftFoxMaterial);
         RenderObject cuteFox = RenderObject("res/models/cute_fox.obj");
         cuteFox.assignMaterial(&cuteFoxMaterial);
 
@@ -131,9 +130,9 @@ namespace Mocha
             // Draw meshes
             //utahTeapot.draw();
             //myGloriousCube.transform.scale = glm::vec3(50.0f, 50.0f, 50.0f);
-            myGloriousCube.draw();
+            //myGloriousCube.draw();
             //minecraftFox.draw();
-            //cuteFox.transform.scale = glm::vec3(2.5f, 2.5f, 2.5f);
+            cuteFox.transform.scale = glm::vec3(2.5f, 2.5f, 2.5f);
             cuteFox.draw();
 
             // Render ImGui
