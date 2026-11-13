@@ -57,6 +57,15 @@ namespace Mocha
 
         logger::logInfo("OpenGL loaded");
         logger::logInfo(("OpenGL version: " + std::string((const char*)glGetString(GL_VERSION))).c_str());
+
+        // Get FramebufferSize on construction.
+        // This prevents a DPI mismatch on initial viewport creation.
+        // If a bug appears where the viewport is wrong somehow but fixed through manually resizing the window on the OS,
+        // this should fix it. Otherwise, the issue must be here.
+        int fbWidth, fbHeight;
+        glfwGetFramebufferSize(window, &fbWidth, &fbHeight);
+        glViewport(0, 0, fbWidth, fbHeight);
+        logger::logInfo("Framebuffer: " + std::to_string(fbWidth) + "x" + std::to_string(fbHeight));
     }
 
     void Window::processInput(float deltaTime) const
@@ -108,6 +117,7 @@ namespace Mocha
         glfwTerminate();
     }
 
+    // Resizing window
     void Window::framebuffer_size_callback(GLFWwindow *window, int width, int height)
     {
         glViewport(0, 0, width, height);
