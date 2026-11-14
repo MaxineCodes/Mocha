@@ -95,9 +95,24 @@ namespace Mocha
             }
 
             // Draw meshes
-            for (RenderObject* ro : scene.renderObjects)
+            for (RenderObject* renderObject : scene.renderObjects)
             {
-                ro->draw();
+                // Reset model matrix
+                modelMatrix = glm::mat4(1.0f);
+                // get RenderObject transforms and put them into the model matrix
+                modelMatrix = glm::translate(modelMatrix, renderObject->transform.position);
+                modelMatrix = glm::rotate   (modelMatrix, renderObject->transform.rotation.x, glm::vec3(1.0f, 0.0f, 0.0f));
+                modelMatrix = glm::rotate   (modelMatrix, renderObject->transform.rotation.y, glm::vec3(0.0f, 1.0f, 0.0f));
+                modelMatrix = glm::rotate   (modelMatrix, renderObject->transform.rotation.z, glm::vec3(1.0f, 0.0f, 1.0f));
+                modelMatrix = glm::scale    (modelMatrix, renderObject->transform.scale);
+                // Update the OpenGL context uniform for the correct shader.
+                for (size_t i = 0; i < scene.shaders.size(); i++)
+                {
+                    scene.shaders[i]->setMat4("model", modelMatrix);
+                }
+
+                // draw
+                renderObject->draw();
             }
 
             // Render ImGui
