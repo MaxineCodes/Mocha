@@ -67,6 +67,13 @@ namespace Mocha
         cuteFox->assignMaterial(cuteFoxMaterial);
         DebugScene.addRenderObject(cuteFox);
 
+        // TODO: figure out why this isn't working and fix it
+        cuteFox->transform.scale = glm::vec3(2.5f, 2.5f, 2.5f);
+        myGloriousCube->transform.scale = glm::vec3(50.0f, 50.0f, 50.0f);
+        utahTeapot->transform.position = glm::vec3(0.0f, 0.0f, 50.0f);
+        utahTeapot->transform.scale = glm::vec3(0.2f, 50.2f, 50.2f);
+        utahTeapot->transform.rotation = glm::vec3(45.0f, 45.0f, 45.0f);
+
 
         return DebugScene;
     }

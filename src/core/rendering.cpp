@@ -71,7 +71,7 @@ namespace Mocha
             // create transformations
             glm::mat4 modelMatrix = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
             glm::mat4 viewMatrix = camera.GetViewMatrix();
-            modelMatrix = glm::rotate(modelMatrix, (float)glfwGetTime(), glm::vec3(0.0f, 1.0f, 0.0f)); // TODO:　get time from window class function
+            //modelMatrix = glm::rotate(modelMatrix, (float)glfwGetTime(), glm::vec3(0.0f, 1.0f, 0.0f)); // TODO:　get time from window class function
             viewMatrix  = glm::translate(viewMatrix, glm::vec3(1.7f, -1.5f, -3.0f));
             // perspective matrix
             const float fov = camera.GetFOV(); //fov = glm::radians(45.0f);
@@ -99,15 +99,6 @@ namespace Mocha
             {
                 ro->draw();
             }
-
-            /*
-            utahTeapot.draw();
-            myGloriousCube.transform.scale = glm::vec3(50.0f, 50.0f, 50.0f);
-            myGloriousCube.draw();
-            minecraftFox.draw();
-            cuteFox.transform.scale = glm::vec3(2.5f, 2.5f, 2.5f);
-            cuteFox.draw();
-            */
 
             // Render ImGui
             GUI::draw();

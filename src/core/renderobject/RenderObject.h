@@ -21,7 +21,9 @@ namespace Mocha
     public:
         RenderObject(const char* path);
         RenderObject();
+        // Draw the object
         void draw();
+
         // Assigns a material to all meshes belonging to this RenderObject
         void assignMaterial(Material* material);
 
