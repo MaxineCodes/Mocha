@@ -75,6 +75,7 @@ namespace Mocha
 
     void Shader::setMat4(const std::string &name, const glm::mat4 &matrix) const
     {
+        use(); // Using shader so the uniform values are written to the correct shader
         glUniformMatrix4fv(glGetUniformLocation(shaderProgramID, name.c_str()), 1, GL_FALSE, &matrix[0][0]);
     }
 

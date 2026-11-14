@@ -75,12 +75,12 @@ namespace Mocha
         cuteFoxMaterial.name("cuteFoxMaterial");
         cuteFoxMaterial.addTexture(brickTexture);
 
-        //RenderObject myGloriousCube = RenderObject("res/models/cube.obj");
-        //myGloriousCube.assignMaterial(&bricksMaterial);
-        //RenderObject utahTeapot = RenderObject("res/models/utah_teapot.obj");
-        //utahTeapot.assignMaterial(&defaultMaterial);
-        //RenderObject minecraftFox = RenderObject("res/models/minecraft_fox.obj");
-        //minecraftFox.assignMaterial(&minecraftFoxMaterial);
+        RenderObject myGloriousCube = RenderObject("res/models/cube.obj");
+        myGloriousCube.assignMaterial(&bricksMaterial);
+        RenderObject utahTeapot = RenderObject("res/models/utah_teapot.obj");
+        utahTeapot.assignMaterial(&defaultMaterial);
+        RenderObject minecraftFox = RenderObject("res/models/minecraft_fox.obj");
+        minecraftFox.assignMaterial(&minecraftFoxMaterial);
         RenderObject cuteFox = RenderObject("res/models/cute_fox.obj");
         cuteFox.assignMaterial(&cuteFoxMaterial);
 
@@ -116,22 +116,27 @@ namespace Mocha
             const float fov = camera.GetFOV(); //fov = glm::radians(45.0f);
             glm::mat4 perspectiveProjectionMatrix = glm::perspective(fov, float(width) / float(height), 0.1f, 100.0f);
 
+            /*
             // retrieve the matrix uniform locations
             unsigned int modelLoc = glGetUniformLocation(simpleShader.shaderProgramID, "model");
             unsigned int viewLoc  = glGetUniformLocation(simpleShader.shaderProgramID, "view");
             // pass them to the shaders
             glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(modelMatrix));
             glUniformMatrix4fv(viewLoc, 1, GL_FALSE, &viewMatrix[0][0]);
-
+            */
+            simpleShader.setMat4("model", modelMatrix);
+            simpleShader.setMat4("view",  viewMatrix);
             simpleShader.setMat4("projection", perspectiveProjectionMatrix);
+
+            defaultShader.setMat4("model", modelMatrix);
+            defaultShader.setMat4("view",  viewMatrix);
             defaultShader.setMat4("projection", perspectiveProjectionMatrix);
-            //simpleShader.setMat4("view", viewMatrix);
 
             // Draw meshes
-            //utahTeapot.draw();
-            //myGloriousCube.transform.scale = glm::vec3(50.0f, 50.0f, 50.0f);
-            //myGloriousCube.draw();
-            //minecraftFox.draw();
+            utahTeapot.draw();
+            myGloriousCube.transform.scale = glm::vec3(50.0f, 50.0f, 50.0f);
+            myGloriousCube.draw();
+            minecraftFox.draw();
             cuteFox.transform.scale = glm::vec3(2.5f, 2.5f, 2.5f);
             cuteFox.draw();
 
