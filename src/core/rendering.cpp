@@ -26,24 +26,15 @@ namespace Mocha
         float lastFrame = 0.0f;
 
         // Create camera
-        Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
+        Camera camera(glm::vec3(0.0f, 0.0f, 3.0f)); // TODO: create camera from scene
 
         // Create window through a GLFW wrapper
         Window window(width, height, "Mocha :: OpenGL Realtime Rendering", &camera);
         // Setup gui
         GUI::setup(window.getWindow());
 
-        const Shader simpleShader = Shader(
-            "res/shaders/basicVertexShader.glsl",
-            "res/shaders/basicFragmentShader.glsl"
-            );
-
-        const Shader defaultShader = Shader(
-            "res/shaders/defaultVertexShader.glsl",
-            "res/shaders/defaultFragmentShader.glsl"
-            );
-
-
+        // Creating the scene here for now
+        scene = Scene::DebugScene(); // TODO: seperate definition and implementation of scene
 
         // Make sure depth test is enabled, otherwise
         // things will render ontop of each other,
@@ -53,36 +44,6 @@ namespace Mocha
         // GL_LINE = wireframe, GL_FILL = not wireframe
         //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-
-        Texture brickTexture = Texture("res/textures/stylizedBricks_baseColour.png");
-        Texture cobblestoneTexture = Texture("res/textures/cobblestone_baseColour.png");
-        Texture minecraftFoxTexture = Texture("res/textures/minecraftFox_baseColour.png");
-        Texture minecraftSnowFoxTexture = Texture("res/textures/minecraftSnowFox_baseColour.png");
-
-
-        Material minecraftFoxMaterial = Material(&simpleShader);
-        minecraftFoxMaterial.name("minecraftFoxMaterial");
-        minecraftFoxMaterial.addTexture(minecraftSnowFoxTexture);
-
-        Material bricksMaterial = Material(&simpleShader);
-        bricksMaterial.name("bricksMaterial");
-        bricksMaterial.addTexture(Texture("res/textures/stylizedBricks_baseColour.png"));
-
-        Material defaultMaterial = Material(&defaultShader);
-        defaultMaterial.name("defaultMaterial");
-
-        Material cuteFoxMaterial = Material(&simpleShader);
-        cuteFoxMaterial.name("cuteFoxMaterial");
-        cuteFoxMaterial.addTexture(brickTexture);
-
-        RenderObject myGloriousCube = RenderObject("res/models/cube.obj");
-        myGloriousCube.assignMaterial(&bricksMaterial);
-        RenderObject utahTeapot = RenderObject("res/models/utah_teapot.obj");
-        utahTeapot.assignMaterial(&defaultMaterial);
-        RenderObject minecraftFox = RenderObject("res/models/minecraft_fox.obj");
-        minecraftFox.assignMaterial(&minecraftFoxMaterial);
-        RenderObject cuteFox = RenderObject("res/models/cute_fox.obj");
-        cuteFox.assignMaterial(&cuteFoxMaterial);
 
         int frameCount = 0;
 
@@ -124,21 +85,29 @@ namespace Mocha
             glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(modelMatrix));
             glUniformMatrix4fv(viewLoc, 1, GL_FALSE, &viewMatrix[0][0]);
             */
-            simpleShader.setMat4("model", modelMatrix);
-            simpleShader.setMat4("view",  viewMatrix);
-            simpleShader.setMat4("projection", perspectiveProjectionMatrix);
 
-            defaultShader.setMat4("model", modelMatrix);
-            defaultShader.setMat4("view",  viewMatrix);
-            defaultShader.setMat4("projection", perspectiveProjectionMatrix);
+            // Set Shader Matrices
+            for (size_t i = 0; i < scene.shaders.size(); i++)
+            {
+                scene.shaders[i]->setMat4("model", modelMatrix);
+                scene.shaders[i]->setMat4("view",  viewMatrix);
+                scene.shaders[i]->setMat4("projection", perspectiveProjectionMatrix);
+            }
 
             // Draw meshes
+            for (RenderObject* ro : scene.renderObjects)
+            {
+                ro->draw();
+            }
+
+            /*
             utahTeapot.draw();
             myGloriousCube.transform.scale = glm::vec3(50.0f, 50.0f, 50.0f);
             myGloriousCube.draw();
             minecraftFox.draw();
             cuteFox.transform.scale = glm::vec3(2.5f, 2.5f, 2.5f);
             cuteFox.draw();
+            */
 
             // Render ImGui
             GUI::draw();
@@ -153,7 +122,6 @@ namespace Mocha
         //glDeleteVertexArrays(1, &VAO);
         //glDeleteBuffers(1, &VBO);
         //glDeleteBuffers(1, &EBO);
-
         GUI::cleanup();
         window.cleanup();
 

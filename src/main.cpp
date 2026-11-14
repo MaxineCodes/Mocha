@@ -27,9 +27,10 @@ int main()
 
     // First, create the scene you want to render
     // Planned: Load .USD scene, or a constructor which generates something for you
-    Mocha::Scene myScene;
+    Mocha::Scene myScene; // <- Currently empty scene
+    // TODO: seperate definition and implementation of scene
 
-
+    // Keep rendering until crash
     if (!Mocha::Render(myScene))
     {
         std::cout << "Rendering terminated." << std::endl;
