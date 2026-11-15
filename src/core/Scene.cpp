@@ -60,12 +60,19 @@ namespace Mocha
         RenderObject* myGloriousCube = new RenderObject("res/models/cube.obj");
         myGloriousCube->assignMaterial(bricksMaterial);
         debugScene.addRenderObject(myGloriousCube);
+
         RenderObject* utahTeapot = new RenderObject("res/models/utah_teapot.obj");
         utahTeapot->assignMaterial(defaultMaterial);
         debugScene.addRenderObject(utahTeapot);
+
+        //RenderObject* stanfordDragon = new RenderObject("res/models/stanford_dragon.obj");
+        //stanfordDragon->assignMaterial(cuteFoxMaterial);
+        //debugScene.addRenderObject(stanfordDragon);
+
         RenderObject* minecraftFox = new RenderObject("res/models/minecraft_fox.obj");
         minecraftFox->assignMaterial(minecraftFoxMaterial);
         debugScene.addRenderObject(minecraftFox);
+
         RenderObject* cuteFox = new RenderObject("res/models/cute_fox.obj");
         cuteFox->assignMaterial(cuteFoxMaterial);
         debugScene.addRenderObject(cuteFox);
@@ -81,7 +88,11 @@ namespace Mocha
         myGloriousCube->transform.scale = glm::vec3(1.0f, 1.0f, 1.0f);
         myGloriousCube->transform.position = glm::vec3(-2.0f, 0.0f, 0.0f);
 
-        utahTeapot->transform.position = glm::vec3(0.0f, 0.0f, 0.0f);
+        //stanfordDragon->transform.scale = glm::vec3(0.01f, 0.01f, 0.01f);
+        //stanfordDragon->transform.position = glm::vec3(0.0f, 0.0f, 0.0f);
+        //stanfordDragon->transform.rotation = glm::vec3(0.0f, 0.0f, 0.0f);
+
+        utahTeapot->transform.position = glm::vec3(-5.0f, 0.0f, 0.0f);
         utahTeapot->transform.scale = glm::vec3(0.2f, 0.2f, 0.2f);
         utahTeapot->transform.rotation = glm::vec3(45.0f, 45.0f, 45.0f);
 

@@ -54,9 +54,9 @@ namespace Mocha
                 mesh->mColors[0][i].r,
                 mesh->mColors[0][i].g,
                 mesh->mColors[0][i].b,
-                mesh->mColors[0][i].a
-            );
+                mesh->mColors[0][i].a);
             }
+            else vertex.colour = glm::vec4(1.0f);
 
             vertices.push_back(vertex);
         }
@@ -97,7 +97,8 @@ namespace Mocha
 
         Assimp::Importer importer;
         //const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs);
-        const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate);
+        const aiScene* scene = importer.ReadFile(path,
+    aiProcess_Triangulate | aiProcess_GenSmoothNormals);
 
         if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
         {
