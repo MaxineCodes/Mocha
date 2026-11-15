@@ -2,70 +2,73 @@
 // Created by maxin on 02/12/2025.
 //
 
+#include <cstdlib>   // std::rand, std::srand
+#include <ctime>     // std::time
+
 #include "Scene.h"
 
 namespace Mocha
 {
     Scene Scene::DebugScene()
     {
-        Scene DebugScene;
+        Scene debugScene;
 
         // Create Shaders
         Shader* simpleShader = new Shader(
             "res/shaders/basicVertexShader.glsl",
             "res/shaders/basicFragmentShader.glsl"
             );
-        DebugScene.addShader(simpleShader);
+        debugScene.addShader(simpleShader);
 
         Shader* defaultShader = new Shader(
             "res/shaders/defaultVertexShader.glsl",
             "res/shaders/defaultFragmentShader.glsl"
             );
-        DebugScene.addShader(defaultShader);
+        debugScene.addShader(defaultShader);
 
         // Create Textures
         Texture* brickTexture = new Texture("res/textures/stylizedBricks_baseColour.png");
-        DebugScene.addTexture(brickTexture);
+        debugScene.addTexture(brickTexture);
         Texture* cobblestoneTexture = new Texture("res/textures/cobblestone_baseColour.png");
-        DebugScene.addTexture(cobblestoneTexture);
+        debugScene.addTexture(cobblestoneTexture);
         Texture* minecraftFoxTexture = new Texture("res/textures/minecraftFox_baseColour.png");
-        DebugScene.addTexture(minecraftFoxTexture);
+        debugScene.addTexture(minecraftFoxTexture);
         Texture* minecraftSnowFoxTexture = new Texture("res/textures/minecraftSnowFox_baseColour.png");
-        DebugScene.addTexture(minecraftSnowFoxTexture);
+        debugScene.addTexture(minecraftSnowFoxTexture);
 
         // Create Materials
         Material* minecraftFoxMaterial = new Material(simpleShader);
         minecraftFoxMaterial->name("minecraftFoxMaterial");
         minecraftFoxMaterial->addTexture(*minecraftSnowFoxTexture);
-        DebugScene.addMaterial(minecraftFoxMaterial);
+        debugScene.addMaterial(minecraftFoxMaterial);
 
         Material* bricksMaterial = new Material(simpleShader);
         bricksMaterial->name("bricksMaterial");
         bricksMaterial->addTexture(*brickTexture);
-        DebugScene.addMaterial(bricksMaterial);
+        debugScene.addMaterial(bricksMaterial);
 
         Material* defaultMaterial = new Material(defaultShader);
         defaultMaterial->name("defaultMaterial");
-        DebugScene.addMaterial(defaultMaterial);
+        debugScene.addMaterial(defaultMaterial);
 
         Material* cuteFoxMaterial = new Material(simpleShader);
         cuteFoxMaterial->name("cuteFoxMaterial");
         cuteFoxMaterial->addTexture(*brickTexture);
-        DebugScene.addMaterial(cuteFoxMaterial);
+        debugScene.addMaterial(cuteFoxMaterial);
 
         // Create RenderObjects
         RenderObject* myGloriousCube = new RenderObject("res/models/cube.obj");
         myGloriousCube->assignMaterial(bricksMaterial);
-        DebugScene.addRenderObject(myGloriousCube);
+        debugScene.addRenderObject(myGloriousCube);
         RenderObject* utahTeapot = new RenderObject("res/models/utah_teapot.obj");
         utahTeapot->assignMaterial(defaultMaterial);
-        DebugScene.addRenderObject(utahTeapot);
+        debugScene.addRenderObject(utahTeapot);
         RenderObject* minecraftFox = new RenderObject("res/models/minecraft_fox.obj");
         minecraftFox->assignMaterial(minecraftFoxMaterial);
-        DebugScene.addRenderObject(minecraftFox);
+        debugScene.addRenderObject(minecraftFox);
         RenderObject* cuteFox = new RenderObject("res/models/cute_fox.obj");
         cuteFox->assignMaterial(cuteFoxMaterial);
-        DebugScene.addRenderObject(cuteFox);
+        debugScene.addRenderObject(cuteFox);
 
         // Transformations
         cuteFox->transform.scale = glm::vec3(0.5f, 0.5f, 0.5f);
@@ -83,7 +86,71 @@ namespace Mocha
         utahTeapot->transform.rotation = glm::vec3(45.0f, 45.0f, 45.0f);
 
 
-        return DebugScene;
+        return debugScene;
+    }
+
+    Scene Scene::spatialGridScene()
+    {
+        Scene scene;
+
+        // Shader
+        Shader* simpleShader = new Shader(
+            "res/shaders/basicVertexShader.glsl",
+            "res/shaders/basicFragmentShader.glsl"
+            );
+        scene.addShader(simpleShader);
+
+        // Textures
+        Texture* brickTexture      = new Texture("res/textures/stylizedBricks_baseColour.png");
+        Texture* cobblestoneTexture= new Texture("res/textures/cobblestone_baseColour.png");
+        scene.addTexture(brickTexture);
+        scene.addTexture(cobblestoneTexture);
+
+        // Materials
+        Material* brickMaterial = new Material(simpleShader);
+        brickMaterial->name("brickMaterial");
+        brickMaterial->addTexture(*brickTexture);
+        scene.addMaterial(brickMaterial);
+
+        Material* cobbleMaterial = new Material(simpleShader);
+        cobbleMaterial->name("cobbleMaterial");
+        cobbleMaterial->addTexture(*cobblestoneTexture);
+        scene.addMaterial(cobbleMaterial);
+
+        Material* variants[2] = { brickMaterial, cobbleMaterial};
+
+        // 3D grid parameters
+        const int   gridSize  = 20;
+        const float spacing  = 1.5f;
+        const glm::vec3 origin(-10.0f, -10.0f, -10.0f);
+
+        // Seed once, outside the loop
+        std::srand(static_cast<unsigned>(std::time(nullptr)));
+
+        // Loop to place random cubes
+        for (int x = 0; x < gridSize; x++)
+        {
+            for (int y = 0; y < gridSize; y++)
+            {
+                for (int z = 0; z < gridSize; z++)
+                {
+                    RenderObject* cube = new RenderObject("res/models/cube.obj");
+
+                    Material* randomMaterial = variants[std::rand() % 2];
+                    cube->assignMaterial(randomMaterial);
+
+                    cube->transform.scale    = glm::vec3(0.5f, 0.5f, 0.5f); // half-spacing so cubes don't touch
+                    cube->transform.position = origin +
+                        glm::vec3(static_cast<float>(x),
+                                  static_cast<float>(y),
+                                  static_cast<float>(z)) * spacing;
+
+                    scene.addRenderObject(cube);
+                }
+            }
+        }
+
+        return scene;
     }
 
     int Scene::getRenderObjectCount()

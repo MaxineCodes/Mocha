@@ -20,6 +20,7 @@ namespace Mocha
 
         // Create a debug scene with random dev testing stuff :)
         static Scene DebugScene();
+        static Scene spatialGridScene(); // Generated stuff
 
     public:
         std::vector<RenderObject*> renderObjects; // mutatable
