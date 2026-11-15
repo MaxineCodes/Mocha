@@ -11,6 +11,7 @@ namespace Mocha
 {
     bool logger::useCout;
     bool logger::printDebug;
+    bool logger::logEnabled;
     std::vector<std::string> Mocha::logger::logMessages;
     std::vector<std::string> Mocha::logger::frameLogMessages;
     std::vector<std::string> Mocha::logger::inputLogMessages;
@@ -30,7 +31,8 @@ namespace Mocha
 
     void logger::log(const logLevel level, logType type, const char *message)
     {
-        if (level == logLevel::DEBUG && !printDebug) return;
+        if (!logger::logEnabled) return; // Don't print if log is disabled.
+        if (level == logLevel::DEBUG && !printDebug) return; // Don't print if printDebug is disabled.
 
         const char* prefix = determineLogLevelPrefix(level);
 

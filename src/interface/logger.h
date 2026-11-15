@@ -33,6 +33,7 @@ namespace Mocha
 
         static bool printDebug;
         static bool useCout;
+        static bool logEnabled;
 
         static std::vector<std::string> logMessages;
         static std::vector<std::string> frameLogMessages;
@@ -77,6 +78,7 @@ namespace Mocha
         // ---
         static void setUseCout(const bool enabled)  { useCout = enabled; }
         static void setPrintDebug(const bool enabled) { printDebug = enabled; }
+        static void setLogEnabled(const bool enabled) { logEnabled = enabled; }
 
         static std::vector<std::string> getLogMessages() { return logMessages; }
         static std::vector<std::string> getFrameLogMessages() { return frameLogMessages; }
@@ -84,6 +86,7 @@ namespace Mocha
 
         static bool getUseCout() { return useCout; }
         static bool getPrintDebug() { return printDebug; }
+        static bool getLogEnabled() { return logEnabled; }
 
     private:
         static const char* determineLogLevelPrefix(logLevel level);
