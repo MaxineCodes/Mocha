@@ -6,7 +6,7 @@
 
 ## About Mocha
 
-Mocha is a simple cross-platform 3D OpenGL core-profile rendering engine to render 3D objects in real-time supporting physically based rendering algorithms and scene loading.
+Mocha is a simple cross-platform 3D OpenGL core-profile rendering engine to render 3D objects in real-time supporting physically based rendering algorithms and scene loading. 
 If you're familiar with 3D viewing applications, a main point of inspiration for this project is Sketchfab and Marmoset Viewer. Performance is not a priority, but being GPU based and only handling small scenes, this should not be a major issue.
 
 ---
