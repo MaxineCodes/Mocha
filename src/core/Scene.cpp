@@ -13,6 +13,8 @@ namespace Mocha
     {
         Scene debugScene;
 
+        debugScene.skyColor = glm::vec4(0.6f, 0.7f, 0.8f, 1.0f); // gentle blue like the sky
+
         // Create Shaders
         Shader* simpleShader = new Shader(
             "res/shaders/basicVertexShader.glsl",
@@ -35,6 +37,8 @@ namespace Mocha
         debugScene.addTexture(minecraftFoxTexture);
         Texture* minecraftSnowFoxTexture = new Texture("res/textures/minecraftSnowFox_baseColour.png");
         debugScene.addTexture(minecraftSnowFoxTexture);
+        Texture* orithTexture = new Texture("res/textures/orith_diffuse_01.png");
+        debugScene.addTexture(orithTexture);
 
         // Create Materials
         Material* minecraftFoxMaterial = new Material(simpleShader);
@@ -56,6 +60,11 @@ namespace Mocha
         cuteFoxMaterial->addTexture(*brickTexture);
         debugScene.addMaterial(cuteFoxMaterial);
 
+        Material* orithMaterial = new Material(simpleShader);
+        orithMaterial->name("orithMaterial");
+        orithMaterial->addTexture(*orithTexture);
+        debugScene.addMaterial(orithMaterial);
+
         // Create RenderObjects
         RenderObject* myGloriousCube = new RenderObject("res/models/cube.obj");
         myGloriousCube->assignMaterial(bricksMaterial);
@@ -68,6 +77,9 @@ namespace Mocha
         //RenderObject* stanfordDragon = new RenderObject("res/models/stanford_dragon.obj");
         //stanfordDragon->assignMaterial(cuteFoxMaterial);
         //debugScene.addRenderObject(stanfordDragon);
+        RenderObject* orith = new RenderObject("res/models/orith.obj");
+        orith->assignMaterial(orithMaterial);
+        debugScene.addRenderObject(orith);
 
         RenderObject* minecraftFox = new RenderObject("res/models/minecraft_fox.obj");
         minecraftFox->assignMaterial(minecraftFoxMaterial);
@@ -92,6 +104,8 @@ namespace Mocha
         //stanfordDragon->transform.position = glm::vec3(0.0f, 0.0f, 0.0f);
         //stanfordDragon->transform.rotation = glm::vec3(0.0f, 0.0f, 0.0f);
 
+        orith->transform.scale = glm::vec3(10.0f, 10.0f, 10.0f);
+
         utahTeapot->transform.position = glm::vec3(-5.0f, 0.0f, 0.0f);
         utahTeapot->transform.scale = glm::vec3(0.2f, 0.2f, 0.2f);
         utahTeapot->transform.rotation = glm::vec3(45.0f, 45.0f, 45.0f);
@@ -103,6 +117,8 @@ namespace Mocha
     Scene Scene::spatialGridScene()
     {
         Scene scene;
+
+        scene.skyColor = glm::vec4(0.6f, 0.7f, 0.8f, 1.0f); // gentle blue like the sky
 
         // Shader
         Shader* simpleShader = new Shader(
@@ -160,6 +176,40 @@ namespace Mocha
                 }
             }
         }
+
+        return scene;
+    }
+
+    Scene Scene::orithScene()
+    {
+        Scene scene;
+
+        scene.skyColor = glm::vec4(0.12f, 0.1f, 0.12f, 1.0f); // purple
+
+        // Create Shaders
+        Shader* simpleShader = new Shader(
+            "res/shaders/basicVertexShader.glsl",
+            "res/shaders/basicFragmentShader.glsl"
+            );
+        scene.addShader(simpleShader);
+
+        // Create Textures
+        Texture* orithTexture = new Texture("res/textures/orith_diffuse_01.png");
+        scene.addTexture(orithTexture);
+
+        // Create Materials
+        Material* orithMaterial = new Material(simpleShader);
+        orithMaterial->name("orithMaterial");
+        orithMaterial->addTexture(*orithTexture);
+        scene.addMaterial(orithMaterial);
+
+        // Create RenderObjects
+        RenderObject* orith = new RenderObject("res/models/orith.obj");
+        orith->assignMaterial(orithMaterial);
+        scene.addRenderObject(orith);
+
+        // Transformations
+        orith->transform.scale = glm::vec3(15.0f, 15.0f, 15.0f);
 
         return scene;
     }

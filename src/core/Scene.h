@@ -21,8 +21,10 @@ namespace Mocha
         // Create a debug scene with random dev testing stuff :)
         static Scene DebugScene();
         static Scene spatialGridScene(); // Generated stuff
+        static Scene orithScene();
 
     public:
+        glm::vec4 skyColor = glm::vec4(1.0f, 0.0f, 1.0f, 1.0f); // Debug-magenta
         std::vector<RenderObject*> renderObjects; // mutatable
         std::vector<const Material*> materials;
         std::vector<const Texture*> textures;

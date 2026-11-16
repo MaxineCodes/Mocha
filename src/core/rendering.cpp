@@ -34,7 +34,7 @@ namespace Mocha
         GUI::setup(window.getWindow());
 
         // Creating the scene here for now
-        scene = Scene::DebugScene(); // TODO: seperate definition and implementation of scene
+        scene = Scene::orithScene(); // TODO: seperate definition and implementation of scene
 
         // Make sure depth test is enabled, otherwise
         // things will render ontop of each other,
@@ -64,7 +64,7 @@ namespace Mocha
             GUI::createGuiElements();
 
             // Render
-            glClearColor(0.6f, 0.7f, 0.8f, 1.0f); // gentle blue like the sky
+            glClearColor(scene.skyColor.x, scene.skyColor.y, scene.skyColor.z, scene.skyColor.w);
             glClear(GL_COLOR_BUFFER_BIT);
             glClear(GL_DEPTH_BUFFER_BIT);
 
