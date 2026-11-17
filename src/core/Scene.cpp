@@ -13,7 +13,8 @@ namespace Mocha
     {
         Scene debugScene;
 
-        debugScene.skyColor = glm::vec4(0.6f, 0.7f, 0.8f, 1.0f); // gentle blue like the sky
+        //debugScene.skyColor = glm::vec4(0.6f, 0.7f, 0.8f, 1.0f); // gentle blue like the sky
+        debugScene.skyColor = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f); // Black
 
         // Create Shaders
         Shader* unlitShader = new Shader(
@@ -45,6 +46,8 @@ namespace Mocha
         debugScene.addTexture(minecraftSnowFoxTexture);
         Texture* orithTexture = new Texture("res/textures/orith_diffuse_01.png");
         debugScene.addTexture(orithTexture);
+        Texture* blankTexture = new Texture("res/textures/white_baseColour.png");
+        debugScene.addTexture(orithTexture);
 
         // Create Materials
         Material* minecraftFoxMaterial = new Material(litShader);
@@ -63,7 +66,7 @@ namespace Mocha
 
         Material* cuteFoxMaterial = new Material(litShader);
         cuteFoxMaterial->name("cuteFoxMaterial");
-        cuteFoxMaterial->addTexture(*brickTexture);
+        cuteFoxMaterial->addTexture(*blankTexture);
         debugScene.addMaterial(cuteFoxMaterial);
 
         Material* orithMaterial = new Material(litShader);
@@ -128,7 +131,7 @@ namespace Mocha
         RenderObject* lightSphere = new RenderObject("res/models/icosphere.obj");
         lightSphere->assignMaterial(lightMaterial);
         debugScene.addRenderObject(lightSphere);
-        lightSphere->transform.scale = glm::vec3(1.0f, 1.0f, 1.0f);
+        lightSphere->transform.scale = glm::vec3(0.1f, 0.1f, 0.1f);
 
         glm::vec3 lightColour = glm::vec3(1.0f, 1.0f, 1.0f);
         litShader->setVec3("lightColour", lightColour);
