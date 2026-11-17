@@ -7,6 +7,8 @@
 
 #include "Scene.h"
 
+#include "GLFW/glfw3.h"
+
 namespace Mocha
 {
     Scene Scene::DebugScene()
@@ -47,7 +49,7 @@ namespace Mocha
         Texture* orithTexture = new Texture("res/textures/orith_diffuse_01.png");
         debugScene.addTexture(orithTexture);
         Texture* blankTexture = new Texture("res/textures/white_baseColour.png");
-        debugScene.addTexture(orithTexture);
+        debugScene.addTexture(blankTexture);
 
         // Create Materials
         Material* minecraftFoxMaterial = new Material(litShader);
@@ -104,7 +106,7 @@ namespace Mocha
 
         minecraftFox->transform.scale = glm::vec3(0.5f, 0.5f, 0.5f);
         minecraftFox->transform.position = glm::vec3(2.0f, 0.0f, 0.0f);
-        minecraftFox->transform.rotation = glm::vec3(0.0f, 0.0f, 1.5f);
+        //minecraftFox->transform.rotation = glm::vec3(0.0f, 0.0f, 1.5f);
 
         myGloriousCube->transform.scale = glm::vec3(1.0f, 1.0f, 1.0f);
         myGloriousCube->transform.position = glm::vec3(-2.0f, 0.0f, 0.0f);
@@ -117,7 +119,7 @@ namespace Mocha
 
         utahTeapot->transform.position = glm::vec3(-5.0f, 0.0f, 0.0f);
         utahTeapot->transform.scale = glm::vec3(0.2f, 0.2f, 0.2f);
-        utahTeapot->transform.rotation = glm::vec3(45.0f, 45.0f, 45.0f);
+        //utahTeapot->transform.rotation = glm::vec3(45.0f, 45.0f, 45.0f);
 
 
         // Lights
@@ -135,6 +137,11 @@ namespace Mocha
 
         glm::vec3 lightColour = glm::vec3(1.0f, 1.0f, 1.0f);
         litShader->setVec3("lightColour", lightColour);
+
+        glm::vec3 lightPosition = glm::vec3(0.0f, 5.0f, 5.0f);
+        litShader->setVec3("lightPosition", lightPosition);
+        lightSphere->transform.position = lightPosition;
+
 
 
 

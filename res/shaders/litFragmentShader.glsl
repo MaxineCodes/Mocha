@@ -2,6 +2,8 @@
 out vec4 FragColor;
 
 in vec2 TexCoord;
+in vec3 Normal;
+in vec3 FragPosition;
 in vec4 VertexColour;
 
 uniform sampler2D texture1;
@@ -9,18 +11,27 @@ uniform sampler2D texture2;
   
 uniform vec3 materialColour;
 uniform vec3 lightColour;
+uniform vec3 lightPosition;
 
 void main()
 {
-    float ambientStrength = 0.1f;
+    //float ambientStrength = 0.1f;
+    vec3 ambientColour = vec3(0.1, 0.1, 0.1);
 
     // Determine the colour of just the texture
     vec4 textureColour = mix(texture(texture1, TexCoord), texture(texture2, TexCoord), 0.0);
     // Add in the vertex colour and material colour
     vec4 unlitColour = textureColour * VertexColour * vec4(materialColour, 1.0);
-    // Add in the ambient factor
-    vec4 ambientColour = unlitColour * ambientStrength;
+
+    // Ambient "Light"
+    vec4 ambientLight = vec4(ambientColour, 1.0);
+
+    // Diffuse Lighting
+    vec3 norm = normalize(Normal);
+    vec3 lightDir = normalize(lightPosition - FragPosition);
+    float diff = max(dot(norm, lightDir), 0.0);
+    vec4 diffuseLight = vec4(diff * lightColour, 1.0);
 
     // Output
-    FragColor = ambientColour;
+    FragColor = (ambientLight + diffuseLight) * unlitColour;
 }
