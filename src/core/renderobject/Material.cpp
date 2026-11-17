@@ -9,6 +9,7 @@ namespace Mocha {
     Material::Material(const Shader* materialShader)
     {
         shader = materialShader;
+        colour = glm::vec3(1.0f, 1.0f, 1.0f); // Default colour to white
     }
 
     Material::Material()
@@ -37,8 +38,10 @@ namespace Mocha {
         // Naming convention for texture: [ texture_baseColour_N ] where N = number of textures
         // For material in shaders: [ material.texture_baseColour_N ]
 
+        shader->setVec3("materialColour", colour);
+
         // Assume defaults
-        unsigned int baseColourCount = 1;
+        unsigned int baseColourCount = 0;
         unsigned int normalCount = 0;
         unsigned int specularCount = 0;
 

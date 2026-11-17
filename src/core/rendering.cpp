@@ -86,6 +86,8 @@ namespace Mocha
             glUniformMatrix4fv(viewLoc, 1, GL_FALSE, &viewMatrix[0][0]);
             */
 
+
+
             // Set Shader Matrices
             for (size_t i = 0; i < scene.shaders.size(); i++)
             {

@@ -22,9 +22,9 @@
 
 int main()  
 {
-    Mocha::logger::setUseCout(false);
-    Mocha::logger::setPrintDebug(false);
-    Mocha::logger::setLogEnabled(false);
+    Mocha::logger::setUseCout(true);
+    Mocha::logger::setPrintDebug(true);
+    Mocha::logger::setLogEnabled(true);
 
     // First, create the scene you want to render
     // Planned: Load .USD scene, or a constructor which generates something for you

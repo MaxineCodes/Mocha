@@ -1,5 +1,5 @@
 # ------------------------------------------------------------
-# Mocha C++/CMake project – .gitignore
+# Mocha C++/CMake project .gitignore
 # ------------------------------------------------------------
 
 # OS files
@@ -68,6 +68,3 @@ dependencies/
 # Python bytecode (used by GLAD generator)
 __pycache__/
 *.pyc
-
-# Keep project metadata like Junie rules tracked
-!.junie/

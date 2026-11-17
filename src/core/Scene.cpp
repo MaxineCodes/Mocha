@@ -16,17 +16,23 @@ namespace Mocha
         debugScene.skyColor = glm::vec4(0.6f, 0.7f, 0.8f, 1.0f); // gentle blue like the sky
 
         // Create Shaders
-        Shader* simpleShader = new Shader(
-            "res/shaders/basicVertexShader.glsl",
-            "res/shaders/basicFragmentShader.glsl"
+        Shader* unlitShader = new Shader(
+            "res/shaders/unlitVertexShader.glsl",
+            "res/shaders/unlitFragmentShader.glsl"
             );
-        debugScene.addShader(simpleShader);
+        debugScene.addShader(unlitShader);
 
         Shader* defaultShader = new Shader(
             "res/shaders/defaultVertexShader.glsl",
             "res/shaders/defaultFragmentShader.glsl"
             );
         debugScene.addShader(defaultShader);
+
+        Shader* litShader = new Shader(
+            "res/shaders/defaultVertexShader.glsl",
+            "res/shaders/litFragmentShader.glsl"
+        );
+        debugScene.addShader(litShader);
 
         // Create Textures
         Texture* brickTexture = new Texture("res/textures/stylizedBricks_baseColour.png");
@@ -41,26 +47,26 @@ namespace Mocha
         debugScene.addTexture(orithTexture);
 
         // Create Materials
-        Material* minecraftFoxMaterial = new Material(simpleShader);
+        Material* minecraftFoxMaterial = new Material(litShader);
         minecraftFoxMaterial->name("minecraftFoxMaterial");
         minecraftFoxMaterial->addTexture(*minecraftSnowFoxTexture);
         debugScene.addMaterial(minecraftFoxMaterial);
 
-        Material* bricksMaterial = new Material(simpleShader);
+        Material* bricksMaterial = new Material(litShader);
         bricksMaterial->name("bricksMaterial");
         bricksMaterial->addTexture(*brickTexture);
         debugScene.addMaterial(bricksMaterial);
 
-        Material* defaultMaterial = new Material(defaultShader);
+        Material* defaultMaterial = new Material(litShader);
         defaultMaterial->name("defaultMaterial");
         debugScene.addMaterial(defaultMaterial);
 
-        Material* cuteFoxMaterial = new Material(simpleShader);
+        Material* cuteFoxMaterial = new Material(litShader);
         cuteFoxMaterial->name("cuteFoxMaterial");
         cuteFoxMaterial->addTexture(*brickTexture);
         debugScene.addMaterial(cuteFoxMaterial);
 
-        Material* orithMaterial = new Material(simpleShader);
+        Material* orithMaterial = new Material(litShader);
         orithMaterial->name("orithMaterial");
         orithMaterial->addTexture(*orithTexture);
         debugScene.addMaterial(orithMaterial);
@@ -111,6 +117,27 @@ namespace Mocha
         utahTeapot->transform.rotation = glm::vec3(45.0f, 45.0f, 45.0f);
 
 
+        // Lights
+        Shader* lightShader = new Shader(
+            "res/shaders/defaultVertexShader.glsl",
+            "res/shaders/lightFragmentShader.glsl");
+        debugScene.addShader(lightShader);
+        Material* lightMaterial = new Material(lightShader);
+        lightMaterial->name("lightMaterial");
+        debugScene.addMaterial(lightMaterial);
+        RenderObject* lightSphere = new RenderObject("res/models/icosphere.obj");
+        lightSphere->assignMaterial(lightMaterial);
+        debugScene.addRenderObject(lightSphere);
+        lightSphere->transform.scale = glm::vec3(1.0f, 1.0f, 1.0f);
+
+        glm::vec3 lightColour = glm::vec3(1.0f, 1.0f, 1.0f);
+        litShader->setVec3("lightColour", lightColour);
+
+
+
+
+
+
         return debugScene;
     }
 
@@ -122,8 +149,8 @@ namespace Mocha
 
         // Shader
         Shader* simpleShader = new Shader(
-            "res/shaders/basicVertexShader.glsl",
-            "res/shaders/basicFragmentShader.glsl"
+            "res/shaders/unlitVertexShader.glsl",
+            "res/shaders/unlitFragmentShader.glsl"
             );
         scene.addShader(simpleShader);
 
@@ -188,8 +215,8 @@ namespace Mocha
 
         // Create Shaders
         Shader* simpleShader = new Shader(
-            "res/shaders/basicVertexShader.glsl",
-            "res/shaders/basicFragmentShader.glsl"
+            "res/shaders/unlitVertexShader.glsl",
+            "res/shaders/unlitFragmentShader.glsl"
             );
         scene.addShader(simpleShader);
 

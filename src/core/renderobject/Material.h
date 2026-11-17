@@ -18,6 +18,7 @@ namespace Mocha
         std::string m_name;
         const Shader *shader;
         std::vector<Texture> textures;
+        glm::vec3 colour;
 
         Material(const Shader* materialShader);
         Material();
