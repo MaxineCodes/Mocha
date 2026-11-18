@@ -111,7 +111,7 @@ namespace Mocha
                 for (size_t i = 0; i < scene.shaders.size(); i++)
                 {
                     scene.shaders[i]->setMat4("model", modelMatrix);
-                    scene.shaders[i]->setVec3("viewPosition", camera.Position);
+                    scene.shaders[i]->setVec3("view.position", camera.Position);
                 }
 
                 // draw

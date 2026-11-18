@@ -54,13 +54,12 @@ namespace Mocha
         Material* minecraftFoxMaterial = new Material(litShader);
         minecraftFoxMaterial->name("minecraftFoxMaterial");
         minecraftFoxMaterial->addTexture(*minecraftSnowFoxTexture);
-        minecraftFoxMaterial->addTexture(*specularTexture);
         debugScene.addMaterial(minecraftFoxMaterial);
 
         Material* bricksMaterial = new Material(litShader);
         bricksMaterial->name("bricksMaterial");
         bricksMaterial->addTexture(*brickTexture);
-        bricksMaterial->addTexture(*specularTexture);
+        bricksMaterial->addTexture(*specularTexture); // TODO: FIX BUG where specular is assigned to all materials
         debugScene.addMaterial(bricksMaterial);
 
         Material* defaultMaterial = new Material(litShader);
@@ -75,7 +74,6 @@ namespace Mocha
         Material* orithMaterial = new Material(litShader);
         orithMaterial->name("orithMaterial");
         orithMaterial->addTexture(*orithTexture);
-        orithMaterial->addTexture(*specularTexture);
         debugScene.addMaterial(orithMaterial);
 
         // Create RenderObjects
@@ -105,7 +103,7 @@ namespace Mocha
         // Transformations
         cuteFox->transform.scale = glm::vec3(0.5f, 0.5f, 0.5f);
         cuteFox->transform.position = glm::vec3(4.0f, 0.0f, 0.0f);
-        cuteFox->transform.rotation = glm::vec3(0.0f, 3.0f, 0.0f);
+        //cuteFox->transform.rotation = glm::vec3(0.0f, 3.0f, 0.0f);
 
         minecraftFox->transform.scale = glm::vec3(0.5f, 0.5f, 0.5f);
         minecraftFox->transform.position = glm::vec3(2.0f, 0.0f, 0.0f);

@@ -11,7 +11,7 @@ namespace Mocha {
         shader = materialShader;
         colour = glm::vec3(1.0f, 1.0f, 1.0f); // Default colour to white
         ambient = glm::vec3(0.1f, 0.1f, 0.1f); // Default a little bit ambient
-        shininess = 3.0f; // Default shininess available
+        shininess = 32.0f; // Default shininess available
     }
 
     Material::Material()
