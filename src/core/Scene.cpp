@@ -36,28 +36,31 @@ namespace Mocha
         debugScene.addShader(litShader);
 
         // Create Textures
-        Texture* brickTexture = new Texture("res/textures/stylizedBricks_baseColour.png");
+        Texture* brickTexture = new Texture("res/textures/stylizedBricks_diffuse.png");
         debugScene.addTexture(brickTexture);
-        Texture* cobblestoneTexture = new Texture("res/textures/cobblestone_baseColour.png");
+        Texture* cobblestoneTexture = new Texture("res/textures/cobblestone_diffuse.png");
         debugScene.addTexture(cobblestoneTexture);
-        Texture* minecraftFoxTexture = new Texture("res/textures/minecraftFox_baseColour.png");
+        Texture* minecraftFoxTexture = new Texture("res/textures/minecraftFox_diffuse.png");
         debugScene.addTexture(minecraftFoxTexture);
-        Texture* minecraftSnowFoxTexture = new Texture("res/textures/minecraftSnowFox_baseColour.png");
+        Texture* minecraftSnowFoxTexture = new Texture("res/textures/minecraftSnowFox_diffuse.png");
         debugScene.addTexture(minecraftSnowFoxTexture);
-        Texture* orithTexture = new Texture("res/textures/orith_diffuse_01.png");
+        Texture* orithTexture = new Texture("res/textures/orith_diffuse.png");
         debugScene.addTexture(orithTexture);
-        Texture* blankTexture = new Texture("res/textures/white_baseColour.png");
+        Texture* blankTexture = new Texture("res/textures/white_diffuse.png");
         debugScene.addTexture(blankTexture);
+        Texture* specularTexture = new Texture("res/textures/test_specular.jpg");
 
         // Create Materials
         Material* minecraftFoxMaterial = new Material(litShader);
         minecraftFoxMaterial->name("minecraftFoxMaterial");
         minecraftFoxMaterial->addTexture(*minecraftSnowFoxTexture);
+        minecraftFoxMaterial->addTexture(*specularTexture);
         debugScene.addMaterial(minecraftFoxMaterial);
 
         Material* bricksMaterial = new Material(litShader);
         bricksMaterial->name("bricksMaterial");
         bricksMaterial->addTexture(*brickTexture);
+        bricksMaterial->addTexture(*specularTexture);
         debugScene.addMaterial(bricksMaterial);
 
         Material* defaultMaterial = new Material(litShader);
@@ -72,6 +75,7 @@ namespace Mocha
         Material* orithMaterial = new Material(litShader);
         orithMaterial->name("orithMaterial");
         orithMaterial->addTexture(*orithTexture);
+        orithMaterial->addTexture(*specularTexture);
         debugScene.addMaterial(orithMaterial);
 
         // Create RenderObjects
@@ -139,13 +143,11 @@ namespace Mocha
         litShader->setVec3("light.diffuse",  0.5f, 0.5f, 0.5f); // darken diffuse light a bit
         litShader->setVec3("light.specular", 1.0f, 1.0f, 1.0f);
         // Material values
-        litShader->setVec3("material.ambient", 1.0f, 0.5f, 0.31f);
-        litShader->setVec3("material.diffuse", 1.0f, 0.5f, 0.31f);
-        litShader->setVec3("material.specular", 0.5f, 0.5f, 0.5f);
-        litShader->setFloat("material.shininess", 32.0f);
+        //litShader->setVec3("material.ambient", 1.0f, 0.5f, 0.31f);
+        //litShader->setFloat("material.shininess", 32.0f);
 
         glm::vec3 lightPosition = glm::vec3(0.0f, 5.0f, 5.0f);
-        litShader->setVec3("lightPosition", lightPosition);
+        litShader->setVec3("light.position", lightPosition);
         lightSphere->transform.position = lightPosition;
 
 

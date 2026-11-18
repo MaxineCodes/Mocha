@@ -10,11 +10,16 @@ namespace Mocha {
     {
         shader = materialShader;
         colour = glm::vec3(1.0f, 1.0f, 1.0f); // Default colour to white
+        ambient = glm::vec3(0.1f, 0.1f, 0.1f); // Default a little bit ambient
+        shininess = 3.0f; // Default shininess available
     }
 
     Material::Material()
         : shader(getDefaultShader())
     {
+        colour = glm::vec3(1.0f, 1.0f, 1.0f); // Default colour to white
+        ambient = glm::vec3(0.1f, 0.1f, 0.1f); // Default a little bit ambient
+        shininess = 3.0f; // Default shininess available
     }
 
     const Shader *Material::getDefaultShader()
@@ -39,26 +44,24 @@ namespace Mocha {
         // For material in shaders: [ material.texture_baseColour_N ]
 
         shader->setVec3("material.colour", colour);
-
-        // Assume defaults
-        unsigned int baseColourCount = 0;
-        unsigned int normalCount = 0;
-        unsigned int specularCount = 0;
+        shader->setVec3("material.ambient", ambient);
+        shader->setFloat("material.shininess", shininess);
 
         for (unsigned int i = 0; i < textures.size(); i++)
         {
             glActiveTexture(GL_TEXTURE0 + i);
             std::string number; std::string textureType = textures[i].type; std::string name = textures[i].name;
 
-            if      (textureType == "texture_baseColour_") number = std::to_string(baseColourCount++);
-            else if (textureType == "texture_normal_")      number = std::to_string(normalCount++);
-            else if (textureType == "texture_specular_")    number = std::to_string(specularCount++);
+            if      (textureType == "diffuse")      shader->setInt("material.diffuse", i);
+            else if (textureType == "normal")       shader->setInt("material.normal", i);
+            else if (textureType == "specular")     shader->setInt("material.specular", i);
+            else logger::logError("Material '" + m_name + "': unknown texture type '" + textureType + "' for texture '" + name + "'");
 
-            shader->setInt(std::string ("material." + textureType + number), i);
+            //shader->setInt(std::string ("material." + textureType), i);
             glBindTexture(GL_TEXTURE_2D, textures[i].textureID);
 
-            logger::logDebugFrame(std::string ("using texture: " + name + textureType + " N=" + number));
-            logger::logDebugFrame(std::string ("shader.setInt: [material." + textureType + number + "] at " + std::to_string(i)));
+            logger::logDebugFrame(std::string ("using texture: " + name + "." + textureType));
+            logger::logDebugFrame(std::string ("shader.setInt: [material." + textureType + "] at " + std::to_string(i)));
         }
         glActiveTexture(GL_TEXTURE0);
     }
