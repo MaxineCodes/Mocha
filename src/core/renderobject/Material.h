@@ -19,6 +19,8 @@ namespace Mocha
         const Shader *shader;
         std::vector<Texture> textures;
         glm::vec3 colour;
+        glm::vec3 ambient;
+        float shininess;
 
         Material(const Shader* materialShader);
         Material();
