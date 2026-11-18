@@ -38,7 +38,7 @@ namespace Mocha {
         // Naming convention for texture: [ texture_baseColour_N ] where N = number of textures
         // For material in shaders: [ material.texture_baseColour_N ]
 
-        shader->setVec3("materialColour", colour);
+        shader->setVec3("material.colour", colour);
 
         // Assume defaults
         unsigned int baseColourCount = 0;

@@ -134,8 +134,15 @@ namespace Mocha
         debugScene.addRenderObject(lightSphere);
         lightSphere->transform.scale = glm::vec3(0.1f, 0.1f, 0.1f);
 
-        glm::vec3 lightColour = glm::vec3(1.0f, 1.0f, 1.0f);
-        litShader->setVec3("lightColour", lightColour);
+        // Light values
+        litShader->setVec3("light.ambient",  0.2f, 0.2f, 0.2f);
+        litShader->setVec3("light.diffuse",  0.5f, 0.5f, 0.5f); // darken diffuse light a bit
+        litShader->setVec3("light.specular", 1.0f, 1.0f, 1.0f);
+        // Material values
+        litShader->setVec3("material.ambient", 1.0f, 0.5f, 0.31f);
+        litShader->setVec3("material.diffuse", 1.0f, 0.5f, 0.31f);
+        litShader->setVec3("material.specular", 0.5f, 0.5f, 0.5f);
+        litShader->setFloat("material.shininess", 32.0f);
 
         glm::vec3 lightPosition = glm::vec3(0.0f, 5.0f, 5.0f);
         litShader->setVec3("lightPosition", lightPosition);

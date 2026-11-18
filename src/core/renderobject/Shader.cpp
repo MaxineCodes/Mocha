@@ -83,6 +83,11 @@ namespace Mocha
         use(); // Using shader so the uniform values are written to the correct shader
         glUniform3fv(glGetUniformLocation(shaderProgramID, name.c_str()), 1, &value[0]);
     }
+    void Shader::setVec3(const std::string &name, const float x, const float y, const float z) const
+    {
+        glm::vec3 vector = glm::vec3(x, y, z);
+        Shader::setVec3(name, vector);
+    }
 
     std::string Shader::readFileFromPath(const char *path)
     {
