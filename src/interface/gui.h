@@ -22,7 +22,7 @@ namespace Mocha
 {
     namespace GUI
     {
-        inline Scene* scene;
+        extern Scene* scene;
 
         // Setup prerequisites for getting gui to render.
         // Only needs to be called once before the render loop.

@@ -10,6 +10,8 @@
 
 #include "logger.h"
 
+namespace Mocha { namespace GUI { Scene* scene = nullptr; } }
+
 void Mocha::GUI::setup(GLFWwindow* window)
 {
     IMGUI_CHECKVERSION();
@@ -29,11 +31,15 @@ void Mocha::GUI::newFrame()
 
 void Mocha::GUI::createGuiElements()
 {
-    ImGui::ShowDemoWindow();
+    //ImGui::ShowDemoWindow();
     DrawLogWindow();
     DrawFrameLogWindow();
     DrawInputLogWindow();
-    DrawOutliner();
+
+    if (scene != nullptr)
+    {
+        DrawOutliner();
+    }
 }
 
 void Mocha::GUI::draw()
@@ -165,7 +171,7 @@ void Mocha::GUI::DrawOutliner()
 
     for (const auto& texture : scene->textures) {
         ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(255, 255, 255, 255));
-        ImGui::TextUnformatted(texture->type.c_str());
+        ImGui::TextUnformatted(texture->name.c_str());
         ImGui::PopStyleColor();
     }
 
