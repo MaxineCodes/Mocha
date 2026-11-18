@@ -35,6 +35,7 @@ namespace Mocha
 
         // Creating the scene here for now
         scene = Scene::DebugScene(); // TODO: seperate definition and implementation of scene
+        GUI::updateScene(&scene); // pointer to scene for GUI
 
         // Make sure depth test is enabled, otherwise
         // things will render ontop of each other,

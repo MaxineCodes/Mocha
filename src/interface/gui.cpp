@@ -29,10 +29,11 @@ void Mocha::GUI::newFrame()
 
 void Mocha::GUI::createGuiElements()
 {
-    //ImGui::ShowDemoWindow();
+    ImGui::ShowDemoWindow();
     DrawLogWindow();
     DrawFrameLogWindow();
     DrawInputLogWindow();
+    DrawOutliner();
 }
 
 void Mocha::GUI::draw()
@@ -143,6 +144,28 @@ void Mocha::GUI::DrawLogWindow()
 
 
         ImGui::TextUnformatted(message.c_str());
+        ImGui::PopStyleColor();
+    }
+
+    // Scroll to bottom by default
+    if (ImGui::GetScrollY() >= ImGui::GetScrollMaxY())
+    {
+        ImGui::SetScrollHereY(1.0f);
+    }
+
+    ImGui::EndChild();
+
+    ImGui::End();
+}
+
+void Mocha::GUI::DrawOutliner()
+{
+    ImGui::Begin("Outliner");
+    ImGui::BeginChild("ScrollingRegion", ImVec2(0,0), false, ImGuiWindowFlags_HorizontalScrollbar);
+
+    for (const auto& texture : scene->textures) {
+        ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(255, 255, 255, 255));
+        ImGui::TextUnformatted(texture->type.c_str());
         ImGui::PopStyleColor();
     }
 

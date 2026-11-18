@@ -19,7 +19,7 @@ namespace Mocha
         int width, height, channels;
 
         Texture(const char* path);
-        Texture() { Texture("res/textures/cobblestone_basecolour.png");}
+        Texture() { Texture("res/textures/cobblestone_diffuse.png");}
 
         void use();
     };
