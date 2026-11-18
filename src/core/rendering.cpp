@@ -70,9 +70,10 @@ namespace Mocha
 
             // create transformations
             glm::mat4 modelMatrix = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
-            glm::mat4 viewMatrix = camera.GetViewMatrix();
             //modelMatrix = glm::rotate(modelMatrix, (float)glfwGetTime(), glm::vec3(0.0f, 1.0f, 0.0f)); // TODO:　get time from window class function
-            viewMatrix  = glm::translate(viewMatrix, glm::vec3(1.7f, -1.5f, -3.0f));
+            // view matrix
+            glm::mat4 viewMatrix = camera.GetViewMatrix();
+            //viewMatrix  = glm::translate(viewMatrix, glm::vec3(1.7f, -1.5f, -3.0f));
             // perspective matrix
             const float fov = camera.GetFOV(); //fov = glm::radians(45.0f);
             glm::mat4 perspectiveProjectionMatrix = glm::perspective(fov, float(width) / float(height), 0.1f, 100.0f);
@@ -85,7 +86,6 @@ namespace Mocha
             glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(modelMatrix));
             glUniformMatrix4fv(viewLoc, 1, GL_FALSE, &viewMatrix[0][0]);
             */
-
 
 
             // Set Shader Matrices
@@ -105,12 +105,13 @@ namespace Mocha
                 modelMatrix = glm::translate(modelMatrix, renderObject->transform.position);
                 modelMatrix = glm::rotate   (modelMatrix, renderObject->transform.rotation.x, glm::vec3(1.0f, 0.0f, 0.0f));
                 modelMatrix = glm::rotate   (modelMatrix, renderObject->transform.rotation.y, glm::vec3(0.0f, 1.0f, 0.0f));
-                modelMatrix = glm::rotate   (modelMatrix, renderObject->transform.rotation.z, glm::vec3(1.0f, 0.0f, 1.0f));
+                modelMatrix = glm::rotate   (modelMatrix, renderObject->transform.rotation.z, glm::vec3(0.0f, 0.0f, 1.0f));
                 modelMatrix = glm::scale    (modelMatrix, renderObject->transform.scale);
                 // Update the OpenGL context uniform for the correct shader.
                 for (size_t i = 0; i < scene.shaders.size(); i++)
                 {
                     scene.shaders[i]->setMat4("model", modelMatrix);
+                    scene.shaders[i]->setVec3("viewPosition", camera.Position);
                 }
 
                 // draw

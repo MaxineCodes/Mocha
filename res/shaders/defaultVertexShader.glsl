@@ -20,7 +20,9 @@ void main()
 
     // Out
     FragPosition = vec3(model * vec4(aPos, 1.0));
-    Normal = aNormal;
+    //uniform mat4 normalMatrix;
+    Normal = mat3(model) * aNormal; // Apply model matrix so normals are correct in world space
+    //Normal = aNormal;
     TexCoord = vec2(aTexCoord.x, 1.0 - aTexCoord.y);
     VertexColour = aColour;
 }

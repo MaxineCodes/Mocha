@@ -7,8 +7,6 @@
 
 #include "Scene.h"
 
-#include "GLFW/glfw3.h"
-
 namespace Mocha
 {
     Scene Scene::DebugScene()
@@ -103,6 +101,7 @@ namespace Mocha
         // Transformations
         cuteFox->transform.scale = glm::vec3(0.5f, 0.5f, 0.5f);
         cuteFox->transform.position = glm::vec3(4.0f, 0.0f, 0.0f);
+        cuteFox->transform.rotation = glm::vec3(0.0f, 3.0f, 0.0f);
 
         minecraftFox->transform.scale = glm::vec3(0.5f, 0.5f, 0.5f);
         minecraftFox->transform.position = glm::vec3(2.0f, 0.0f, 0.0f);
