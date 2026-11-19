@@ -50,7 +50,7 @@ namespace Mocha {
         else
         {
             logger::logError("Material::bindTexture on " + m_name + ": NULL texture: " + std::string(uniformVariable));
-            glBindTexture(GL_TEXTURE_2D, getFalbackTexture(textureType) );
+            glBindTexture(GL_TEXTURE_2D, getFallbackTexture(textureType) );
         }
     }
 
@@ -75,16 +75,18 @@ namespace Mocha {
         glActiveTexture(GL_TEXTURE0);
     }
 
-    GLuint Material::getFalbackTexture(TEXTURE_TYPE textureType)
+    GLuint Material::getFallbackTexture(TEXTURE_TYPE textureType)
     {
         // One 1x1 white and one 1x1 black texture, created lazily on first use.
-        static GLuint whiteTextureID = 0;
-        static GLuint blackTextureID = 0;
+        static GLuint whiteTextureID   = 0;
+        static GLuint blackTextureID   = 0;
+        static GLuint magentaTextureID = 0;
 
         if (whiteTextureID == 0)
         {
-            const unsigned char white[3] = { 255, 255, 255 };
-            const unsigned char black[3] = {   0,   0,   0 };
+            const unsigned char white   [3] = { 255, 255, 255 };
+            const unsigned char black   [3] = {   0,   0,   0 };
+            const unsigned char magenta [3] = { 255,   0, 255 };
 
             glGenTextures(1, &whiteTextureID);
             glBindTexture(GL_TEXTURE_2D, whiteTextureID);
@@ -102,13 +104,27 @@ namespace Mocha {
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
             glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 1, 1, 0, GL_RGB, GL_UNSIGNED_BYTE, black);
 
+            glGenTextures(1, &magentaTextureID);
+            glBindTexture(GL_TEXTURE_2D, magentaTextureID);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 1, 1, 0, GL_RGB, GL_UNSIGNED_BYTE, magenta);
+
+
             logger::logInfo("Created fallback textures (1x1 white/black)");
         }
 
         switch (textureType)
         {
-            case DIFFUSE:  return whiteTextureID; // White for multiplicative (value * 1.0 = value)
-            default:       return blackTextureID; // Black for additive (value + 0.0 = value)
+            // White for multiplicative (value * 1.0 = value)
+            // Black for additive (value + 0.0 = value)
+            // Magenta to boldly show that something is wrong
+            case DIFFUSE:   return whiteTextureID;
+            case SPECULAR:  return whiteTextureID;
+            case EMISSION:  return blackTextureID;
+            default:        return blackTextureID;
         }
     }
 } // Mocha

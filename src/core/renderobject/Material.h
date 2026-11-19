@@ -59,7 +59,7 @@ namespace Mocha
     private:
         static const Shader* getDefaultShader();
         void bindTexture(TEXTURE_TYPE textureType) const;
-        static GLuint getFalbackTexture(TEXTURE_TYPE textureType);
+        static GLuint getFallbackTexture(TEXTURE_TYPE textureType);
     };
 } // Mocha
 
