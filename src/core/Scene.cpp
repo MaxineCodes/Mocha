@@ -13,92 +13,95 @@ namespace Mocha
     {
         Scene debugScene;
 
-        //debugScene.skyColor = glm::vec4(0.6f, 0.7f, 0.8f, 1.0f); // gentle blue like the sky
-        debugScene.skyColor = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f); // Black
+        debugScene.skyColor = glm::vec4(0.6f, 0.7f, 0.8f, 1.0f); // gentle blue like the sky
+        //debugScene.skyColor = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f); // Black
 
         // Create Shaders
         Shader* unlitShader = new Shader(
             "res/shaders/unlitVertexShader.glsl",
             "res/shaders/unlitFragmentShader.glsl"
             );
-        debugScene.addShader(unlitShader);
+        debugScene.setShader("unlit", unlitShader);
 
         Shader* defaultShader = new Shader(
             "res/shaders/defaultVertexShader.glsl",
             "res/shaders/defaultFragmentShader.glsl"
             );
-        debugScene.addShader(defaultShader);
+        debugScene.setShader("default", defaultShader);
 
         Shader* litShader = new Shader(
             "res/shaders/defaultVertexShader.glsl",
             "res/shaders/litFragmentShader.glsl"
         );
-        debugScene.addShader(litShader);
+        debugScene.setShader("lit", litShader);
 
         // Create Textures
         Texture* brickTexture = new Texture("res/textures/stylizedBricks_diffuse.png");
-        debugScene.addTexture(brickTexture);
+        debugScene.setTexture("stylizedBricks_diffuse", brickTexture);
         Texture* cobblestoneTexture = new Texture("res/textures/cobblestone_diffuse.png");
-        debugScene.addTexture(cobblestoneTexture);
+        debugScene.setTexture("cobblestone_diffuse", cobblestoneTexture);
         Texture* minecraftFoxTexture = new Texture("res/textures/minecraftFox_diffuse.png");
-        debugScene.addTexture(minecraftFoxTexture);
+        debugScene.setTexture("minecraftFox_diffuse", minecraftFoxTexture);
         Texture* minecraftSnowFoxTexture = new Texture("res/textures/minecraftSnowFox_diffuse.png");
-        debugScene.addTexture(minecraftSnowFoxTexture);
+        debugScene.setTexture("minecraftSnowFox_diffuse", minecraftSnowFoxTexture);
         Texture* orithTexture = new Texture("res/textures/orith_diffuse.png");
-        debugScene.addTexture(orithTexture);
+        debugScene.setTexture("orith_diffuse", orithTexture);
         Texture* blankTexture = new Texture("res/textures/white_diffuse.png");
-        debugScene.addTexture(blankTexture);
+        debugScene.setTexture("white_diffuse", blankTexture);
         Texture* specularTexture = new Texture("res/textures/test_specular.jpg");
+        debugScene.setTexture("specular", specularTexture);
 
         // Create Materials
         Material* minecraftFoxMaterial = new Material(litShader);
         minecraftFoxMaterial->name("minecraftFoxMaterial");
-        minecraftFoxMaterial->addTexture(*minecraftSnowFoxTexture);
-        debugScene.addMaterial(minecraftFoxMaterial);
+        minecraftFoxMaterial->setDiffuseTexture(&*minecraftSnowFoxTexture);
+        minecraftFoxMaterial->setSpecularTexture(&*specularTexture);
+        debugScene.setMaterial("mc fox", minecraftFoxMaterial);
 
         Material* bricksMaterial = new Material(litShader);
         bricksMaterial->name("bricksMaterial");
-        bricksMaterial->addTexture(*brickTexture);
-        bricksMaterial->addTexture(*specularTexture); // TODO: FIX BUG where specular is assigned to all materials
-        debugScene.addMaterial(bricksMaterial);
+        bricksMaterial->setDiffuseTexture(&*brickTexture);
+        bricksMaterial->setSpecularTexture(&*specularTexture); // TODO: FIX BUG where specular is assigned to all materials
+        debugScene.setMaterial("stylized bricks", bricksMaterial);
 
         Material* defaultMaterial = new Material(litShader);
         defaultMaterial->name("defaultMaterial");
-        debugScene.addMaterial(defaultMaterial);
+        debugScene.setMaterial("default", defaultMaterial);
 
         Material* cuteFoxMaterial = new Material(litShader);
         cuteFoxMaterial->name("cuteFoxMaterial");
-        cuteFoxMaterial->addTexture(*blankTexture);
-        debugScene.addMaterial(cuteFoxMaterial);
+        cuteFoxMaterial->setDiffuseTexture(&*blankTexture);
+        debugScene.setMaterial("cute fox", cuteFoxMaterial);
 
         Material* orithMaterial = new Material(litShader);
         orithMaterial->name("orithMaterial");
-        orithMaterial->addTexture(*orithTexture);
-        debugScene.addMaterial(orithMaterial);
+        orithMaterial->setDiffuseTexture(&*orithTexture);
+        //orithMaterial->setSpecularTexture(&*specularTexture);
+        debugScene.setMaterial("orith", orithMaterial);
 
         // Create RenderObjects
         RenderObject* myGloriousCube = new RenderObject("res/models/cube.obj");
-        myGloriousCube->assignMaterial(bricksMaterial);
-        debugScene.addRenderObject(myGloriousCube);
+        myGloriousCube->assignMaterial(*bricksMaterial);
+        debugScene.setRenderObject("glorious cube", myGloriousCube);
 
         RenderObject* utahTeapot = new RenderObject("res/models/utah_teapot.obj");
-        utahTeapot->assignMaterial(defaultMaterial);
-        debugScene.addRenderObject(utahTeapot);
+        utahTeapot->assignMaterial(*defaultMaterial);
+        debugScene.setRenderObject("utah teapot", utahTeapot);
 
         //RenderObject* stanfordDragon = new RenderObject("res/models/stanford_dragon.obj");
         //stanfordDragon->assignMaterial(cuteFoxMaterial);
         //debugScene.addRenderObject(stanfordDragon);
         RenderObject* orith = new RenderObject("res/models/orith.obj");
-        orith->assignMaterial(orithMaterial);
-        debugScene.addRenderObject(orith);
+        orith->assignMaterial(*orithMaterial);
+        debugScene.setRenderObject("orith", orith);
 
         RenderObject* minecraftFox = new RenderObject("res/models/minecraft_fox.obj");
-        minecraftFox->assignMaterial(minecraftFoxMaterial);
-        debugScene.addRenderObject(minecraftFox);
+        minecraftFox->assignMaterial(*minecraftFoxMaterial);
+        debugScene.setRenderObject("fox from minecraft", minecraftFox);
 
         RenderObject* cuteFox = new RenderObject("res/models/cute_fox.obj");
-        cuteFox->assignMaterial(cuteFoxMaterial);
-        debugScene.addRenderObject(cuteFox);
+        cuteFox->assignMaterial(*cuteFoxMaterial);
+        debugScene.setRenderObject("cutefox", cuteFox);
 
         // Transformations
         cuteFox->transform.scale = glm::vec3(0.5f, 0.5f, 0.5f);
@@ -127,13 +130,16 @@ namespace Mocha
         Shader* lightShader = new Shader(
             "res/shaders/defaultVertexShader.glsl",
             "res/shaders/lightFragmentShader.glsl");
-        debugScene.addShader(lightShader);
+        debugScene.setShader("lightshader", lightShader);
         Material* lightMaterial = new Material(lightShader);
         lightMaterial->name("lightMaterial");
-        debugScene.addMaterial(lightMaterial);
+        lightMaterial->setSpecularTexture(&*specularTexture);
+        lightMaterial->setDiffuseTexture(&*specularTexture);
+
+        debugScene.setMaterial("light", lightMaterial);
         RenderObject* lightSphere = new RenderObject("res/models/icosphere.obj");
-        lightSphere->assignMaterial(lightMaterial);
-        debugScene.addRenderObject(lightSphere);
+        lightSphere->assignMaterial(*lightMaterial);
+        debugScene.setRenderObject("lightsphere", lightSphere);
         lightSphere->transform.scale = glm::vec3(0.1f, 0.1f, 0.1f);
 
         // Light values
@@ -168,24 +174,24 @@ namespace Mocha
             "res/shaders/unlitVertexShader.glsl",
             "res/shaders/unlitFragmentShader.glsl"
             );
-        scene.addShader(simpleShader);
+        scene.setShader("simpleShader", simpleShader);
 
         // Textures
         Texture* brickTexture      = new Texture("res/textures/stylizedBricks_baseColour.png");
         Texture* cobblestoneTexture= new Texture("res/textures/cobblestone_baseColour.png");
-        scene.addTexture(brickTexture);
-        scene.addTexture(cobblestoneTexture);
+        scene.setTexture("stylized brick", brickTexture);
+        scene.setTexture("cobblestone", cobblestoneTexture);
 
         // Materials
         Material* brickMaterial = new Material(simpleShader);
         brickMaterial->name("brickMaterial");
-        brickMaterial->addTexture(*brickTexture);
-        scene.addMaterial(brickMaterial);
+        brickMaterial->setDiffuseTexture(&*brickTexture);
+        scene.setMaterial("stylized bricks", brickMaterial);
 
         Material* cobbleMaterial = new Material(simpleShader);
         cobbleMaterial->name("cobbleMaterial");
-        cobbleMaterial->addTexture(*cobblestoneTexture);
-        scene.addMaterial(cobbleMaterial);
+        cobbleMaterial->setDiffuseTexture(&*cobblestoneTexture);
+        scene.setMaterial("cobblestone", cobbleMaterial);
 
         Material* variants[2] = { brickMaterial, cobbleMaterial};
 
@@ -194,7 +200,7 @@ namespace Mocha
         const float spacing  = 1.5f;
         const glm::vec3 origin(-10.0f, -10.0f, -10.0f);
 
-        // Seed once, outside the loop
+        // Seed once outside the loop
         std::srand(static_cast<unsigned>(std::time(nullptr)));
 
         // Loop to place random cubes
@@ -207,7 +213,7 @@ namespace Mocha
                     RenderObject* cube = new RenderObject("res/models/cube.obj");
 
                     Material* randomMaterial = variants[std::rand() % 2];
-                    cube->assignMaterial(randomMaterial);
+                    cube->assignMaterial(*randomMaterial);
 
                     cube->transform.scale    = glm::vec3(0.5f, 0.5f, 0.5f); // half-spacing so cubes don't touch
                     cube->transform.position = origin +
@@ -215,7 +221,8 @@ namespace Mocha
                                   static_cast<float>(y),
                                   static_cast<float>(z)) * spacing;
 
-                    scene.addRenderObject(cube);
+                    std::string name = "cube_" + std::to_string(x) + "_" + std::to_string(y) + "_" + std::to_string(z);
+                    scene.setRenderObject(name.c_str(), cube);
                 }
             }
         }
@@ -234,22 +241,22 @@ namespace Mocha
             "res/shaders/unlitVertexShader.glsl",
             "res/shaders/unlitFragmentShader.glsl"
             );
-        scene.addShader(simpleShader);
+        scene.setShader("simple shader", simpleShader);
 
         // Create Textures
         Texture* orithTexture = new Texture("res/textures/orith_diffuse_01.png");
-        scene.addTexture(orithTexture);
+        scene.setTexture("orith diffuse", orithTexture);
 
         // Create Materials
         Material* orithMaterial = new Material(simpleShader);
         orithMaterial->name("orithMaterial");
-        orithMaterial->addTexture(*orithTexture);
-        scene.addMaterial(orithMaterial);
+        orithMaterial->assignTexture(*orithTexture, DIFFUSE);
+        scene.setMaterial("orith", orithMaterial);
 
         // Create RenderObjects
         RenderObject* orith = new RenderObject("res/models/orith.obj");
-        orith->assignMaterial(orithMaterial);
-        scene.addRenderObject(orith);
+        orith->assignMaterial(*orithMaterial);
+        scene.setRenderObject("orith", orith);
 
         // Transformations
         orith->transform.scale = glm::vec3(15.0f, 15.0f, 15.0f);
@@ -257,7 +264,25 @@ namespace Mocha
         return scene;
     }
 
-    int Scene::getRenderObjectCount()
+    void Scene::assignTextureToMaterial(const std::string& textureName, const std::string& materialName, const TEXTURE_TYPE textureType)
+    {
+        const Texture* texture = this->getTexture(textureName);
+        Material* material = this->getMaterial(materialName);
+        material->assignTexture(*texture, textureType);
+    }
+    void Scene::assignTextureToMaterial(const char* textureName, const char* materialName, const TEXTURE_TYPE textureType)
+    { assignTextureToMaterial(std::string(textureName), std::string(materialName), textureType); }
+
+    void Scene::assignMaterialToRenderObject(const std::string& materialName, const std::string& renderObjectName)
+    {
+        Material* material = this->getMaterial(materialName);
+        RenderObject* renderObject = this->getRenderObject(renderObjectName);
+        renderObject->assignMaterial(*material);
+    }
+    void Scene::assignMaterialToRenderObject(const char* materialName, const char* renderObjectName)
+    { assignMaterialToRenderObject(std::string(materialName), std::string(renderObjectName)); }
+
+    int Scene::getRenderObjectCount() const
     {
         return renderObjects.size();
     }

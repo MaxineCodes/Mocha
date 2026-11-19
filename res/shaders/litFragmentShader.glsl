@@ -15,11 +15,12 @@ in vec4 VertexColour;
 // --------- Material ---------
 struct Material 
 {
-    sampler2D diffuse;
-    vec3 colour;
     vec3 ambient;
-    sampler2D specular;
     float shininess;
+
+    sampler2D diffuse;          vec3 diffuseValue;
+    sampler2D specular;         vec3 specularValue;
+    sampler2D emission;         vec3 emissionValue;
 }; 
 uniform Material material;
 // ----------------------------
@@ -90,6 +91,9 @@ void main()
     // Ambient "Light"
     vec3 ambientLight = texture(material.diffuse, TexCoord).rgb  * VertexColour.rgb * light.ambient;
 
+    // diffuseColour = diffuseTexture * diffuseValue
+    // diffuseColour = diffuseColour * VertexColour
+
     // Diffuse Lighting
     vec3 norm = normalize(Normal);
     vec3 lightDir = normalize(light.position - FragPosition);
@@ -106,5 +110,8 @@ void main()
 
     // Output
     FragColor = vec4((ambientLight + diffuseLight + specularLight), 1.0);
+    //FragColor = vec4(ambientLight), 1.0);
     //FragColor = (ambientLight + diffuseLight) * unlitColour;
-}
+
+    //FragColor = vec4(texture(material.specular, TexCoord).rgb, 1.0);
+}    

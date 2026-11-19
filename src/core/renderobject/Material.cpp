@@ -6,21 +6,8 @@
 #include "../../interface/logger.h"
 
 namespace Mocha {
-    Material::Material(const Shader* materialShader)
-    {
-        shader = materialShader;
-        colour = glm::vec3(1.0f, 1.0f, 1.0f); // Default colour to white
-        ambient = glm::vec3(0.1f, 0.1f, 0.1f); // Default a little bit ambient
-        shininess = 32.0f; // Default shininess available
-    }
-
-    Material::Material()
-        : shader(getDefaultShader())
-    {
-        colour = glm::vec3(1.0f, 1.0f, 1.0f); // Default colour to white
-        ambient = glm::vec3(0.1f, 0.1f, 0.1f); // Default a little bit ambient
-        shininess = 3.0f; // Default shininess available
-    }
+    Material::Material(const Shader* materialShader) { shader = materialShader;}
+    Material::Material() : shader(getDefaultShader()) {}
 
     const Shader *Material::getDefaultShader()
     {
@@ -30,9 +17,41 @@ namespace Mocha {
 
     Material::~Material() = default;
 
-    void Material::addTexture(const Texture& texture)
+    void Material::assignTexture(const Texture &texture, TEXTURE_TYPE textureType)
     {
-        textures.push_back(texture);
+        switch (textureType)
+        {
+            case DIFFUSE:  m_diffuseTexture  = &texture; break;
+            case SPECULAR: m_specularTexture = &texture; break;
+            case EMISSION: m_emissionTexture = &texture; break;
+            case NORMAL:   m_normalTexture   = &texture; break;
+            default: logger::logError("Material::assignTexture: UNKNOWN TYPE: '" + m_name + "'");
+        }
+    }
+
+    void Material::bindTexture(TEXTURE_TYPE textureType) const
+    {
+        const Texture* texture = nullptr;
+        const char* uniformVariable = nullptr;
+
+        switch (textureType)
+        {
+            case DIFFUSE:  texture = m_diffuseTexture;      uniformVariable = "material.diffuse"; break;
+            case SPECULAR: texture = m_specularTexture;     uniformVariable = "material.specular"; break;
+            case EMISSION : texture = m_emissionTexture;    uniformVariable = "material.emission"; break;
+            case NORMAL:   texture = m_normalTexture;       uniformVariable = "material.normal"; break;
+            default: logger::logError("Material " + m_name + ": unknown texture type." );
+        }
+
+        glActiveTexture(GL_TEXTURE0 + textureType);
+        shader->setInt(uniformVariable, static_cast<int>(textureType));
+
+        if (texture) glBindTexture(GL_TEXTURE_2D, texture->textureID);
+        else
+        {
+            logger::logError("Material::bindTexture on " + m_name + ": NULL texture: " + std::string(uniformVariable));
+            glBindTexture(GL_TEXTURE_2D, getFalbackTexture(textureType) );
+        }
     }
 
     void Material::Use() const
@@ -40,29 +59,56 @@ namespace Mocha {
         shader->use();
         logger::logDebugFrame(("using material: " + m_name).c_str());
 
-        // Naming convention for texture: [ texture_baseColour_N ] where N = number of textures
-        // For material in shaders: [ material.texture_baseColour_N ]
+        // Blinn-Phong
+        shader->setVec3("material.ambient", m_ambient);
+        shader->setFloat("material.shininess", m_shininess);
+        shader->setVec3("material.diffuseValue", m_diffuseValue);
+        shader->setVec3("material.specularValue", m_specularValue);
+        shader->setVec3("material.emissionValue", m_emissionValue);
+        shader->setFloat("material.normalIntensity", m_normalIntensity);
 
-        shader->setVec3("material.colour", colour);
-        shader->setVec3("material.ambient", ambient);
-        shader->setFloat("material.shininess", shininess);
+        bindTexture(DIFFUSE);
+        bindTexture(SPECULAR);
+        bindTexture(EMISSION);  // unused
+        bindTexture(NORMAL);    // unused
 
-        for (unsigned int i = 0; i < textures.size(); i++)
-        {
-            glActiveTexture(GL_TEXTURE0 + i);
-            std::string number; std::string textureType = textures[i].type; std::string name = textures[i].name;
-
-            if      (textureType == "diffuse")      shader->setInt("material.diffuse", i);
-            else if (textureType == "normal")       shader->setInt("material.normal", i);
-            else if (textureType == "specular")     shader->setInt("material.specular", i);
-            else logger::logError("Material '" + m_name + "': unknown texture type '" + textureType + "' for texture '" + name + "'");
-
-            //shader->setInt(std::string ("material." + textureType), i);
-            glBindTexture(GL_TEXTURE_2D, textures[i].textureID);
-
-            logger::logDebugFrame(std::string ("using texture: " + name + "." + textureType));
-            logger::logDebugFrame(std::string ("shader.setInt: [material." + textureType + "] at " + std::to_string(i)));
-        }
         glActiveTexture(GL_TEXTURE0);
+    }
+
+    GLuint Material::getFalbackTexture(TEXTURE_TYPE textureType)
+    {
+        // One 1x1 white and one 1x1 black texture, created lazily on first use.
+        static GLuint whiteTextureID = 0;
+        static GLuint blackTextureID = 0;
+
+        if (whiteTextureID == 0)
+        {
+            const unsigned char white[3] = { 255, 255, 255 };
+            const unsigned char black[3] = {   0,   0,   0 };
+
+            glGenTextures(1, &whiteTextureID);
+            glBindTexture(GL_TEXTURE_2D, whiteTextureID);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 1, 1, 0, GL_RGB, GL_UNSIGNED_BYTE, white);
+
+            glGenTextures(1, &blackTextureID);
+            glBindTexture(GL_TEXTURE_2D, blackTextureID);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 1, 1, 0, GL_RGB, GL_UNSIGNED_BYTE, black);
+
+            logger::logInfo("Created fallback textures (1x1 white/black)");
+        }
+
+        switch (textureType)
+        {
+            case DIFFUSE:  return whiteTextureID; // White for multiplicative (value * 1.0 = value)
+            default:       return blackTextureID; // Black for additive (value + 0.0 = value)
+        }
     }
 } // Mocha

@@ -11,7 +11,7 @@ namespace Mocha
 {
     struct Texture
     {
-        GLuint textureID;
+        GLuint textureID = 0;
         std::string name;
         std::string type;
         std::string number;
@@ -19,7 +19,7 @@ namespace Mocha
         int width, height, channels;
 
         Texture(const char* path);
-        Texture() { Texture("res/textures/cobblestone_diffuse.png");}
+        Texture() : Texture("res/textures/cobblestone_diffuse.png") {}
 
         void use();
     };

@@ -30,11 +30,11 @@ namespace Mocha
         }
     }
 
-    void RenderObject::assignMaterial(Material *material)
+    void RenderObject::assignMaterial(Material& material)
     {
         for (unsigned int i = 0; i < meshes.size(); i++)
         {
-            meshes[i].AssignMaterial(*material);
+            meshes[i].AssignMaterial(material);
         }
     }
 

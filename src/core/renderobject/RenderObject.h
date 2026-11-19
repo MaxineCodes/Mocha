@@ -29,7 +29,7 @@ namespace Mocha
         void draw();
 
         // Assigns a material to all meshes belonging to this RenderObject
-        void assignMaterial(Material* material);
+        void assignMaterial(Material& material);
 
     private:
         std::vector<Mesh> meshes;

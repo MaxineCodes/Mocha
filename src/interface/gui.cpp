@@ -169,9 +169,28 @@ void Mocha::GUI::DrawOutliner()
     ImGui::Begin("Outliner");
     ImGui::BeginChild("ScrollingRegion", ImVec2(0,0), false, ImGuiWindowFlags_HorizontalScrollbar);
 
-    for (const auto& texture : scene->textures) {
+    for (auto& [name, shader] : scene->shaders)
+    {
         ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(255, 255, 255, 255));
-        ImGui::TextUnformatted(texture->name.c_str());
+        ImGui::TextUnformatted(name.c_str());
+        ImGui::PopStyleColor();
+    }
+    for (auto& [name, shader] : scene->textures)
+    {
+        ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(255, 0, 0, 255));
+        ImGui::TextUnformatted(name.c_str());
+        ImGui::PopStyleColor();
+    }
+    for (auto& [name, shader] : scene->materials)
+    {
+        ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(0, 255, 0, 255));
+        ImGui::TextUnformatted(name.c_str());
+        ImGui::PopStyleColor();
+    }
+    for (auto& [name, shader] : scene->renderObjects)
+    {
+        ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(0, 0, 255, 255));
+        ImGui::TextUnformatted(name.c_str());
         ImGui::PopStyleColor();
     }
 
