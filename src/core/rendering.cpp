@@ -34,7 +34,7 @@ namespace Mocha
         GUI::setup(window.getWindow());
 
         // Creating the scene here for now
-        scene = Scene::DebugScene(); // TODO: seperate definition and implementation of scene
+        scene = Scene::spatialGridScene(); // TODO: seperate definition and implementation of scene
         GUI::updateScene(&scene); // pointer to scene for GUI
 
         // Make sure depth test is enabled, otherwise
@@ -71,7 +71,7 @@ namespace Mocha
 
             // create transformations
             glm::mat4 modelMatrix = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
-            //modelMatrix = glm::rotate(modelMatrix, (float)glfwGetTime(), glm::vec3(0.0f, 1.0f, 0.0f)); // TODO:　get time from window class function
+            modelMatrix = glm::rotate(modelMatrix, (float)glfwGetTime(), glm::vec3(0.0f, 1.0f, 0.0f)); // TODO:　get time from window class function
             // view matrix
             glm::mat4 viewMatrix = camera.GetViewMatrix();
             //viewMatrix  = glm::translate(viewMatrix, glm::vec3(1.7f, -1.5f, -3.0f));
@@ -79,22 +79,9 @@ namespace Mocha
             const float fov = camera.GetFOV(); //fov = glm::radians(45.0f);
             glm::mat4 perspectiveProjectionMatrix = glm::perspective(fov, float(width) / float(height), 0.1f, 100.0f);
 
-            /*
-            // retrieve the matrix uniform locations
-            unsigned int modelLoc = glGetUniformLocation(simpleShader.shaderProgramID, "model");
-            unsigned int viewLoc  = glGetUniformLocation(simpleShader.shaderProgramID, "view");
-            // pass them to the shaders
-            glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(modelMatrix));
-            glUniformMatrix4fv(viewLoc, 1, GL_FALSE, &viewMatrix[0][0]);
-            */
-
-
             // Set Shader Matrices for all shaders
             for (auto& [name, shader] : scene.shaders)
             {
-                //scene.shaders[name]->setMat4("model", modelMatrix);
-                //scene.shaders[name]->setMat4("view",  viewMatrix);
-                //scene.shaders[name]->setMat4("projection", perspectiveProjectionMatrix);
                 scene.getShader(name)->setMat4("model", modelMatrix);
                 scene.getShader(name)->setMat4("view",  viewMatrix);
                 scene.getShader(name)->setMat4("projection", perspectiveProjectionMatrix);

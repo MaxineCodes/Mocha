@@ -18,7 +18,7 @@ namespace Mocha
 
         // Create Shaders
         Shader* unlitShader = new Shader(
-            "res/shaders/unlitVertexShader.glsl",
+            "res/shaders/defaultVertexShader.glsl",
             "res/shaders/unlitFragmentShader.glsl"
             );
         debugScene.setShader("unlit", unlitShader);
@@ -46,8 +46,6 @@ namespace Mocha
         debugScene.setTexture("minecraftSnowFox_diffuse", minecraftSnowFoxTexture);
         Texture* orithTexture = new Texture("res/textures/orith_diffuse.png");
         debugScene.setTexture("orith_diffuse", orithTexture);
-        Texture* blankTexture = new Texture("res/textures/white_diffuse.png");
-        debugScene.setTexture("white_diffuse", blankTexture);
         Texture* specularTexture = new Texture("res/textures/test_specular.jpg");
         debugScene.setTexture("specular", specularTexture);
 
@@ -70,7 +68,7 @@ namespace Mocha
 
         Material* cuteFoxMaterial = new Material(litShader);
         cuteFoxMaterial->name("cuteFoxMaterial");
-        cuteFoxMaterial->setDiffuseTexture(&*blankTexture);
+        //cuteFoxMaterial->setDiffuseTexture(&*blankTexture);
         debugScene.setMaterial("cute fox", cuteFoxMaterial);
 
         Material* orithMaterial = new Material(litShader);
@@ -171,14 +169,14 @@ namespace Mocha
 
         // Shader
         Shader* simpleShader = new Shader(
-            "res/shaders/unlitVertexShader.glsl",
+            "res/shaders/defaultVertexShader.glsl",
             "res/shaders/unlitFragmentShader.glsl"
             );
         scene.setShader("simpleShader", simpleShader);
 
         // Textures
-        Texture* brickTexture      = new Texture("res/textures/stylizedBricks_baseColour.png");
-        Texture* cobblestoneTexture= new Texture("res/textures/cobblestone_baseColour.png");
+        Texture* brickTexture      = new Texture("res/textures/stylizedBricks_diffuse.png");
+        Texture* cobblestoneTexture= new Texture("res/textures/cobblestone_diffuse.png");
         scene.setTexture("stylized brick", brickTexture);
         scene.setTexture("cobblestone", cobblestoneTexture);
 
@@ -238,13 +236,13 @@ namespace Mocha
 
         // Create Shaders
         Shader* simpleShader = new Shader(
-            "res/shaders/unlitVertexShader.glsl",
+            "res/shaders/defaultVertexShader.glsl",
             "res/shaders/unlitFragmentShader.glsl"
             );
         scene.setShader("simple shader", simpleShader);
 
         // Create Textures
-        Texture* orithTexture = new Texture("res/textures/orith_diffuse_01.png");
+        Texture* orithTexture = new Texture("res/textures/orith_diffuse.png");
         scene.setTexture("orith diffuse", orithTexture);
 
         // Create Materials

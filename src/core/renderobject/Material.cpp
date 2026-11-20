@@ -49,7 +49,7 @@ namespace Mocha {
         if (texture) glBindTexture(GL_TEXTURE_2D, texture->textureID);
         else
         {
-            logger::logError("Material::bindTexture on " + m_name + ": NULL texture: " + std::string(uniformVariable));
+            //logger::logError("Material::bindTexture on " + m_name + ": NULL texture: " + std::string(uniformVariable));
             glBindTexture(GL_TEXTURE_2D, getFallbackTexture(textureType) );
         }
     }
@@ -114,6 +114,7 @@ namespace Mocha {
 
 
             logger::logInfo("Created fallback textures (1x1 white/black)");
+
         }
 
         switch (textureType)

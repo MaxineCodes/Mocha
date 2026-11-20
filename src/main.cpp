@@ -22,8 +22,8 @@
 
 int main()  
 {
-    Mocha::logger::setUseCout(true);
-    Mocha::logger::setPrintDebug(true);
+    Mocha::logger::setUseCout(false);
+    Mocha::logger::setPrintDebug(false);
     Mocha::logger::setLogEnabled(true);
 
     // First, create the scene you want to render

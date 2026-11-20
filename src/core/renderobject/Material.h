@@ -35,10 +35,10 @@ namespace Mocha
         //  Blinn-Phong
         glm::vec3 m_ambient = glm::vec3(0.1f, 0.1f, 0.1f);
         float m_shininess = 32.0f;
-        const Texture *m_diffuseTexture = nullptr;      glm::vec3 m_diffuseValue = glm::vec3(1);
-        const Texture *m_specularTexture = nullptr;     glm::vec3 m_specularValue = glm::vec3(0);
-        const Texture *m_emissionTexture = nullptr;     glm::vec3 m_emissionValue = glm::vec3(0);
-        const Texture *m_normalTexture = nullptr;       float m_normalIntensity;
+        const Texture* m_diffuseTexture = nullptr;      glm::vec3 m_diffuseValue = glm::vec3(1);
+        const Texture* m_specularTexture = nullptr;     glm::vec3 m_specularValue = glm::vec3(0);
+        const Texture* m_emissionTexture = nullptr;     glm::vec3 m_emissionValue = glm::vec3(0);
+        const Texture* m_normalTexture = nullptr;       float m_normalIntensity;
 
         Material(const Shader* materialShader);
         Material();
@@ -49,10 +49,10 @@ namespace Mocha
         void name(const char* name) { this->m_name = name; }
 
         void assignTexture(const Texture& texture, TEXTURE_TYPE textureType);
-        void setDiffuseTexture(Texture *texture) { m_diffuseTexture = texture; }
-        void setSpecularTexture(Texture *texture) { m_specularTexture = texture; }
-        void setEmissionTexture(Texture *texture) { m_emissionTexture = texture; }
-        void setNormalTexture(Texture *texture) { m_normalTexture = texture; }
+        void setDiffuseTexture(Texture* texture) { m_diffuseTexture = texture; }
+        void setSpecularTexture(Texture* texture) { m_specularTexture = texture; }
+        void setEmissionTexture(Texture* texture) { m_emissionTexture = texture; }
+        void setNormalTexture(Texture* texture) { m_normalTexture = texture; }
 
         void Use() const;
 
