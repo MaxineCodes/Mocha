@@ -12,7 +12,6 @@
 
 #include "Window.h"
 #include "renderobject/Shader.h"
-#include "renderobject/Texture.h"
 #include "../interface/gui.h"
 #include "camera/Camera.h"
 
@@ -34,7 +33,7 @@ namespace Mocha
         GUI::setup(window.getWindow());
 
         // Creating the scene here for now
-        scene = Scene::spatialGridScene(); // TODO: seperate definition and implementation of scene
+        scene = Scene::orithScene(); // TODO: seperate definition and implementation of scene
         GUI::updateScene(&scene); // pointer to scene for GUI
 
         // Make sure depth test is enabled, otherwise
@@ -60,8 +59,6 @@ namespace Mocha
 
             // Start ImGui frame
             GUI::newFrame();
-
-            // Show ImGui demo window
             GUI::createGuiElements();
 
             // Render

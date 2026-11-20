@@ -8,6 +8,7 @@
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
 
+#include "imgui_internal.h"
 #include "logger.h"
 
 namespace Mocha { namespace GUI { Scene* scene = nullptr; } }
@@ -35,6 +36,7 @@ void Mocha::GUI::createGuiElements()
     DrawLogWindow();
     DrawFrameLogWindow();
     DrawInputLogWindow();
+    DrawMetrics();
 
     if (scene != nullptr)
     {
@@ -198,6 +200,32 @@ void Mocha::GUI::DrawOutliner()
     if (ImGui::GetScrollY() >= ImGui::GetScrollMaxY())
     {
         ImGui::SetScrollHereY(1.0f);
+    }
+
+    ImGui::EndChild();
+
+    ImGui::End();
+}
+
+void Mocha::GUI::DrawMetrics()
+{
+    ImGui::Begin("Metrics");
+
+    ImGuiContext& g = *GImGui;
+    ImGuiIO& io = g.IO;
+    ImGuiPlatformIO& platform_io = g.PlatformIO;
+    ImGuiMetricsConfig* cfg = &g.DebugMetricsConfig;
+
+    ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
+    ImGui::Text("%d vertices, %d indices (%d triangles)", io.MetricsRenderVertices, io.MetricsRenderIndices, io.MetricsRenderIndices / 3);
+    ImGui::Text("%d visible windows, %d current allocations", io.MetricsRenderWindows, g.DebugAllocInfo.TotalAllocCount - g.DebugAllocInfo.TotalFreeCount);
+    ImGui::BeginChild("ScrollingRegion", ImVec2(0,0), false, ImGuiWindowFlags_HorizontalScrollbar);
+
+    for (auto& [name, shader] : scene->renderObjects)
+    {
+        ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(0, 0, 255, 255));
+        ImGui::TextUnformatted(name.c_str());
+        ImGui::PopStyleColor();
     }
 
     ImGui::EndChild();

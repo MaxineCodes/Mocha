@@ -42,6 +42,7 @@ namespace Mocha
         void DrawFrameLogWindow();
         void DrawInputLogWindow();
         void DrawOutliner();
+        void DrawMetrics();
     }
 }
 
