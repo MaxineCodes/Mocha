@@ -132,21 +132,7 @@ namespace Mocha
 
 
         // Lights
-        Shader* lightShader = new Shader(
-            "res/shaders/defaultVertexShader.glsl",
-            "res/shaders/lightFragmentShader.glsl");
-        debugScene.setShader("lightshader", lightShader);
-        Material* lightMaterial = new Material(lightShader);
-        lightMaterial->name("lightMaterial");
-        lightMaterial->setSpecularTexture(&*specularTexture);
-        lightMaterial->setDiffuseTexture(&*specularTexture);
-
-        debugScene.setMaterial("light", lightMaterial);
-        RenderObject* lightSphere = new RenderObject("res/models/icosphere.obj");
-        lightSphere->assignMaterial(*lightMaterial);
-        debugScene.setRenderObject("lightsphere", lightSphere);
-        lightSphere->transform.scale = glm::vec3(0.1f, 0.1f, 0.1f);
-
+        /*
         // Light values
         litShader->setVec3("pointLights[0].ambient",  0.2f, 0.2f, 0.2f);
         litShader->setVec3("pointLights[0].diffuse",  0.5f, 0.5f, 0.5f); // darken diffuse light a bit
@@ -154,10 +140,31 @@ namespace Mocha
         // Material values
         //litShader->setVec3("material.ambient", 1.0f, 0.5f, 0.31f);
         //litShader->setFloat("material.shininess", 32.0f);
-
-        glm::vec3 lightPosition = glm::vec3(0.0f, 5.0f, 5.0f);
         litShader->setVec3("pointLights[0].position", lightPosition);
-        lightSphere->transform.position = lightPosition;
+        */
+
+        //debugScene.directionalLights["directionalLight_0"]->diffuse = glm::vec3(0.5f, 0.5f, 0.5f);
+        //debugScene.directionalLights["directionalLight_0"]->ambient = glm::vec3(0.5f, 0.5f, 0.5f);
+        glm::vec3 lightPosition = glm::vec3(0.0f, 5.0f, 5.0f);
+        debugScene.pointLights["pointLight_0"]->position = lightPosition;
+        debugScene.pointLights["pointLight_0"]->diffuse  = glm::vec3(0.8f, 0.8f, 0.8f);
+        debugScene.pointLights["pointLight_0"]->ambient  = glm::vec3(0.2f, 0.2f, 0.2f);
+        debugScene.pointLights["pointLight_0"]->specular = glm::vec3(1.0f, 1.0f, 1.0f);
+
+        lightPosition = glm::vec3(5.0f, 5.0f, -5.0f);
+        debugScene.pointLights["pointLight_1"]->position = lightPosition;
+        debugScene.pointLights["pointLight_1"]->diffuse  = glm::vec3(0.0f, 1.0f, 1.0f);
+        debugScene.pointLights["pointLight_1"]->ambient  = glm::vec3(0.0f, 0.0f, 0.0f);
+        debugScene.pointLights["pointLight_1"]->specular = glm::vec3(1.0f, 1.0f, 1.0f);
+
+
+        // Create light spheres
+        for (unsigned int i = 0; i < debugScene.pointLights.size(); i++) {
+            const std::string lightName = "pointLight_" + std::to_string(i);
+            debugScene.spawnLightSphere(debugScene.pointLights[lightName]->position,
+                                  debugScene.pointLights[lightName]->ambient);
+        }
+
 
 
 
@@ -314,58 +321,90 @@ namespace Mocha
         }
     }
 
-    // Set the shader's light uniforms for every light.
+    void Scene::loadDirectionalLight(const Shader* shader, const uint index)
+    {
+        const std::string lightName = "directionalLight_" + std::to_string(index);
+        const std::string prefix = "directionalLight[" + std::to_string(index) + "]";
+
+        // Light base class uniforms
+        shader->setVec3(lightName + ".position",     directionalLights[lightName]->position);
+        shader->setVec3(lightName + ".direction",    directionalLights[lightName]->direction);
+        shader->setVec3(lightName + ".ambient",      directionalLights[lightName]->ambient);
+        shader->setVec3(lightName + ".diffuse",      directionalLights[lightName]->diffuse);
+        shader->setVec3(lightName + ".specular",     directionalLights[lightName]->specular);
+    }
+    void Scene::loadPointLight(const Shader* shader, const uint index)
+    {
+        const std::string lightName = "pointLight_" + std::to_string(index);
+        const std::string prefix = "pointLights[" + std::to_string(index) + "]";
+
+        // Light base class uniforms
+        shader->setVec3(prefix + ".position",     pointLights[lightName]->position);
+        shader->setVec3(prefix + ".direction",    pointLights[lightName]->direction);
+        shader->setVec3(prefix + ".ambient",      pointLights[lightName]->ambient);
+        shader->setVec3(prefix + ".diffuse",      pointLights[lightName]->diffuse);
+        shader->setVec3(prefix + ".specular",     pointLights[lightName]->specular);
+        // PointLight unique uniforms
+        shader->setFloat(prefix + ".constant",    pointLights[lightName]->constant);
+        shader->setFloat(prefix + ".linear",      pointLights[lightName]->linear);
+        shader->setFloat(prefix + ".quadratic",   pointLights[lightName]->quadratic);
+    }
+    void Scene::loadSpotLight(const Shader* shader, const uint index)
+    {
+        const std::string lightName = "spotLight_" + std::to_string(index);
+        const std::string prefix = "spotLight[" + std::to_string(index) + "]";
+
+        // Light base class uniforms
+        shader->setVec3(lightName + ".position",     spotLights[lightName]->position);
+        shader->setVec3(lightName + ".direction",    spotLights[lightName]->direction);
+        shader->setVec3(lightName + ".ambient",      spotLights[lightName]->ambient);
+        shader->setVec3(lightName + ".diffuse",      spotLights[lightName]->diffuse);
+        shader->setVec3(lightName + ".specular",     spotLights[lightName]->specular);
+    }
+
     void Scene::loadLights(const Shader* shader)
     {
         logger::logInfo("Loaded lights to shader: " + shader->name);
         for (unsigned int i = 0; i < directionalLights.size(); i++)
-            {
-                const std::string lightName = "directionalLight_" + std::to_string(i);
-                const std::string prefix = "directionalLight[" + std::to_string(i) + "]";
-
-                // Light base class uniforms
-                shader->setVec3(lightName + ".position",     directionalLights[lightName]->position);
-                shader->setVec3(lightName + ".direction",    directionalLights[lightName]->direction);
-                shader->setVec3(lightName + ".ambient",      directionalLights[lightName]->ambient);
-                shader->setVec3(lightName + ".diffuse",      directionalLights[lightName]->diffuse);
-                shader->setVec3(lightName + ".specular",     directionalLights[lightName]->specular);
-            }
-            for (unsigned int i = 0; i < pointLights.size(); i++)
-            {
-                const std::string lightName = "pointLight_" + std::to_string(i);
-                const std::string prefix = "pointLights[" + std::to_string(i) + "]";
-
-                // Light base class uniforms
-                shader->setVec3(prefix + ".position",     pointLights[lightName]->position);
-                shader->setVec3(prefix + ".direction",    pointLights[lightName]->direction);
-                shader->setVec3(prefix + ".ambient",      pointLights[lightName]->ambient);
-                shader->setVec3(prefix + ".diffuse",      pointLights[lightName]->diffuse);
-                shader->setVec3(prefix + ".specular",     pointLights[lightName]->specular);
-                // PointLight unique uniforms
-                shader->setFloat(prefix + ".constant",    pointLights[lightName]->constant);
-                shader->setFloat(prefix + ".linear",      pointLights[lightName]->linear);
-                shader->setFloat(prefix + ".quadratic",   pointLights[lightName]->quadratic);
-            }
-            for (unsigned int i = 0; i < spotLights.size(); i++)
-            {
-                const std::string lightName = "spotLight_" + std::to_string(i);
-                const std::string prefix = "spotLight[" + std::to_string(i) + "]";
-
-                // Light base class uniforms
-                shader->setVec3(lightName + ".position",     spotLights[lightName]->position);
-                shader->setVec3(lightName + ".direction",    spotLights[lightName]->direction);
-                shader->setVec3(lightName + ".ambient",      spotLights[lightName]->ambient);
-                shader->setVec3(lightName + ".diffuse",      spotLights[lightName]->diffuse);
-                shader->setVec3(lightName + ".specular",     spotLights[lightName]->specular);
-            }
+            loadDirectionalLight(shader, i);
+        for (unsigned int i = 0; i < pointLights.size(); i++)
+            loadPointLight(shader, i);
+        for (unsigned int i = 0; i < spotLights.size(); i++)
+            loadSpotLight(shader, i);
     }
-    // No arguments? Just do all of them.
     void Scene::loadLights()
     {
         logger::logInfo("Scene::loadLights called for all shaders.");
         for (auto& [name, shader] : shaders)
-        {
             loadLights(shader);
+    }
+
+
+    void Scene::spawnLightSphere(const glm::vec3& position, const glm::vec3& colour)
+    {
+        // If no lightMaterial in materials
+        if (materials.find("lightMaterial") == materials.end())
+        {
+            Shader* lightShader = new Shader(
+            "res/shaders/defaultVertexShader.glsl",
+            "res/shaders/lightFragmentShader.glsl");
+            setShader("lightshader", lightShader);
+            Material* lightMaterial = new Material(lightShader);
+            lightMaterial->name("lightMaterial");
+            setMaterial("lightMaterial", lightMaterial);
         }
+
+        RenderObject* lightSphere = new RenderObject("res/models/icosphere.obj");
+        Material* lightMaterial = materials["lightMaterial"];
+        lightSphere->assignMaterial(*lightMaterial);
+        std::string name = "lightSphere_"
+                           + std::to_string(position.x)
+                           + "_" + std::to_string(position.y)
+                           + "_" + std::to_string(position.z);
+        if (renderObjects.find(name) == renderObjects.end()) setRenderObject(name, lightSphere);
+        else setRenderObject(name + "_DUPLICATE", lightSphere);
+
+        lightSphere->transform.scale    = glm::vec3(0.1f, 0.1f, 0.1f);
+        lightSphere->transform.position = position;
     }
 }

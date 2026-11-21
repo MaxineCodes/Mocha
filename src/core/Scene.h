@@ -93,11 +93,21 @@ namespace Mocha
 
         // Other utility functions
         int getRenderObjectCount() const;
+
+        // Set the shader's light uniforms for every light.
         void loadLights(const Shader *shader);
-        void loadLights();
+        void loadLights(); // No arguments? Just do all of them.
 
     private:
+        // Fill the lights maps to avoid NULLs
         void initialiseLights();
+
+        // Set light uniforms to shader
+        void loadDirectionalLight(const Shader *shader, uint index);
+        void loadPointLight(const Shader *shader, uint index);
+        void loadSpotLight(const Shader *shader, uint index);
+
+        void spawnLightSphere(const glm::vec3 &position, const glm::vec3 &colour);
     };
 
 }
