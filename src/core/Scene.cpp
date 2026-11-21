@@ -208,9 +208,9 @@ namespace Mocha
         Material* variants[2] = { brickMaterial, cobbleMaterial};
 
         // 3D grid parameters
-        const int   gridSize  = 20;
+        const int   gridSize  = 5;
         const float spacing  = 1.5f;
-        const glm::vec3 origin(-10.0f, -10.0f, -10.0f);
+        const glm::vec3 origin(-2.5f, -2.5f, -7.5f);
 
         // Seed once outside the loop
         std::srand(static_cast<unsigned>(std::time(nullptr)));
@@ -232,9 +232,7 @@ namespace Mocha
                         glm::vec3(static_cast<float>(x),
                                   static_cast<float>(y),
                                   static_cast<float>(z)) * spacing;
-
-                    std::string name = "cube_" + std::to_string(x) + "_" + std::to_string(y) + "_" + std::to_string(z);
-                    scene.setRenderObject(name.c_str(), cube);
+                    scene.createRenderObject("cube", cube);
                 }
             }
         }
@@ -293,6 +291,213 @@ namespace Mocha
     }
     void Scene::assignMaterialToRenderObject(const char* materialName, const char* renderObjectName)
     { assignMaterialToRenderObject(std::string(materialName), std::string(renderObjectName)); }
+
+    void Scene::createShader(const std::string &name, const Shader* shader)
+    {
+        const std::string finalName = getAvailableName(name, shaders);
+        shaders[finalName] = shader;
+        if (finalName != name)
+            logger::logWarn("Scene::createShader: '" + name + "' taken, created '" + finalName + "'.");
+        else
+            logger::logInfo("Scene::createShader: '" + name + "' created.");
+    }
+    void Scene::setShader(const std::string& name, const Shader* shader)
+    {
+        if (!shaders.count(name))
+        {
+            logger::logError("Scene::setShader: '" + name + "' doesn't exist.");
+            createShader(name, shader);
+            return;
+        }
+        shaders.at(name) = shader;
+        logger::logInfo("Scene::setShader: '" + name + "' updated.");
+    }
+    const Shader*  Scene::getShader(const std::string &name) const
+    {
+        if (!shaders.count(name))
+        {
+            logger::logError("Scene::getShader: '" + name + "' doesn't exist.");
+            return nullptr;
+        }
+        return shaders.at(name);
+    }
+
+    void Scene::createTexture(const std::string& name, const Texture* texture)
+    {
+        const std::string finalName = getAvailableName(name, textures);
+        textures[finalName] = texture;
+        logger::logInfo("Scene::createTexture: '" + finalName + "' created.");
+    }
+    void Scene::setTexture(const std::string& name, const Texture* texture)
+    {
+        if (!textures.count(name))
+        {
+            logger::logError("Scene::setTexture: '" + name + "' doesn't exist.");
+            createTexture(name, texture);
+            return;
+        }
+        textures.at(name) = texture;
+    }
+    const Texture* Scene::getTexture(const std::string& name) const
+    {
+        if (!textures.count(name))
+        {
+            logger::logError("Scene::getTexture: '" + name + "' doesn't exist.");
+            return nullptr;
+        }
+        return textures.at(name);
+    }
+    void Scene::createMaterial(const std::string& name, Material* material)
+    {
+        const std::string finalName = getAvailableName(name, materials);
+        materials[finalName] = material;
+        logger::logInfo("Scene::createMaterial: '" + finalName + "' created.");
+    }
+    void Scene::setMaterial(const std::string& name, Material* material)
+    {
+        if (!materials.count(name))
+        {
+            logger::logError("Scene::setMaterial: '" + name + "' doesn't exist.");
+            createMaterial(name, material);
+            return;
+        }
+        materials.at(name) = material;
+    }
+    Material* Scene::getMaterial(const std::string& name) const
+    {
+        if (!materials.count(name))
+        {
+            logger::logError("Scene::getMaterial: '" + name + "' doesn't exist.");
+            return nullptr;
+        }
+        return materials.at(name);
+    }
+    void Scene::createRenderObject(const std::string& name, RenderObject* renderObject)
+    {
+        const std::string finalName = getAvailableName(name, renderObjects);
+        renderObjects[finalName] = renderObject;
+        logger::logInfo("Scene::createRenderObject: '" + finalName + "' created.");
+    }
+    void Scene::setRenderObject(const std::string& name, RenderObject* renderObject)
+    {
+        if (!renderObjects.count(name))
+        {
+            logger::logError("Scene::setRenderObject: '" + name + "' doesn't exist.");
+            createRenderObject(name, renderObject);
+            return;
+        }
+        renderObjects.at(name) = renderObject;
+    }
+    RenderObject* Scene::getRenderObject(const std::string& name) const
+    {
+        if (!renderObjects.count(name))
+        {
+            logger::logError("Scene::getRenderObject: '" + name + "' doesn't exist.");
+            return nullptr;
+        }
+        return renderObjects.at(name);
+    }
+    void Scene::createCamera(const std::string& name, Camera* camera)
+    {
+        const std::string finalName = getAvailableName(name, cameras);
+        cameras[finalName] = camera;
+        logger::logInfo("Scene::createCamera: '" + finalName + "' created.");
+    }
+    void Scene::setCamera(const std::string& name, Camera* camera)
+    {
+        if (!cameras.count(name))
+        {
+            logger::logError("Scene::setCamera: '" + name + "' doesn't exist.");
+            createCamera(name, camera);
+            return;
+        }
+        cameras.at(name) = camera;
+    }
+    Camera* Scene::getCamera(const std::string& name) const
+    {
+        if (!cameras.count(name))
+        {
+            logger::logError("Scene::getCamera: '" + name + "' doesn't exist.");
+            return nullptr;
+        }
+        return cameras.at(name);
+    }
+    void Scene::createDirectionalLight(const std::string& name, Light::DirectionalLight* light)
+    {
+        const std::string finalName = getAvailableName(name, directionalLights);
+        directionalLights[finalName] = light;
+        logger::logInfo("Scene::createDirectionalLight: '" + finalName + "' created.");
+    }
+    void Scene::setDirectionalLight(const std::string& name, Light::DirectionalLight* light)
+    {
+        if (!directionalLights.count(name))
+        {
+            logger::logError("Scene::setDirectionalLight: '" + name + "' doesn't exist.");
+            createDirectionalLight(name, light);
+            return;
+        }
+        directionalLights.at(name) = light;
+    }
+    Light::DirectionalLight* Scene::getDirectionalLight(const std::string& name) const
+    {
+        if (!directionalLights.count(name))
+        {
+            logger::logError("Scene::getDirectionalLight: '" + name + "' doesn't exist.");
+            return nullptr;
+        }
+        return directionalLights.at(name);
+    }
+    void Scene::createPointLight(const std::string& name, Light::PointLight* light)
+    {
+        const std::string finalName = getAvailableName(name, pointLights);
+        pointLights[finalName] = light;
+        logger::logInfo("Scene::createPointLight: '" + finalName + "' created.");
+    }
+    void Scene::setPointLight(const std::string& name, Light::PointLight* light)
+    {
+        if (!pointLights.count(name))
+        {
+            logger::logError("Scene::setPointLight: '" + name + "' doesn't exist.");
+            createPointLight(name, light);
+            return;
+        }
+        pointLights.at(name) = light;
+    }
+    Light::PointLight* Scene::getPointLight(const std::string& name) const
+    {
+        if (!pointLights.count(name))
+        {
+            logger::logError("Scene::getPointLight: '" + name + "' doesn't exist.");
+            return nullptr;
+        }
+        return pointLights.at(name);
+    }
+    void Scene::createSpotLight(const std::string& name, Light::SpotLight* light)
+    {
+        const std::string finalName = getAvailableName(name, spotLights);
+        spotLights[finalName] = light;
+        logger::logInfo("Scene::createSpotLight: '" + finalName + "' created.");
+    }
+    void Scene::setSpotLight(const std::string& name, Light::SpotLight* light)
+    {
+        if (!spotLights.count(name))
+        {
+            logger::logError("Scene::setSpotLight: '" + name + "' doesn't exist.");
+            createSpotLight(name, light);
+            return;
+        }
+        spotLights.at(name) = light;
+    }
+    Light::SpotLight* Scene::getSpotLight(const std::string& name) const
+    {
+        if (!spotLights.count(name))
+        {
+            logger::logError("Scene::getSpotLight: '" + name + "' doesn't exist.");
+            return nullptr;
+        }
+        return spotLights.at(name);
+    }
+
 
     int Scene::getRenderObjectCount() const
     {
@@ -407,4 +612,5 @@ namespace Mocha
         lightSphere->transform.scale    = glm::vec3(0.1f, 0.1f, 0.1f);
         lightSphere->transform.position = position;
     }
+
 }

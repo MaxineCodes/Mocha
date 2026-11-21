@@ -173,25 +173,25 @@ void Mocha::GUI::DrawOutliner()
 
     for (auto& [name, shader] : scene->shaders)
     {
-        ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(255, 255, 255, 255));
+        ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(55, 155, 255, 255));
         ImGui::TextUnformatted(name.c_str());
         ImGui::PopStyleColor();
     }
     for (auto& [name, shader] : scene->textures)
     {
-        ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(255, 0, 0, 255));
+        ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(155, 155, 155, 255));
         ImGui::TextUnformatted(name.c_str());
         ImGui::PopStyleColor();
     }
     for (auto& [name, shader] : scene->materials)
     {
-        ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(0, 255, 0, 255));
+        ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(55, 255, 55, 255));
         ImGui::TextUnformatted(name.c_str());
         ImGui::PopStyleColor();
     }
     for (auto& [name, shader] : scene->renderObjects)
     {
-        ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(0, 0, 255, 255));
+        ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(100, 200, 255, 255));
         ImGui::TextUnformatted(name.c_str());
         ImGui::PopStyleColor();
     }
