@@ -18,7 +18,7 @@ namespace Mocha
     class Scene
     {
     public:
-        Scene() = default;
+        Scene();
 
         // Create a debug scene with random dev testing stuff :)
         static Scene DebugScene();
@@ -93,6 +93,11 @@ namespace Mocha
 
         // Other utility functions
         int getRenderObjectCount() const;
+        void loadLights(const Shader *shader);
+        void loadLights();
+
+    private:
+        void initialiseLights();
     };
 
 }

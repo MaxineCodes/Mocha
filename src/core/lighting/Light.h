@@ -18,27 +18,30 @@ namespace Mocha
 
         enum TYPE {NONE, DIRECTIONAL_LIGHT, POINT_LIGHT, SPOT_LIGHT};
 
-        class Light : public Object
+        struct Light : public Object
         {
-            glm::vec3 position, direction;
-            glm::vec3 colour;
-            glm::vec3 ambient, diffuse, specular;
+            glm::vec3 position      = glm::vec3(0.0f, 0.0f, 0.0f);
+            glm::vec3 direction     = glm::vec3(0.0f, -1.0f, 0.0f);
+            //glm::vec3 colour        = glm::vec3(0.0f, 0.0f, 0.0f);
+            glm::vec3 ambient       = glm::vec3(0.1f, 0.1f, 0.1f);
+            glm::vec3 diffuse       = glm::vec3(0.5f, 0.5f, 0.5f);
+            glm::vec3 specular      = glm::vec3(1.0f, 1.0f, 1.0f);
 
             static TYPE getType() { return NONE; }
         };
 
-        class DirectionalLight : public Light
+        struct DirectionalLight : public Light
         {
             static TYPE getType() { return DIRECTIONAL_LIGHT; }
         };
 
-        class PointLight : public Light
+        struct PointLight : public Light
         {
-            float constant = 0, linear = 0, quadratic = 0;
+            float constant = 1.0f, linear = 0.09f, quadratic = 0.032f;
             static TYPE getType() { return POINT_LIGHT; }
         };
 
-        class SpotLight : public Light
+        struct SpotLight : public Light
         {
             static TYPE getType() { return SPOT_LIGHT; }
         };

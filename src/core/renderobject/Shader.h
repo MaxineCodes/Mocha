@@ -18,6 +18,7 @@ namespace Mocha
     {
     public:
         unsigned int programID;
+        std::string name;
 
         Shader(const char* vertexPath, const char* fragmentPath);
         Shader();
