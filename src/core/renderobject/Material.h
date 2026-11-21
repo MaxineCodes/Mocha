@@ -17,7 +17,7 @@ namespace Mocha
     class Material
     {
     public:
-        std::string m_name = "material";
+        std::string name;
         const Shader *shader;
 
         /*
@@ -46,7 +46,7 @@ namespace Mocha
         ~Material();
 
         //void addTexture(const Texture& texture);
-        void name(const char* name) { this->m_name = name; }
+        //void name(const char* name) { this->name = name; }
 
         void assignTexture(const Texture& texture, TEXTURE_TYPE textureType);
         void setDiffuseTexture(Texture* texture) { m_diffuseTexture = texture; }

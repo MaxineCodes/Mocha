@@ -33,7 +33,7 @@ namespace Mocha
         GUI::setup(window.getWindow());
 
         // Creating the scene here for now
-        scene = Scene::spatialGridScene(); // TODO: seperate definition and implementation of scene
+        scene = Scene::DebugScene(); // TODO: seperate definition and implementation of scene
         GUI::updateScene(&scene); // pointer to scene for GUI
 
         // Make sure depth test is enabled, otherwise

@@ -25,7 +25,7 @@ namespace Mocha {
             case SPECULAR: m_specularTexture = &texture; break;
             case EMISSION: m_emissionTexture = &texture; break;
             case NORMAL:   m_normalTexture   = &texture; break;
-            default: logger::logError("Material::assignTexture: UNKNOWN TYPE: '" + m_name + "'");
+            default: logger::logError("Material::assignTexture: UNKNOWN TYPE: '" + name + "'");
         }
     }
 
@@ -40,7 +40,7 @@ namespace Mocha {
             case SPECULAR: texture = m_specularTexture;     uniformVariable = "material.specular"; break;
             case EMISSION : texture = m_emissionTexture;    uniformVariable = "material.emission"; break;
             case NORMAL:   texture = m_normalTexture;       uniformVariable = "material.normal"; break;
-            default: logger::logError("Material " + m_name + ": unknown texture type." );
+            default: logger::logError("Material " + name + ": unknown texture type." );
         }
 
         glActiveTexture(GL_TEXTURE0 + textureType);
@@ -57,7 +57,7 @@ namespace Mocha {
     void Material::Use() const
     {
         shader->use();
-        logger::logDebugFrame(("using material: " + m_name).c_str());
+        logger::logDebugFrame(("using material: " + name).c_str());
 
         // Blinn-Phong
         shader->setVec3("material.ambient", m_ambient);

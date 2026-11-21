@@ -11,6 +11,7 @@
 
 #ifndef MOCHA_CAMERA_H
 #define MOCHA_CAMERA_H
+#include <string>
 #include <glad/glad.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -37,6 +38,7 @@ namespace Mocha
     {
     public:
         // camera Attributes
+        std::string name = "";
         glm::vec3 Position;
         glm::vec3 Front;
         glm::vec3 Up;

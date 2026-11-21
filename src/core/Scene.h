@@ -53,12 +53,12 @@ namespace Mocha
 
         // ----- GETTERS / SETTERS -----
         // Shader
-        void createShader(const std::string& name, const Shader* shader);
-        void setShader(const std::string& name, const Shader* shader);
+        void createShader(const std::string& name, Shader* shader);
+        void setShader(const std::string& name, Shader* shader);
         const Shader*  getShader(const std::string& name) const;
         // Texture
-        void createTexture(const std::string& name, const Texture* texture);
-        void setTexture(const std::string& name, const Texture* texture);
+        void createTexture(const std::string& name, Texture* texture);
+        void setTexture(const std::string& name, Texture* texture);
         const Texture* getTexture(const std::string& name) const;
         // Material
         void createMaterial(const std::string& name, Material* material);

@@ -5,6 +5,8 @@
 #ifndef MOCHA_LIGHT_H
 #define MOCHA_LIGHT_H
 
+#include <string>
+
 #include "../Object.h"
 
 namespace Mocha
@@ -20,6 +22,8 @@ namespace Mocha
 
         struct Light : Object
         {
+            std::string name;
+
             glm::vec3 position      = glm::vec3(0.0f, 0.0f, 0.0f);
             glm::vec3 direction     = glm::vec3(0.0f, -1.0f, 0.0f);
             //glm::vec3 colour        = glm::vec3(0.0f, 0.0f, 0.0f);

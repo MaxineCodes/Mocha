@@ -16,7 +16,7 @@ namespace Mocha
     class RenderObject : public Object
     {
     public:
-        const char* name = "RenderObject";
+        std::string name;
 
     private:
         const char* defaultObjectPath = "res/models/cube.obj";

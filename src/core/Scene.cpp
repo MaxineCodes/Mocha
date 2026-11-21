@@ -58,28 +58,28 @@ namespace Mocha
 
         // Create Materials
         Material* minecraftFoxMaterial = new Material(litShader);
-        minecraftFoxMaterial->name("minecraftFoxMaterial");
+        minecraftFoxMaterial->name = "minecraftFoxMaterial";
         minecraftFoxMaterial->setDiffuseTexture(&*minecraftSnowFoxTexture);
         minecraftFoxMaterial->setSpecularTexture(&*specularTexture);
         debugScene.setMaterial("mc fox", minecraftFoxMaterial);
 
         Material* bricksMaterial = new Material(litShader);
-        bricksMaterial->name("bricksMaterial");
+        bricksMaterial->name = "bricksMaterial";
         bricksMaterial->setDiffuseTexture(&*brickTexture);
         bricksMaterial->setSpecularTexture(&*specularTexture); // TODO: FIX BUG where specular is assigned to all materials
         debugScene.setMaterial("stylized bricks", bricksMaterial);
 
         Material* defaultMaterial = new Material(litShader);
-        defaultMaterial->name("defaultMaterial");
+        defaultMaterial->name = "defaultMaterial";
         debugScene.setMaterial("default", defaultMaterial);
 
         Material* cuteFoxMaterial = new Material(litShader);
-        cuteFoxMaterial->name("cuteFoxMaterial");
+        cuteFoxMaterial->name = "cuteFoxMaterial";
         //cuteFoxMaterial->setDiffuseTexture(&*blankTexture);
         debugScene.setMaterial("cute fox", cuteFoxMaterial);
 
         Material* orithMaterial = new Material(litShader);
-        orithMaterial->name("orithMaterial");
+        orithMaterial->name = "orithMaterial";
         orithMaterial->setDiffuseTexture(&*orithTexture);
         //orithMaterial->setSpecularTexture(&*specularTexture);
         debugScene.setMaterial("orith", orithMaterial);
@@ -196,12 +196,12 @@ namespace Mocha
 
         // Materials
         Material* brickMaterial = new Material(simpleShader);
-        brickMaterial->name("brickMaterial");
+        brickMaterial->name = "brickMaterial";
         brickMaterial->setDiffuseTexture(&*brickTexture);
         scene.setMaterial("stylized bricks", brickMaterial);
 
         Material* cobbleMaterial = new Material(simpleShader);
-        cobbleMaterial->name("cobbleMaterial");
+        cobbleMaterial->name = "cobbleMaterial";
         cobbleMaterial->setDiffuseTexture(&*cobblestoneTexture);
         scene.setMaterial("cobblestone", cobbleMaterial);
 
@@ -259,7 +259,6 @@ namespace Mocha
 
         // Create Materials
         Material* orithMaterial = new Material(simpleShader);
-        orithMaterial->name("orithMaterial");
         orithMaterial->assignTexture(*orithTexture, DIFFUSE);
         scene.setMaterial("orith", orithMaterial);
 
@@ -292,16 +291,17 @@ namespace Mocha
     void Scene::assignMaterialToRenderObject(const char* materialName, const char* renderObjectName)
     { assignMaterialToRenderObject(std::string(materialName), std::string(renderObjectName)); }
 
-    void Scene::createShader(const std::string &name, const Shader* shader)
+    void Scene::createShader(const std::string &name, Shader* shader)
     {
         const std::string finalName = getAvailableName(name, shaders);
         shaders[finalName] = shader;
+        if (shader->name == "") shader->name = name;
         if (finalName != name)
             logger::logWarn("Scene::createShader: '" + name + "' taken, created '" + finalName + "'.");
         else
             logger::logInfo("Scene::createShader: '" + name + "' created.");
     }
-    void Scene::setShader(const std::string& name, const Shader* shader)
+    void Scene::setShader(const std::string& name, Shader* shader)
     {
         if (!shaders.count(name))
         {
@@ -322,13 +322,14 @@ namespace Mocha
         return shaders.at(name);
     }
 
-    void Scene::createTexture(const std::string& name, const Texture* texture)
+    void Scene::createTexture(const std::string& name, Texture* texture)
     {
         const std::string finalName = getAvailableName(name, textures);
         textures[finalName] = texture;
+        if (texture->name == "") texture->name = name;
         logger::logInfo("Scene::createTexture: '" + finalName + "' created.");
     }
-    void Scene::setTexture(const std::string& name, const Texture* texture)
+    void Scene::setTexture(const std::string& name, Texture* texture)
     {
         if (!textures.count(name))
         {
@@ -351,6 +352,7 @@ namespace Mocha
     {
         const std::string finalName = getAvailableName(name, materials);
         materials[finalName] = material;
+        if (material->name == "") material->name = name;
         logger::logInfo("Scene::createMaterial: '" + finalName + "' created.");
     }
     void Scene::setMaterial(const std::string& name, Material* material)
@@ -376,6 +378,7 @@ namespace Mocha
     {
         const std::string finalName = getAvailableName(name, renderObjects);
         renderObjects[finalName] = renderObject;
+        if (renderObject->name == "") renderObject->name = name;
         logger::logInfo("Scene::createRenderObject: '" + finalName + "' created.");
     }
     void Scene::setRenderObject(const std::string& name, RenderObject* renderObject)
@@ -401,6 +404,7 @@ namespace Mocha
     {
         const std::string finalName = getAvailableName(name, cameras);
         cameras[finalName] = camera;
+        if (camera->name == "") camera->name = name;
         logger::logInfo("Scene::createCamera: '" + finalName + "' created.");
     }
     void Scene::setCamera(const std::string& name, Camera* camera)
@@ -426,6 +430,7 @@ namespace Mocha
     {
         const std::string finalName = getAvailableName(name, directionalLights);
         directionalLights[finalName] = light;
+        if (light->name == "") light->name = name;
         logger::logInfo("Scene::createDirectionalLight: '" + finalName + "' created.");
     }
     void Scene::setDirectionalLight(const std::string& name, Light::DirectionalLight* light)
@@ -451,6 +456,7 @@ namespace Mocha
     {
         const std::string finalName = getAvailableName(name, pointLights);
         pointLights[finalName] = light;
+        if (light->name == "") light->name = name;
         logger::logInfo("Scene::createPointLight: '" + finalName + "' created.");
     }
     void Scene::setPointLight(const std::string& name, Light::PointLight* light)
@@ -476,6 +482,7 @@ namespace Mocha
     {
         const std::string finalName = getAvailableName(name, spotLights);
         spotLights[finalName] = light;
+        if (light->name == "") light->name = name;
         logger::logInfo("Scene::createSpotLight: '" + finalName + "' created.");
     }
     void Scene::setSpotLight(const std::string& name, Light::SpotLight* light)
@@ -593,10 +600,10 @@ namespace Mocha
             Shader* lightShader = new Shader(
             "res/shaders/defaultVertexShader.glsl",
             "res/shaders/lightFragmentShader.glsl");
-            setShader("lightshader", lightShader);
+            createShader("lightshader", lightShader);
             Material* lightMaterial = new Material(lightShader);
-            lightMaterial->name("lightMaterial");
-            setMaterial("lightMaterial", lightMaterial);
+            lightMaterial->name = "lightMaterial";
+            createMaterial("lightMaterial", lightMaterial);
         }
 
         RenderObject* lightSphere = new RenderObject("res/models/icosphere.obj");

@@ -23,6 +23,7 @@ namespace Mocha
         Transform transform;
         glm::mat4 getModelMatrix() const
         {
+            std::string name = "";
             glm::mat4 model = glm::mat4(1.0f);
             model = glm::translate(model, transform.position);
             model = glm::rotate(model, glm::radians(transform.rotation.x), glm::vec3(1.0f, 0.0f, 0.0f));
