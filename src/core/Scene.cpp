@@ -537,41 +537,44 @@ namespace Mocha
     {
         const std::string lightName = "directionalLight_" + std::to_string(index);
         const std::string prefix = "directionalLights[" + std::to_string(index) + "]";
+        const Light::DirectionalLight* directionalLight = getDirectionalLight(lightName);
 
         // Light base class uniforms
-        shader->setVec3(prefix + ".position",     directionalLights[lightName]->position);
-        shader->setVec3(prefix + ".direction",    directionalLights[lightName]->direction);
-        shader->setVec3(prefix + ".ambient",      directionalLights[lightName]->ambient);
-        shader->setVec3(prefix + ".diffuse",      directionalLights[lightName]->diffuse);
-        shader->setVec3(prefix + ".specular",     directionalLights[lightName]->specular);
+        shader->setVec3(prefix + ".position",     directionalLight->position);
+        shader->setVec3(prefix + ".direction",    directionalLight->direction);
+        shader->setVec3(prefix + ".ambient",      directionalLight->ambient);
+        shader->setVec3(prefix + ".diffuse",      directionalLight->diffuse);
+        shader->setVec3(prefix + ".specular",     directionalLight->specular);
     }
     void Scene::loadPointLight(const Shader* shader, const uint index)
     {
         const std::string lightName = "pointLight_" + std::to_string(index);
         const std::string prefix = "pointLights[" + std::to_string(index) + "]";
+        const Light::PointLight* pointLight = getPointLight(lightName);
 
         // Light base class uniforms
-        shader->setVec3(prefix + ".position",     pointLights[lightName]->position);
-        shader->setVec3(prefix + ".direction",    pointLights[lightName]->direction);
-        shader->setVec3(prefix + ".ambient",      pointLights[lightName]->ambient);
-        shader->setVec3(prefix + ".diffuse",      pointLights[lightName]->diffuse);
-        shader->setVec3(prefix + ".specular",     pointLights[lightName]->specular);
+        shader->setVec3(prefix + ".position",     pointLight->position);
+        shader->setVec3(prefix + ".direction",    pointLight->direction);
+        shader->setVec3(prefix + ".ambient",      pointLight->ambient);
+        shader->setVec3(prefix + ".diffuse",      pointLight->diffuse);
+        shader->setVec3(prefix + ".specular",     pointLight->specular);
         // PointLight unique uniforms
-        shader->setFloat(prefix + ".constant",    pointLights[lightName]->constant);
-        shader->setFloat(prefix + ".linear",      pointLights[lightName]->linear);
-        shader->setFloat(prefix + ".quadratic",   pointLights[lightName]->quadratic);
+        shader->setFloat(prefix + ".constant",    pointLight->constant);
+        shader->setFloat(prefix + ".linear",      pointLight->linear);
+        shader->setFloat(prefix + ".quadratic",   pointLight->quadratic);
     }
     void Scene::loadSpotLight(const Shader* shader, const uint index)
     {
         const std::string lightName = "spotLight_" + std::to_string(index);
         const std::string prefix = "spotLight[" + std::to_string(index) + "]";
+        const Light::SpotLight* spotLight = getSpotLight(lightName);
 
         // Light base class uniforms
-        shader->setVec3(lightName + ".position",     spotLights[lightName]->position);
-        shader->setVec3(lightName + ".direction",    spotLights[lightName]->direction);
-        shader->setVec3(lightName + ".ambient",      spotLights[lightName]->ambient);
-        shader->setVec3(lightName + ".diffuse",      spotLights[lightName]->diffuse);
-        shader->setVec3(lightName + ".specular",     spotLights[lightName]->specular);
+        shader->setVec3(prefix + ".position",     spotLight->position);
+        shader->setVec3(prefix + ".direction",    spotLight->direction);
+        shader->setVec3(prefix + ".ambient",      spotLight->ambient);
+        shader->setVec3(prefix + ".diffuse",      spotLight->diffuse);
+        shader->setVec3(prefix + ".specular",     spotLight->specular);
     }
 
     void Scene::loadLights(const Shader* shader)
