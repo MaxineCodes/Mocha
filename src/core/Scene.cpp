@@ -20,8 +20,8 @@ namespace Mocha
     {
         Scene debugScene;
 
-        debugScene.skyColor = glm::vec4(0.6f, 0.7f, 0.8f, 1.0f); // gentle blue like the sky
-        //debugScene.skyColor = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f); // Black
+        //debugScene.skyColor = glm::vec4(0.6f, 0.7f, 0.8f, 1.0f); // gentle blue like the sky
+        debugScene.skyColor = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f); // Black
 
         // Create Shaders
         Shader* unlitShader = new Shader(
@@ -132,30 +132,30 @@ namespace Mocha
 
 
         // Lights
-        /*
-        // Light values
-        litShader->setVec3("pointLights[0].ambient",  0.2f, 0.2f, 0.2f);
-        litShader->setVec3("pointLights[0].diffuse",  0.5f, 0.5f, 0.5f); // darken diffuse light a bit
-        litShader->setVec3("pointLights[0].specular", 1.0f, 1.0f, 1.0f);
-        // Material values
-        //litShader->setVec3("material.ambient", 1.0f, 0.5f, 0.31f);
-        //litShader->setFloat("material.shininess", 32.0f);
-        litShader->setVec3("pointLights[0].position", lightPosition);
-        */
 
-        //debugScene.directionalLights["directionalLight_0"]->diffuse = glm::vec3(0.5f, 0.5f, 0.5f);
-        //debugScene.directionalLights["directionalLight_0"]->ambient = glm::vec3(0.5f, 0.5f, 0.5f);
-        glm::vec3 lightPosition = glm::vec3(0.0f, 5.0f, 5.0f);
-        debugScene.pointLights["pointLight_0"]->position = lightPosition;
-        debugScene.pointLights["pointLight_0"]->diffuse  = glm::vec3(0.8f, 0.8f, 0.8f);
+        // Directional Light
+        debugScene.directionalLights["directionalLight_0"]->direction = glm::vec3(-0.2f, -1.0f, -0.3f);
+        debugScene.directionalLights["directionalLight_0"]->position = glm::vec3(0.0f, -1.0f, 0.0f);
+        debugScene.directionalLights["directionalLight_0"]->ambient = glm::vec3(0.05f, 0.05f, 0.05f);
+        debugScene.directionalLights["directionalLight_0"]->diffuse = glm::vec3(0.4f, 0.4f, 0.4f);
+        debugScene.directionalLights["directionalLight_0"]->specular = glm::vec3(0.5f, 0.5f, 0.5f);
+        // Key light
+        /*
+        debugScene.pointLights["pointLight_0"]->position = glm::vec3(3.5f, 5.0f, 5.0f);
+        debugScene.pointLights["pointLight_0"]->diffuse  = glm::vec3(2.0f, 1.0f, 1.0f);
         debugScene.pointLights["pointLight_0"]->ambient  = glm::vec3(0.2f, 0.2f, 0.2f);
         debugScene.pointLights["pointLight_0"]->specular = glm::vec3(1.0f, 1.0f, 1.0f);
-
-        lightPosition = glm::vec3(5.0f, 5.0f, -5.0f);
-        debugScene.pointLights["pointLight_1"]->position = lightPosition;
-        debugScene.pointLights["pointLight_1"]->diffuse  = glm::vec3(0.0f, 1.0f, 1.0f);
+        // Back light
+        debugScene.pointLights["pointLight_1"]->position = glm::vec3(-3.5f, 5.0f, -5.0f);
+        debugScene.pointLights["pointLight_1"]->diffuse  = glm::vec3(0.0f, 0.0f, 2.0f);
         debugScene.pointLights["pointLight_1"]->ambient  = glm::vec3(0.0f, 0.0f, 0.0f);
         debugScene.pointLights["pointLight_1"]->specular = glm::vec3(1.0f, 1.0f, 1.0f);
+        // Fill light
+        debugScene.pointLights["pointLight_2"]->position = glm::vec3(-2.5f, 0.5f, 5.0f);
+        debugScene.pointLights["pointLight_2"]->diffuse  = glm::vec3(0.0f, 2.0f, 0.0f);
+        debugScene.pointLights["pointLight_2"]->ambient  = glm::vec3(0.0f, 0.0f, 0.0f);
+        debugScene.pointLights["pointLight_2"]->specular = glm::vec3(1.0f, 1.0f, 1.0f);
+        */
 
 
         // Create light spheres
@@ -536,14 +536,14 @@ namespace Mocha
     void Scene::loadDirectionalLight(const Shader* shader, const uint index)
     {
         const std::string lightName = "directionalLight_" + std::to_string(index);
-        const std::string prefix = "directionalLight[" + std::to_string(index) + "]";
+        const std::string prefix = "directionalLights[" + std::to_string(index) + "]";
 
         // Light base class uniforms
-        shader->setVec3(lightName + ".position",     directionalLights[lightName]->position);
-        shader->setVec3(lightName + ".direction",    directionalLights[lightName]->direction);
-        shader->setVec3(lightName + ".ambient",      directionalLights[lightName]->ambient);
-        shader->setVec3(lightName + ".diffuse",      directionalLights[lightName]->diffuse);
-        shader->setVec3(lightName + ".specular",     directionalLights[lightName]->specular);
+        shader->setVec3(prefix + ".position",     directionalLights[lightName]->position);
+        shader->setVec3(prefix + ".direction",    directionalLights[lightName]->direction);
+        shader->setVec3(prefix + ".ambient",      directionalLights[lightName]->ambient);
+        shader->setVec3(prefix + ".diffuse",      directionalLights[lightName]->diffuse);
+        shader->setVec3(prefix + ".specular",     directionalLights[lightName]->specular);
     }
     void Scene::loadPointLight(const Shader* shader, const uint index)
     {

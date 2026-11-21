@@ -82,6 +82,9 @@ uniform SpotLight spotLights[NUMBER_OF_SPOT_LIGHTS];
 // - Light Calculation Functions -
 vec3 CalculateDirectionalLight(DirectionalLight light, vec3 normal, vec3 viewDir)
 {
+    // For 0 value
+    if (length(light.direction) == 0.0 || light.diffuse == vec3(0.0)) return vec3(0.0);
+    
     vec3 lightDir = normalize(-light.direction);
     // diffuse shading
     float diff = max(dot(normal, lightDir), 0.0);
@@ -169,4 +172,5 @@ void main()
     //result += CalcSpotLight(spotLight, norm, FragPos, viewDir);    
 
     FragColor = vec4(lightingResult, 1.0);
+    //FragColor = vec4(norm, 1.0f);
 }    
