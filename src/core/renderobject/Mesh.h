@@ -48,6 +48,8 @@ namespace Mocha
 
         void CleanUp();
         void Draw();
+        void Draw(const Shader &shader);
+
         void AssignMaterial(Material &material);
 
     private:

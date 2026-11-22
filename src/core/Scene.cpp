@@ -98,6 +98,7 @@ namespace Mocha
         //debugScene.addRenderObject(stanfordDragon);
         RenderObject* orith = new RenderObject("res/models/orith.obj");
         orith->assignMaterial(*orithMaterial);
+        orith->outline = true;
         debugScene.setRenderObject("orith", orith);
 
         RenderObject* minecraftFox = new RenderObject("res/models/minecraft_fox.obj");
@@ -606,7 +607,7 @@ namespace Mocha
         {
             Shader* lightShader = new Shader(
             "res/shaders/defaultVertexShader.glsl",
-            "res/shaders/lightFragmentShader.glsl");
+            "res/shaders/light.glsl");
             createShader("lightshader", lightShader);
             Material* lightMaterial = new Material(lightShader);
             lightMaterial->name = "lightMaterial";

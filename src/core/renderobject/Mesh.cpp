@@ -27,6 +27,17 @@ namespace Mocha
         glBindVertexArray(0);
     }
 
+    void Mesh::Draw(const Shader& shader)
+    {
+        // Use provided shader
+        shader.use();
+
+        // Draw mesh
+        glBindVertexArray(VAO);
+        glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
+        glBindVertexArray(0);
+    }
+
     void Mesh::AssignMaterial(Material &material)
     {
         this->m_material = &material;

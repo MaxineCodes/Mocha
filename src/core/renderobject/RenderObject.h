@@ -17,6 +17,7 @@ namespace Mocha
     {
     public:
         std::string name;
+        bool outline = false;
 
     private:
         const char* defaultObjectPath = "res/models/cube.obj";
@@ -25,8 +26,13 @@ namespace Mocha
     public:
         RenderObject(const char* path);
         RenderObject();
-        // Draw the object
+
+        // Draw the object with it's assigned Material.
         void draw();
+
+        // Draw the object with a provided Shader override.
+        // NOTE: does not use textures or any variables from Material, these must be set to shader manually.
+        void draw(const Shader &shader);
 
         // Assigns a material to all meshes belonging to this RenderObject
         void assignMaterial(Material& material);

@@ -30,6 +30,15 @@ namespace Mocha
         }
     }
 
+    void RenderObject::draw(const Shader& shader)
+    {
+        // Draw every mesh but provide the given shader override
+        for (unsigned int i = 0; i < meshes.size(); i++)
+        {
+            meshes[i].Draw(shader);
+        }
+    }
+
     void RenderObject::assignMaterial(Material& material)
     {
         for (unsigned int i = 0; i < meshes.size(); i++)

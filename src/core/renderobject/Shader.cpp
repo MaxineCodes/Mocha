@@ -111,7 +111,7 @@ namespace Mocha
         }
         catch (std::ifstream::failure e)
         {
-            logger::logGLError("ERROR::SHADER::FILE_NOT_SUCCESFULLY_READ");
+            logger::logGLError("ERROR::SHADER::FILE_NOT_SUCCESFULLY_READ: " + std::string(path));
         }
 
         logger::logDebug(path);
