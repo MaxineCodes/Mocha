@@ -133,36 +133,40 @@ namespace Mocha
 
         // Lights
 
-        // Directional Light
+        // Directional-Light
         debugScene.directionalLights["directionalLight_0"]->direction = glm::vec3(-0.2f, -1.0f, -0.3f);
         debugScene.directionalLights["directionalLight_0"]->position = glm::vec3(0.0f, -1.0f, 0.0f);
         debugScene.directionalLights["directionalLight_0"]->ambient = glm::vec3(0.05f, 0.05f, 0.05f);
         debugScene.directionalLights["directionalLight_0"]->diffuse = glm::vec3(0.4f, 0.4f, 0.4f);
         debugScene.directionalLights["directionalLight_0"]->specular = glm::vec3(0.5f, 0.5f, 0.5f);
-        // Key light
-        /*
+        debugScene.directionalLights["directionalLight_0"]->initialised = true;
+        // Key-light
         debugScene.pointLights["pointLight_0"]->position = glm::vec3(3.5f, 5.0f, 5.0f);
-        debugScene.pointLights["pointLight_0"]->diffuse  = glm::vec3(2.0f, 1.0f, 1.0f);
+        debugScene.pointLights["pointLight_0"]->diffuse  = glm::vec3(1.0f, 0.5f, 0.5f);
         debugScene.pointLights["pointLight_0"]->ambient  = glm::vec3(0.2f, 0.2f, 0.2f);
         debugScene.pointLights["pointLight_0"]->specular = glm::vec3(1.0f, 1.0f, 1.0f);
-        // Back light
+        debugScene.pointLights["pointLight_0"]->initialised = true;
+        // Back-light
         debugScene.pointLights["pointLight_1"]->position = glm::vec3(-3.5f, 5.0f, -5.0f);
-        debugScene.pointLights["pointLight_1"]->diffuse  = glm::vec3(0.0f, 0.0f, 2.0f);
+        debugScene.pointLights["pointLight_1"]->diffuse  = glm::vec3(0.0f, 0.0f, 1.0f);
         debugScene.pointLights["pointLight_1"]->ambient  = glm::vec3(0.0f, 0.0f, 0.0f);
         debugScene.pointLights["pointLight_1"]->specular = glm::vec3(1.0f, 1.0f, 1.0f);
-        // Fill light
+        debugScene.pointLights["pointLight_1"]->initialised = true;
+        // Fill-light
         debugScene.pointLights["pointLight_2"]->position = glm::vec3(-2.5f, 0.5f, 5.0f);
-        debugScene.pointLights["pointLight_2"]->diffuse  = glm::vec3(0.0f, 2.0f, 0.0f);
+        debugScene.pointLights["pointLight_2"]->diffuse  = glm::vec3(0.0f, 1.0f, 0.0f);
         debugScene.pointLights["pointLight_2"]->ambient  = glm::vec3(0.0f, 0.0f, 0.0f);
         debugScene.pointLights["pointLight_2"]->specular = glm::vec3(1.0f, 1.0f, 1.0f);
-        */
-
+        debugScene.pointLights["pointLight_2"]->initialised = true;
 
         // Create light spheres
-        for (unsigned int i = 0; i < debugScene.pointLights.size(); i++) {
+        for (unsigned int i = 0; i < debugScene.pointLights.size(); i++)
+        {
+            // Kinda temporary code to prevent default lights
+            // see Light.h: Light struct has temporary 'initialised' bool now also
             const std::string lightName = "pointLight_" + std::to_string(i);
-            debugScene.spawnLightSphere(debugScene.pointLights[lightName]->position,
-                                  debugScene.pointLights[lightName]->ambient);
+            Light::PointLight* light = debugScene.pointLights[lightName];
+            if (light->initialised) debugScene.spawnLightSphere(light->position,light->ambient);
         }
 
 

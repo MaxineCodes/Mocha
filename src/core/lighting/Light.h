@@ -23,6 +23,7 @@ namespace Mocha
         struct Light : Object
         {
             std::string name;
+            bool initialised = false; // temporary? see Scene::DebugScene()
 
             glm::vec3 position      = glm::vec3(0.0f, 0.0f, 0.0f);
             glm::vec3 direction     = glm::vec3(0.0f, -1.0f, 0.0f);
@@ -39,7 +40,7 @@ namespace Mocha
             static TYPE getType() { return DIRECTIONAL_LIGHT; }
         };
 
-        struct PointLight : public Light
+        struct PointLight : Light
         {
             float constant = 1.0f, linear = 0.09f, quadratic = 0.032f;
             static TYPE getType() { return POINT_LIGHT; }
