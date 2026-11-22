@@ -169,18 +169,8 @@ namespace Mocha
                 // No depth for outlines
                 glDisable(GL_DEPTH_TEST);
 
-                /*
-                // Set stencil mask for outlines
-                if (renderObject->outline) {
-                    glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
-                    glStencilMask(0x00);
-                }
-                */
-
                 // Reset model matrix
                 modelMatrix = glm::mat4(1.0f);
-                const float outlineScalar = renderSettings.outlineThickness + 1.0f;
-                glm::vec3 outlineScale = glm::vec3(outlineScalar, outlineScalar, outlineScalar);
                 // get RenderObject transforms and put them into the model matrix
                 modelMatrix = glm::translate(modelMatrix, renderObject->transform.position);
                 modelMatrix = glm::rotate   (modelMatrix, renderObject->transform.rotation.x, glm::vec3(1.0f, 0.0f, 0.0f));
@@ -194,8 +184,6 @@ namespace Mocha
 
                 // Draw the outline
                 renderObject->draw(*outlineShader);
-                // Draw object again ontop of outline
-                //renderObject->draw();
 
                 // Clean up for next pass
                 // Reset stencil buffer mask
