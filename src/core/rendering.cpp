@@ -22,7 +22,7 @@ namespace Mocha
         struct RenderSettings
         {
             glm::vec3 outlineColour = glm::vec3(1.0f, 1.0f, 0.0f); // Yellow
-            float outlineThickness = 0.1f;
+            float outlineThickness = 0.5f;
         };
         RenderSettings renderSettings;
 
