@@ -57,6 +57,11 @@ namespace Mocha
         glEnable(GL_DEPTH_TEST);
         glDepthFunc(GL_LESS);
 
+        // Cull faces counter-clock-wise
+        glEnable(GL_CULL_FACE);
+        glCullFace(GL_BACK);
+        glFrontFace(GL_CCW);
+
         // Enable stencil buffers for outlines
         glEnable(GL_STENCIL_TEST);
         glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
