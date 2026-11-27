@@ -20,8 +20,8 @@ namespace Mocha
     {
         Scene debugScene;
 
-        //debugScene.skyColor = glm::vec4(0.6f, 0.7f, 0.8f, 1.0f); // gentle blue like the sky
-        debugScene.skyColor = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f); // Black
+        debugScene.skyColor = glm::vec4(0.6f, 0.7f, 0.8f, 1.0f); // gentle blue like the sky
+        //debugScene.skyColor = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f); // Black
 
         // Create Shaders
         Shader* unlitShader = new Shader(
@@ -42,11 +42,15 @@ namespace Mocha
         );
         debugScene.setShader("lit", litShader);
 
+        Shader* cutoutShader = new Shader(
+            "res/shaders/defaultVertexShader.glsl",
+            "res/shaders/cutout.glsl"
+        );
+        debugScene.setShader("cutout", cutoutShader);
+
         // Create Textures
         Texture* brickTexture = new Texture("res/textures/stylizedBricks_diffuse.png");
         debugScene.setTexture("stylizedBricks_diffuse", brickTexture);
-        Texture* cobblestoneTexture = new Texture("res/textures/cobblestone_diffuse.png");
-        debugScene.setTexture("cobblestone_diffuse", cobblestoneTexture);
         Texture* minecraftFoxTexture = new Texture("res/textures/minecraftFox_diffuse.png");
         debugScene.setTexture("minecraftFox_diffuse", minecraftFoxTexture);
         Texture* minecraftSnowFoxTexture = new Texture("res/textures/minecraftSnowFox_diffuse.png");
@@ -55,6 +59,8 @@ namespace Mocha
         debugScene.setTexture("orith_diffuse", orithTexture);
         Texture* specularTexture = new Texture("res/textures/test_specular.jpg");
         debugScene.setTexture("specular", specularTexture);
+        Texture* grassTexture = new Texture("res/textures/grass.png");
+        debugScene.setTexture("grass_diffuse", grassTexture);
 
         // Create Materials
         Material* minecraftFoxMaterial = new Material(litShader);
@@ -63,9 +69,9 @@ namespace Mocha
         minecraftFoxMaterial->setSpecularTexture(&*specularTexture);
         debugScene.setMaterial("mc fox", minecraftFoxMaterial);
 
-        Material* bricksMaterial = new Material(litShader);
+        Material* bricksMaterial = new Material(cutoutShader);
         bricksMaterial->name = "bricksMaterial";
-        bricksMaterial->setDiffuseTexture(&*brickTexture);
+        bricksMaterial->setDiffuseTexture(&*grassTexture);
         bricksMaterial->setSpecularTexture(&*specularTexture); // TODO: FIX BUG where specular is assigned to all materials
         debugScene.setMaterial("stylized bricks", bricksMaterial);
 
